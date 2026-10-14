@@ -1,0 +1,42 @@
+name: Reminder
+options:
+  bundleIdPrefix: com.songthin
+  deploymentTarget:
+    iOS: "18.0"
+  createIntermediateGroups: true
+  developmentLanguage: zh-Hans
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+
+targets:
+  Reminder:
+    type: application
+    platform: iOS
+    sources:
+      - Reminder
+    scheme: {}
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.songthin.reminder
+        PRODUCT_NAME: Reminder
+        TARGETED_DEVICE_FAMILY: "1"
+        CODE_SIGN_STYLE: Automatic
+        # 在 Mac 上用 Xcode 装机时，把这里改成你的 Personal Team ID（Xcode → Settings → Accounts 可查看）
+        DEVELOPMENT_TEAM: ""
+        ASSETCATALOG_COMPILER_APPICON_NAME: ""
+    info:
+      path: Reminder/Info.plist
+      properties:
+        CFBundleDisplayName: 事件提醒
+        CFBundleDevelopmentRegion: zh-Hans
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        NSCameraUsageDescription: 用于拍照并附加到提醒事项
+        NSPhotoLibraryUsageDescription: 用于从相册选择图片附加到提醒事项
+        LSApplicationQueriesSchemes:
+          - comgooglemaps

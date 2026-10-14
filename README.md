@@ -1,0 +1,67 @@
+# 事件提醒
+
+只给自己用的 iPhone 提醒 App：按事件逐条列出，不按日历组织。
+
+- SwiftUI + SwiftData，iOS 18+，全部本地存储，不依赖服务器
+- 工程由 [XcodeGen](https://github.com/yonaskolb/XcodeGen) 从 `project.yml` 生成，`.xcodeproj` 不进版本库
+
+## 功能与规则
+
+| 项目 | 规则 |
+|---|---|
+| 常年提醒 | 不设日期。固定显示在列表顶部，可手动排序，不发通知 |
+| 日期 | 可以精确到分钟，也可以只设日期。计算提醒时只看日期部分 |
+| 提醒区间 | 每条可单独设置，默认"提前 1 天"。从到期前 N 天起，每天在设定时刻（默认 9:00）汇总发一条通知 |
+| 过期 | 显示在"已过期"分组，之后每天继续提醒，直到标记完成 |
+| 角标 | 已进入提醒区间且未过期的事项数，不含常年和已过期事项 |
+| 重复 | 每天、每周、每月、每年，可设间隔。完成后生成一条历史记录，原事项顺延到下一次 |
+| 地址 | 用 Google 地图打开：装了 App 就打开 App，没装就打开网页版 |
+| 链接、电话 | 链接用系统默认浏览器打开，电话号码点击即可拨打 |
+| 图片 | 支持拍照和从相册多选。压缩到长边 2048 像素后存在 App 目录，会随 iPhone 备份一起备份 |
+
+## 在 Mac 上装到 iPhone（免费 Apple ID）
+
+1. 从 App Store 安装最新版 Xcode。手机是 iOS 27，Xcode 需要 27 或更高。
+2. 安装 XcodeGen 并生成工程：
+   ```sh
+   brew install xcodegen
+   xcodegen generate
+   open Reminder.xcodeproj
+   ```
+3. 在 Xcode 中打开 Settings → Accounts，登录你的 Apple ID。
+4. 选中 Reminder target，进入 Signing & Capabilities，Team 选择"(你的名字) (Personal Team)"。
+   为了避免每次生成工程后都要重选，可以把 Team ID 填进 `project.yml` 的 `DEVELOPMENT_TEAM`。
+5. 用数据线连接 iPhone。在手机上打开 **设置 → 隐私与安全性 → 开发者模式**，开启后手机会重启。
+6. 在 Xcode 中选择你的 iPhone 作为运行目标，然后点 ▶︎ 运行。
+7. 第一次运行时，手机上要信任开发者：**设置 → 通用 → VPN 与设备管理** → 选择你的 Apple ID → 信任。
+
+> 免费账号的签名 **7 天后过期**，过期后 App 无法打开。重新连接手机并在 Xcode 里运行一次即可。
+> 这是覆盖安装，**数据不会丢**。注意：不要先删除 App 再重装，删除会清空数据。
+> 另外，bundle ID `com.songthin.reminder` 在 Apple 账号下必须唯一。如果签名提示被占用，在 `project.yml` 里换一个。
+
+## GitHub Actions
+
+每次 push 都会在 macOS runner 上生成工程并编译，用来检查代码能否编译通过。
+产物是**未签名**的 `Reminder-unsigned.ipa`，在 Actions 页面下载。
+这个 ipa 不能直接安装，需要用 Sideloadly 或 AltStore 加上你的 Apple ID 签名后再装，同样 7 天有效。
+
+## 目录
+
+```
+Reminder/
+  App/        入口、AppDelegate（前台通知）、RootView（回到前台时刷新）
+  Models/     Reminder、Attachment（SwiftData，兼容 CloudKit）、Recurrence
+  Services/   NotificationScheduler（每日汇总通知、角标）
+              ReminderActions（完成、恢复、删除，以及保存后重建通知）
+              AttachmentStore（图片文件）
+              ContentDetector / MapOpener（链接、地址识别）
+              DueFormat、AppSettings
+  Views/      列表、详情、编辑、图片浏览、日期筛选、设置
+```
+
+## 后续计划
+
+- 导出/导入备份（zip）
+- 桌面小组件
+- iCloud 同步（需要付费开发者账号。数据模型已经按 CloudKit 的要求设计，届时只需开启能力）
+- App 图标

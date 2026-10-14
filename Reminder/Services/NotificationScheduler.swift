@@ -1,0 +1,140 @@
+import Foundation
+import SwiftData
+import UserNotifications
+
+/// 通知策略：每次数据变化都清空所有待发通知，按天重新生成"每日汇总"。
+/// - 每天在设定时刻发一条汇总：今天到期 / 即将到期（已进入提醒区间）/ 已过期
+/// - 角标 = 已进入提醒区间且未过期的事项数（不含常年、不含已过期）
+/// - 某天没有可提醒内容但角标需要变化时，发一条只改角标、不弹窗的通知
+/// iOS 最多保留 64 条待发本地通知，这里最多排 60 条。
+@MainActor
+enum NotificationScheduler {
+    struct Item: Sendable {
+        let title: String
+        let due: Date
+        let leadDays: Int
+    }
+
+    nonisolated private static let horizonDays = 45
+    nonisolated private static let maxRequests = 60
+    private static var pending: Task<Void, Never>?
+
+    static func requestAuthorization() async {
+        _ = try? await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge])
+    }
+
+    static func reschedule(context: ModelContext) {
+        let descriptor = FetchDescriptor<Reminder>(predicate: #Predicate { $0.isDone == false })
+        let items = ((try? context.fetch(descriptor)) ?? []).compactMap { r -> Item? in
+            guard let due = r.dueDate else { return nil }
+            return Item(title: r.title, due: due, leadDays: r.leadDays)
+        }
+        let minutes = AppSettings.notifyMinutes
+        // 串行执行，避免多次快速保存时清空/添加交错
+        let previous = pending
+        pending = Task {
+            await previous?.value
+            await schedule(items, notifyMinutes: minutes, now: Date())
+        }
+    }
+
+    nonisolated private static func schedule(_ items: [Item], notifyMinutes: Int, now: Date) async {
+        let center = UNUserNotificationCenter.current()
+        center.removeAllPendingNotificationRequests()
+
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: now)
+        var currentBadge = Digest(items: items, day: today).badge
+        try? await center.setBadgeCount(currentBadge)
+
+        var count = 0
+        for offset in 0..<horizonDays where count < maxRequests {
+            guard let day = calendar.date(byAdding: .day, value: offset, to: today) else { continue }
+            let digest = Digest(items: items, day: day)
+
+            // 午夜：角标变化时更新（不弹窗）
+            if offset > 0, digest.badge != currentBadge {
+                await add(center, id: "badge-\(dayKey(day))", content: badgeOnly(digest.badge), at: day)
+                currentBadge = digest.badge
+                count += 1
+            }
+
+            // 设定时刻：汇总提醒
+            guard !digest.isEmpty,
+                  let fire = calendar.date(byAdding: .minute, value: notifyMinutes, to: day),
+                  fire > now,
+                  count < maxRequests else { continue }
+            await add(center, id: "digest-\(dayKey(day))", content: digest.content(), at: fire)
+            count += 1
+        }
+    }
+
+    nonisolated private static func add(_ center: UNUserNotificationCenter, id: String, content: UNNotificationContent, at date: Date) async {
+        let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+        try? await center.add(UNNotificationRequest(identifier: id, content: content, trigger: trigger))
+    }
+
+    nonisolated private static func badgeOnly(_ badge: Int) -> UNNotificationContent {
+        let content = UNMutableNotificationContent()
+        content.badge = NSNumber(value: badge)
+        return content
+    }
+
+    nonisolated private static func dayKey(_ day: Date) -> String {
+        let c = Calendar.current.dateComponents([.year, .month, .day], from: day)
+        return "\(c.year ?? 0)-\(c.month ?? 0)-\(c.day ?? 0)"
+    }
+}
+
+/// 某一天的提醒汇总
+private struct Digest {
+    var dueToday: [String] = []
+    var upcoming: [(title: String, days: Int)] = []
+    var overdue: [(title: String, days: Int)] = []
+
+    init(items: [NotificationScheduler.Item], day: Date) {
+        let calendar = Calendar.current
+        for item in items {
+            let days = calendar.dayDistance(from: day, to: item.due)
+            if days < 0 {
+                overdue.append((item.title, -days))
+            } else if days == 0 {
+                dueToday.append(item.title)
+            } else if days <= item.leadDays {
+                upcoming.append((item.title, days))
+            }
+        }
+        upcoming.sort { $0.days < $1.days }
+        overdue.sort { $0.days < $1.days }
+    }
+
+    var isEmpty: Bool { dueToday.isEmpty && upcoming.isEmpty && overdue.isEmpty }
+    var badge: Int { dueToday.count + upcoming.count }
+
+    func content() -> UNNotificationContent {
+        let content = UNMutableNotificationContent()
+        if !dueToday.isEmpty {
+            content.title = "今天有 \(dueToday.count) 件事到期"
+        } else if !upcoming.isEmpty {
+            content.title = "有 \(upcoming.count) 件事即将到期"
+        } else {
+            content.title = "有 \(overdue.count) 件事已过期"
+        }
+
+        var lines: [String] = []
+        if !dueToday.isEmpty {
+            lines.append("今天：" + dueToday.joined(separator: "、"))
+        }
+        for group in Dictionary(grouping: upcoming, by: \.days).sorted(by: { $0.key < $1.key }) {
+            lines.append("\(DueFormat.relative(days: group.key))：" + group.value.map(\.title).joined(separator: "、"))
+        }
+        if !overdue.isEmpty {
+            lines.append("已过期：" + overdue.map { "\($0.title)（\($0.days)天）" }.joined(separator: "、"))
+        }
+        content.body = lines.joined(separator: "\n")
+        content.sound = .default
+        content.badge = NSNumber(value: badge)
+        return content
+    }
+}
