@@ -10,7 +10,7 @@ struct ReminderApp: App {
         WindowGroup {
             RootView()
         }
-        .modelContainer(for: [Reminder.self, Attachment.self])
+        .modelContainer(AppModel.container)
     }
 }
 

@@ -23,7 +23,8 @@ enum NotificationScheduler {
         _ = try? await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge])
     }
 
-    static func reschedule(context: ModelContext) {
+    @discardableResult
+    static func reschedule(context: ModelContext) -> Task<Void, Never> {
         let descriptor = FetchDescriptor<Reminder>(predicate: #Predicate { $0.isDone == false })
         let items = ((try? context.fetch(descriptor)) ?? []).compactMap { r -> Item? in
             guard let due = r.dueDate else { return nil }
@@ -32,10 +33,12 @@ enum NotificationScheduler {
         let minutes = AppSettings.notifyMinutes
         // 串行执行，避免多次快速保存时清空/添加交错
         let previous = pending
-        pending = Task {
+        let task = Task {
             await previous?.value
             await schedule(items, notifyMinutes: minutes, now: Date())
         }
+        pending = task
+        return task
     }
 
     nonisolated private static func schedule(_ items: [Item], notifyMinutes: Int, now: Date) async {

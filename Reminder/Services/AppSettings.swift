@@ -10,4 +10,9 @@ enum AppSettings {
     static var notifyMinutes: Int {
         UserDefaults.standard.object(forKey: notifyMinutesKey) as? Int ?? defaultNotifyMinutes
     }
+
+    /// 新建提醒时默认提前几天开始提醒
+    static var defaultLeadDays: Int {
+        UserDefaults.standard.object(forKey: defaultLeadDaysKey) as? Int ?? 1
+    }
 }

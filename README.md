@@ -1,4 +1,4 @@
-# 事件提醒
+# 瘦子提醒
 
 只给自己用的 iPhone 提醒 App：按事件逐条列出，不按日历组织。
 
@@ -20,6 +20,15 @@
 | 图片 | 支持拍照和从相册多选。压缩到长边 2048 像素后存在 App 目录，会随 iPhone 备份一起备份 |
 | 长按菜单 | 列表中长按某条提醒：完成或恢复、推迟一天、推迟一周、复制文字、删除 |
 | 备份 | 在设置里导出成一个 JSON 文件（图片内嵌），可以存到"文件"或 iCloud Drive。恢复时可选"合并"或"替换全部" |
+| Siri | 说"用瘦子提醒记一下"（或"瘦子提醒添加待办"等），Siri 问"要提醒什么？"，回答"明天下午2点去洗车"即可。自动识别日期时间，没说日期的进常年提醒 |
+
+### Siri 能识别的时间说法
+
+- 日期：今天、明天、后天、大后天、今晚、明早、3天后、2周后、周五、这周三、下周一、10月20号、2027年1月5日、15号
+- 时间：上午10点、下午2点半、晚上8点一刻、14:30。只说"2点"且没说上午下午时，1～5 点按下午算
+- 只说时间没说日期：今天还没过就是今天，已过就是明天
+- 触发语都要带 App 名，这是 iOS 的限制；直接说"添加待办"会交给系统自带的"提醒事项"
+- 第一次装好后，可能要先打开一次 App，Siri 才能认出这些触发语。Siri 的语言要设成中文（普通话）
 
 ## 在 Mac 上装到 iPhone（免费 Apple ID）
 
@@ -51,13 +60,15 @@
 
 ```
 Reminder/
-  App/        入口、AppDelegate（前台通知）、RootView（回到前台时刷新）
+  App/        入口、AppDelegate（前台通知）、RootView（回到前台时刷新）、AppModel（共用数据库）
+  Intents/    Siri 添加提醒（AddReminderIntent、触发语）
   Models/     Reminder、Attachment（SwiftData，兼容 CloudKit）、Recurrence
   Services/   BackupService（导出/恢复备份）
               NotificationScheduler（每日汇总通知、角标）
               ReminderActions（完成、恢复、删除，以及保存后重建通知）
               AttachmentStore（图片文件）
               ContentDetector / MapOpener（链接、地址识别）
+              SpokenDateParser（从口语里识别日期时间）
               DueFormat、AppSettings
   Views/      列表、详情、编辑、图片浏览、日期筛选、设置
 ```

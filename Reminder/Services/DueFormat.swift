@@ -22,6 +22,11 @@ enum DueFormat {
         return hasTime ? base + " " + time.string(from: date) : base
     }
 
+    /// 例：14:30
+    static func clock(_ date: Date) -> String {
+        time.string(from: date)
+    }
+
     static func timestamp(_ date: Date) -> String {
         full.string(from: date)
     }
