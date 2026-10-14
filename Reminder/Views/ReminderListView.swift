@@ -189,6 +189,32 @@ struct ReminderListView: View {
                 Label("删除", systemImage: "trash")
             }
         }
+        .contextMenu {
+            if reminder.isDone {
+                Button("恢复为待办", systemImage: "arrow.uturn.backward") {
+                    ReminderActions.restore(reminder, in: context)
+                }
+            } else {
+                Button("标记完成", systemImage: "checkmark") {
+                    ReminderActions.complete(reminder, in: context)
+                }
+                if reminder.dueDate != nil {
+                    Button("推迟一天", systemImage: "clock.arrow.circlepath") {
+                        ReminderActions.postpone(reminder, days: 1, in: context)
+                    }
+                    Button("推迟一周", systemImage: "calendar.badge.clock") {
+                        ReminderActions.postpone(reminder, days: 7, in: context)
+                    }
+                }
+            }
+            Button("复制文字", systemImage: "doc.on.doc") {
+                UIPasteboard.general.string = reminder.text
+            }
+            Divider()
+            Button("删除", systemImage: "trash", role: .destructive) {
+                ReminderActions.delete(reminder, in: context)
+            }
+        }
     }
 
     @ViewBuilder

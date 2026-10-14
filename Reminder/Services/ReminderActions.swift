@@ -34,6 +34,19 @@ enum ReminderActions {
         save(context)
     }
 
+    /// 推迟 N 天，保留原来的时刻。已过期的从今天起算。
+    static func postpone(_ reminder: Reminder, days: Int, in context: ModelContext) {
+        guard let due = reminder.dueDate else { return }
+        let calendar = Calendar.current
+        let dueDay = calendar.startOfDay(for: due)
+        let timeOfDay = due.timeIntervalSince(dueDay)
+        let baseDay = max(dueDay, calendar.startOfDay(for: Date()))
+        guard let newDay = calendar.date(byAdding: .day, value: days, to: baseDay) else { return }
+        reminder.dueDate = newDay.addingTimeInterval(timeOfDay)
+        reminder.updatedAt = Date()
+        save(context)
+    }
+
     static func restore(_ reminder: Reminder, in context: ModelContext) {
         reminder.isDone = false
         reminder.completedAt = nil

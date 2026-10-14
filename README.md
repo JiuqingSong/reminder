@@ -18,6 +18,8 @@
 | 地址 | 用 Google 地图打开：装了 App 就打开 App，没装就打开网页版 |
 | 链接、电话 | 链接用系统默认浏览器打开，电话号码点击即可拨打 |
 | 图片 | 支持拍照和从相册多选。压缩到长边 2048 像素后存在 App 目录，会随 iPhone 备份一起备份 |
+| 长按菜单 | 列表中长按某条提醒：完成或恢复、推迟一天、推迟一周、复制文字、删除 |
+| 备份 | 在设置里导出成一个 JSON 文件（图片内嵌），可以存到"文件"或 iCloud Drive。恢复时可选"合并"或"替换全部" |
 
 ## 在 Mac 上装到 iPhone（免费 Apple ID）
 
@@ -51,7 +53,8 @@
 Reminder/
   App/        入口、AppDelegate（前台通知）、RootView（回到前台时刷新）
   Models/     Reminder、Attachment（SwiftData，兼容 CloudKit）、Recurrence
-  Services/   NotificationScheduler（每日汇总通知、角标）
+  Services/   BackupService（导出/恢复备份）
+              NotificationScheduler（每日汇总通知、角标）
               ReminderActions（完成、恢复、删除，以及保存后重建通知）
               AttachmentStore（图片文件）
               ContentDetector / MapOpener（链接、地址识别）
@@ -61,7 +64,13 @@ Reminder/
 
 ## 后续计划
 
-- 导出/导入备份（zip）
 - 桌面小组件
 - iCloud 同步（需要付费开发者账号。数据模型已经按 CloudKit 的要求设计，届时只需开启能力）
-- App 图标
+
+## 图标
+
+图标是 `Reminder/Assets.xcassets/AppIcon.appiconset/icon-1024.png`，由 `tools/make-icon.ps1` 在 Windows 上生成：
+
+```powershell
+powershell -File tools/make-icon.ps1 -Out Reminder/Assets.xcassets/AppIcon.appiconset/icon-1024.png
+```

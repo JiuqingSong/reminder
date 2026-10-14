@@ -25,6 +25,13 @@ enum AttachmentStore {
         return name
     }
 
+    /// 直接写入已压缩好的图片数据（从备份恢复时用）
+    static func save(data: Data) throws -> String {
+        let name = UUID().uuidString + ".jpg"
+        try data.write(to: url(for: name), options: .atomic)
+        return name
+    }
+
     static func duplicate(_ fileName: String) -> String? {
         let name = UUID().uuidString + ".jpg"
         do {
