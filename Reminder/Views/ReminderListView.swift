@@ -22,9 +22,10 @@ struct ReminderListView: View {
     @State private var showingSettings = false
     @State private var showingDateFilter = false
     @State private var editMode: EditMode = .inactive
+    @State private var navigator = Navigator()
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigator.path) {
             List {
                 if isSearching {
                     searchSection
@@ -61,6 +62,7 @@ struct ReminderListView: View {
             }
             .onChange(of: tab) { _, _ in editMode = .inactive }
         }
+        .environment(navigator)
     }
 
     // MARK: - 数据分组

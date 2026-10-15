@@ -7,9 +7,16 @@ enum ShoppingRoute: Hashable {
     case list, bought
 }
 
+/// 主列表 NavigationStack 的导航路径，子页面用按钮跳转时往里追加
+@Observable
+final class Navigator {
+    var path = NavigationPath()
+}
+
 /// 待买：需要买的在上，"以后检查"的循环物品灰色排在最下面
 struct ShoppingListView: View {
     @Environment(\.modelContext) private var context
+    @Environment(Navigator.self) private var navigator
     @Query(filter: #Predicate<Reminder> { $0.isShopping == true }) private var items: [Reminder]
 
     @State private var showingEditor = false
@@ -64,7 +71,10 @@ struct ShoppingListView: View {
                 Button("批量添加", systemImage: "text.badge.plus") { showingBatch = true }
                     .labelStyle(.titleAndIcon)
                 Spacer()
-                NavigationLink(value: ShoppingRoute.bought) {
+                // 工具栏里不放 NavigationLink：它会打乱导航栈，点物品时详情页一闪就被盖住
+                Button {
+                    navigator.path.append(ShoppingRoute.bought)
+                } label: {
                     Label("已买 \(boughtCount)", systemImage: "bag")
                         .labelStyle(.titleAndIcon)
                 }
