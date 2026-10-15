@@ -22,6 +22,10 @@ struct BackupReminder: Codable {
     var createdAt: Date
     var updatedAt: Date
     var images: [Data]
+    // 待买物品（后来加的，旧备份里没有这些字段）
+    var isShopping: Bool?
+    var shopRecurring: Bool?
+    var shopNeeded: Bool?
 }
 
 @MainActor
@@ -49,7 +53,10 @@ enum BackupService {
                 sortOrder: r.sortOrder,
                 createdAt: r.createdAt,
                 updatedAt: r.updatedAt,
-                images: r.sortedAttachments.compactMap { try? Data(contentsOf: AttachmentStore.url(for: $0.fileName)) }
+                images: r.sortedAttachments.compactMap { try? Data(contentsOf: AttachmentStore.url(for: $0.fileName)) },
+                isShopping: r.isShopping,
+                shopRecurring: r.shopRecurring,
+                shopNeeded: r.shopNeeded
             )
         })
 
@@ -98,6 +105,9 @@ enum BackupService {
             r.sortOrder = item.sortOrder
             r.createdAt = item.createdAt
             r.updatedAt = item.updatedAt
+            r.isShopping = item.isShopping ?? false
+            r.shopRecurring = item.shopRecurring ?? false
+            r.shopNeeded = item.shopNeeded ?? true
             context.insert(r)
             for (index, data) in item.images.enumerated() {
                 guard let name = try? AttachmentStore.save(data: data) else { continue }

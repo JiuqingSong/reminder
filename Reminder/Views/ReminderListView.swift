@@ -11,8 +11,9 @@ struct ReminderListView: View {
     let now: Date
 
     @Environment(\.modelContext) private var context
-    @Query(filter: #Predicate<Reminder> { $0.isDone == false }) private var active: [Reminder]
-    @Query(filter: #Predicate<Reminder> { $0.isDone == true }) private var completed: [Reminder]
+    @Query(filter: #Predicate<Reminder> { $0.isDone == false && $0.isShopping == false }) private var active: [Reminder]
+    @Query(filter: #Predicate<Reminder> { $0.isDone == true && $0.isShopping == false }) private var completed: [Reminder]
+    @Query(filter: #Predicate<Reminder> { $0.isShopping == true }) private var shopping: [Reminder]
 
     @State private var tab: Tab = .pending
     @State private var searchText = ""
@@ -77,7 +78,7 @@ struct ReminderListView: View {
 
     private var searchResults: [Reminder] {
         let keyword = searchText.trimmingCharacters(in: .whitespaces)
-        return (active + completed)
+        return (active + completed + shopping)
             .filter { r in
                 (keyword.isEmpty || r.text.localizedStandardContains(keyword))
                     && (dateFilter?.contains(r.dueDate) ?? true)
@@ -90,21 +91,35 @@ struct ReminderListView: View {
     @ViewBuilder
     private var pendingSections: some View {
         let pinnedItems = pinned
-        if !pinnedItems.isEmpty {
-            Section {
-                ForEach(pinnedItems) { row($0) }
-                    .onMove(perform: movePinned)
-            } header: {
+        // 待买固定在常年分组第一行，即使是空的也显示
+        Section {
+            NavigationLink {
+                ShoppingListView()
+            } label: {
                 HStack {
-                    Label("常年", systemImage: "pin.fill")
+                    Label("待买", systemImage: "cart")
                     Spacer()
-                    if pinnedItems.count > 1 {
-                        Button(editMode.isEditing ? "完成" : "排序") {
-                            withAnimation { editMode = editMode.isEditing ? .inactive : .active }
-                        }
-                        .font(.footnote)
-                        .textCase(nil)
+                    let count = shopping.filter(\.isShopNeeded).count
+                    if count > 0 {
+                        Text("\(count)")
+                            .font(.subheadline.monospacedDigit())
+                            .foregroundStyle(.secondary)
                     }
+                }
+            }
+            .moveDisabled(true)
+            ForEach(pinnedItems) { row($0) }
+                .onMove(perform: movePinned)
+        } header: {
+            HStack {
+                Label("常年", systemImage: "pin.fill")
+                Spacer()
+                if pinnedItems.count > 1 {
+                    Button(editMode.isEditing ? "完成" : "排序") {
+                        withAnimation { editMode = editMode.isEditing ? .inactive : .active }
+                    }
+                    .font(.footnote)
+                    .textCase(nil)
                 }
             }
         }
@@ -165,8 +180,11 @@ struct ReminderListView: View {
         NavigationLink(value: reminder) {
             ReminderRow(reminder: reminder, now: now)
         }
+        // 待买物品只会出现在搜索结果里，它的已买等操作在待买页和详情页中
         .swipeActions(edge: .leading) {
-            if reminder.isDone {
+            if reminder.isShopping {
+                EmptyView()
+            } else if reminder.isDone {
                 Button {
                     ReminderActions.restore(reminder, in: context)
                 } label: {
@@ -190,7 +208,9 @@ struct ReminderListView: View {
             }
         }
         .contextMenu {
-            if reminder.isDone {
+            if reminder.isShopping {
+                EmptyView()
+            } else if reminder.isDone {
                 Button("恢复为待办", systemImage: "arrow.uturn.backward") {
                     ReminderActions.restore(reminder, in: context)
                 }
@@ -221,8 +241,6 @@ struct ReminderListView: View {
     private var emptyState: some View {
         if isSearching {
             if searchResults.isEmpty { ContentUnavailableView.search }
-        } else if tab == .pending, active.isEmpty {
-            ContentUnavailableView("没有待办", systemImage: "checkmark.circle", description: Text("点右上角 ＋ 新建提醒"))
         } else if tab == .done, completed.isEmpty {
             ContentUnavailableView("还没有已完成的事项", systemImage: "tray")
         }
@@ -273,14 +291,16 @@ struct ReminderListView: View {
 struct ReminderRow: View {
     let reminder: Reminder
     let now: Date
+    /// 在待买页里不再标"待买"
+    var inShoppingList = false
 
     var body: some View {
         HStack(alignment: .center, spacing: 12) {
             VStack(alignment: .leading, spacing: 4) {
                 Text(reminder.title)
                     .lineLimit(2)
-                    .strikethrough(reminder.isDone, color: .secondary)
-                    .foregroundStyle(reminder.isDone ? Color.secondary : Color.primary)
+                    .strikethrough(reminder.isDone && !reminder.isShopping, color: .secondary)
+                    .foregroundStyle(reminder.isDone || reminder.isShopLater ? Color.secondary : Color.primary)
                 subtitle
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -304,7 +324,9 @@ struct ReminderRow: View {
 
     @ViewBuilder
     private var subtitle: some View {
-        if reminder.isDone, let completedAt = reminder.completedAt {
+        if reminder.isShopping {
+            shopSubtitle
+        } else if reminder.isDone, let completedAt = reminder.completedAt {
             Text("完成于 " + DueFormat.timestamp(completedAt))
         } else if let due = reminder.dueDate {
             HStack(spacing: 4) {
@@ -313,6 +335,23 @@ struct ReminderRow: View {
                     Image(systemName: "repeat")
                     Text(reminder.recurrence.description(interval: reminder.recurrenceInterval))
                 }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var shopSubtitle: some View {
+        let parts: [String] = [
+            inShoppingList ? nil : (reminder.isDone ? "已买" : "待买"),
+            reminder.shopRecurring ? "循环" : nil,
+            reminder.isShopLater ? "以后检查" : nil,
+            reminder.isDone ? reminder.completedAt.map { "买于 " + DueFormat.timestamp($0) } : nil,
+        ].compactMap { (part: String?) in part }
+        if !parts.isEmpty {
+            HStack(spacing: 4) {
+                if !inShoppingList { Image(systemName: "cart") }
+                if reminder.shopRecurring { Image(systemName: "arrow.triangle.2.circlepath") }
+                Text(parts.joined(separator: " · "))
             }
         }
     }

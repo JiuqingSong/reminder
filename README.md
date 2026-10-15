@@ -10,6 +10,10 @@
 | 项目 | 规则 |
 |---|---|
 | 常年提醒 | 不设日期。固定显示在列表顶部，可手动排序，不发通知 |
+| 待买 | 固定在常年分组第一行，没有物品时也显示，行上显示需要买的件数。点进去是物品列表，每件可以有文字、图片、链接 |
+| 普通物品 | 左划标记已买，移到"已买"列表（待买页底部入口）。已买的可以恢复，也可以一键清空（永久删除） |
+| 循环物品 | 状态分为"需要买"和"以后检查"。左划只切换状态，不会变成已买。"以后检查"的灰色排在最下面 |
+| 批量添加 | 每行一项，添加为普通物品。和待买列表里已有物品重名时，可以选择跳过或重复添加；重名的是"以后检查"的循环物品时，也可以选择把它改回需要买。单个添加时同样检查重名 |
 | 日期 | 可以精确到分钟，也可以只设日期。计算提醒时只看日期部分 |
 | 提醒区间 | 每条可单独设置，默认"提前 1 天"。从到期前 N 天起，每天在设定时刻（默认 9:00）汇总发一条通知 |
 | 过期 | 显示在"已过期"分组，之后每天继续提醒，直到标记完成 |
@@ -62,15 +66,16 @@
 Reminder/
   App/        入口、AppDelegate（前台通知）、RootView（回到前台时刷新）、AppModel（共用数据库）
   Intents/    Siri 添加提醒（AddReminderIntent、触发语）
-  Models/     Reminder、Attachment（SwiftData，兼容 CloudKit）、Recurrence
+  Models/     Reminder（待买物品也是 Reminder，用 isShopping 区分）、Attachment（SwiftData，兼容 CloudKit）、Recurrence
   Services/   BackupService（导出/恢复备份）
+              ShoppingActions（待买：已买、循环状态、批量添加、查重）
               NotificationScheduler（每日汇总通知、角标）
               ReminderActions（完成、恢复、删除，以及保存后重建通知）
               AttachmentStore（图片文件）
               ContentDetector / MapOpener（链接、地址识别）
               SpokenDateParser（从口语里识别日期时间）
               DueFormat、AppSettings
-  Views/      列表、详情、编辑、图片浏览、日期筛选、设置
+  Views/      列表、详情、编辑、待买（含已买、批量添加）、图片浏览、日期筛选、设置
 ```
 
 ## 后续计划

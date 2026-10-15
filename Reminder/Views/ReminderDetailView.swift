@@ -77,7 +77,7 @@ struct ReminderDetailView: View {
         .fullScreenCover(item: $viewerStart) { start in
             ImageViewer(fileNames: reminder.sortedAttachments.map(\.fileName), startIndex: start.index)
         }
-        .confirmationDialog("删除这条提醒？", isPresented: $confirmingDelete, titleVisibility: .visible) {
+        .confirmationDialog(reminder.isShopping ? "删除这件物品？" : "删除这条提醒？", isPresented: $confirmingDelete, titleVisibility: .visible) {
             Button("删除", role: .destructive) {
                 dismiss()
                 // 等返回动画结束再删，避免视图访问已删除的对象
@@ -91,7 +91,14 @@ struct ReminderDetailView: View {
 
     private var infoCard: some View {
         VStack(alignment: .leading, spacing: 10) {
-            if let due = reminder.dueDate {
+            if reminder.isShopping {
+                infoRow("cart", "类别", "待买物品")
+                Toggle(isOn: Binding(get: { reminder.shopRecurring },
+                                     set: { ShoppingActions.setRecurring(reminder, $0, in: context) })) {
+                    Label("循环", systemImage: "arrow.triangle.2.circlepath").foregroundStyle(.secondary)
+                }
+                infoRow("info.circle", "状态", shopStatus)
+            } else if let due = reminder.dueDate {
                 infoRow("calendar", "到期", DueFormat.date(due, hasTime: reminder.hasTime, now: now))
                 if !reminder.isDone, let days = reminder.daysUntilDue(from: now) {
                     infoRow("hourglass", "剩余", DueFormat.relative(days: days))
@@ -104,7 +111,7 @@ struct ReminderDetailView: View {
                 infoRow("pin", "类型", "常年提醒")
             }
             if let completedAt = reminder.completedAt {
-                infoRow("checkmark.circle", "完成于", DueFormat.timestamp(completedAt))
+                infoRow("checkmark.circle", reminder.isShopping ? "已买于" : "完成于", DueFormat.timestamp(completedAt))
             }
             infoRow("clock", "创建于", DueFormat.timestamp(reminder.createdAt))
         }
@@ -122,7 +129,45 @@ struct ReminderDetailView: View {
         }
     }
 
+    private var shopStatus: String {
+        if reminder.isDone { return "已买" }
+        if reminder.isShopLater { return "以后检查" }
+        return "需要买"
+    }
+
+    @ViewBuilder
     private var bottomButton: some View {
+        if reminder.isShopping {
+            shopButton
+        } else {
+            reminderButton
+        }
+    }
+
+    private var shopButton: some View {
+        let (title, icon, tint): (String, String, Color) =
+            reminder.isDone ? ("恢复为待买", "arrow.uturn.backward", Color.blue)
+            : reminder.isShopLater ? ("需要买", "cart.badge.plus", Color.orange)
+            : reminder.shopRecurring ? ("以后检查", "clock", Color.gray)
+            : ("已买", "checkmark", Color.green)
+        return Button {
+            if reminder.isDone {
+                ReminderActions.restore(reminder, in: context)
+            } else {
+                ShoppingActions.swipe(reminder, in: context)
+            }
+            dismiss()
+        } label: {
+            Label(title, systemImage: icon).frame(maxWidth: .infinity)
+        }
+        .buttonStyle(.borderedProminent)
+        .tint(tint)
+        .controlSize(.large)
+        .padding()
+        .background(.bar)
+    }
+
+    private var reminderButton: some View {
         Button {
             if reminder.isDone {
                 ReminderActions.restore(reminder, in: context)

@@ -16,8 +16,14 @@ final class Reminder {
     var recurrenceInterval: Int = 1
     var isDone: Bool = false
     var completedAt: Date?
-    /// 常年提醒的手动排序
+    /// 常年提醒、待买物品的手动排序
     var sortOrder: Double = 0
+    /// 待买物品。待买物品没有日期，isDone 表示已买
+    var isShopping: Bool = false
+    /// 循环物品：左划不会变成已买，只在"需要买"和"以后检查"之间切换
+    var shopRecurring: Bool = false
+    /// 循环物品的状态：true 需要买，false 以后检查。普通物品不看这个字段
+    var shopNeeded: Bool = true
     var createdAt: Date = Date()
     var updatedAt: Date = Date()
 
@@ -45,7 +51,14 @@ extension Reminder {
         set { recurrenceRaw = newValue.rawValue }
     }
 
-    var isPinned: Bool { dueDate == nil }
+    /// 常年提醒（不含待买物品）
+    var isPinned: Bool { dueDate == nil && !isShopping }
+
+    /// 待买物品当前需要买：普通物品未买，或循环物品状态为"需要买"
+    var isShopNeeded: Bool { isShopping && !isDone && (!shopRecurring || shopNeeded) }
+
+    /// 循环物品状态为"以后检查"
+    var isShopLater: Bool { isShopping && !isDone && shopRecurring && !shopNeeded }
 
     var sortedAttachments: [Attachment] {
         (attachments ?? []).sorted { $0.order < $1.order }
@@ -58,6 +71,12 @@ extension Reminder {
             .first { !$0.isEmpty }
         if let line { return line }
         return (attachments?.isEmpty == false) ? "［图片］" : "（无内容）"
+    }
+
+    /// 判断待买物品是否同名：去掉首尾空格，不区分大小写和全半角
+    static func shopKey(_ name: String) -> String {
+        name.trimmingCharacters(in: .whitespacesAndNewlines)
+            .folding(options: [.caseInsensitive, .widthInsensitive], locale: .current)
     }
 
     func daysUntilDue(from day: Date) -> Int? {

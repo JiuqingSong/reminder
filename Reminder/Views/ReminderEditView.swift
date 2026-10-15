@@ -5,6 +5,8 @@ import PhotosUI
 struct ReminderEditView: View {
     /// nil 表示新建
     let reminder: Reminder?
+    /// 新建时：true 表示新建待买物品
+    var newShoppingItem = false
 
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
@@ -20,33 +22,61 @@ struct ReminderEditView: View {
     @State private var images: [DraftImage] = []
     @State private var pickerItems: [PhotosPickerItem] = []
     @State private var showingCamera = false
+    @State private var shopRecurring = false
+    @State private var shopNeeded = true
+    @State private var duplicate: Reminder?
     @State private var loaded = false
     @FocusState private var textFocused: Bool
+
+    private var isShopping: Bool { reminder?.isShopping ?? newShoppingItem }
 
     var body: some View {
         NavigationStack {
             Form {
                 Section {
-                    TextField("写点什么……链接、地址会自动识别", text: $text, axis: .vertical)
-                        .lineLimit(4...20)
+                    TextField(isShopping ? "物品名称（第一行），可以附上链接、说明" : "写点什么……链接、地址会自动识别",
+                              text: $text, axis: .vertical)
+                        .lineLimit(isShopping ? 2...20 : 4...20)
                         .focused($textFocused)
                 }
 
                 imageSection
-                dateSection
 
-                if hasDate {
-                    reminderSection
+                if isShopping {
+                    shopSection
+                } else {
+                    dateSection
+                    if hasDate {
+                        reminderSection
+                    }
                 }
             }
-            .navigationTitle(reminder == nil ? "新提醒" : "编辑提醒")
+            .navigationTitle(isShopping
+                             ? (reminder == nil ? "新物品" : "编辑物品")
+                             : (reminder == nil ? "新提醒" : "编辑提醒"))
+            .alert("已有同名物品", isPresented: Binding(get: { duplicate != nil }, set: { if !$0 { duplicate = nil } }),
+                   presenting: duplicate) { existing in
+                Button("仍然添加") { save() }
+                if existing.isShopLater {
+                    Button("不添加，把原有的改为需要买") {
+                        ShoppingActions.setNeeded(existing, true, in: context)
+                        dismiss()
+                    }
+                }
+                Button("不添加") { dismiss() }
+                Button("返回修改", role: .cancel) {}
+            } message: { existing in
+                Text(existing.isShopLater
+                     ? "「\(existing.title)」已在待买列表中（循环，以后检查）。"
+                     : "「\(existing.title)」已在待买列表中。")
+            }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("取消") { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("保存") { save() }
+                    Button("保存") { checkThenSave() }
                         .disabled(!canSave)
                 }
             }
@@ -159,6 +189,25 @@ struct ReminderEditView: View {
         }
     }
 
+    private var shopSection: some View {
+        Section {
+            Picker("类别", selection: $shopRecurring.animation()) {
+                Text("普通").tag(false)
+                Text("循环").tag(true)
+            }
+            if shopRecurring {
+                Picker("状态", selection: $shopNeeded) {
+                    Text("需要买").tag(true)
+                    Text("以后检查").tag(false)
+                }
+            }
+        } footer: {
+            Text(shopRecurring
+                 ? "循环物品左划不会变成已买，而是改为\"以后检查\"，灰色显示在列表最下面，用完了再改回\"需要买\"。"
+                 : "普通物品左划即标记为已买。")
+        }
+    }
+
     private var leadOptions: [Int] {
         LeadDays.options.contains(leadDays) ? LeadDays.options : (LeadDays.options + [leadDays]).sorted()
     }
@@ -181,10 +230,26 @@ struct ReminderEditView: View {
             recurrence = reminder.recurrence
             interval = max(1, reminder.recurrenceInterval)
             images = reminder.sortedAttachments.map { DraftImage(source: .existing($0)) }
+            shopRecurring = reminder.shopRecurring
+            shopNeeded = reminder.shopNeeded
         } else {
             leadDays = defaultLeadDays
             textFocused = true
         }
+    }
+
+    /// 新建待买物品时先检查同名
+    private func checkThenSave() {
+        if isShopping, reminder == nil {
+            let name = text.split(whereSeparator: \.isNewline)
+                .map { $0.trimmingCharacters(in: .whitespaces) }
+                .first { !$0.isEmpty }
+            if let name, let existing = ShoppingActions.existing(matching: [name], in: context).values.first {
+                duplicate = existing
+                return
+            }
+        }
+        save()
     }
 
     private func save() {
@@ -192,13 +257,24 @@ struct ReminderEditView: View {
         if let reminder {
             target = reminder
         } else {
-            target = Reminder()
+            target = isShopping ? ShoppingActions.makeItem(text: "") : Reminder()
             context.insert(target)
         }
         let wasPinned = reminder?.isPinned ?? false
 
         target.text = text.trimmingCharacters(in: .whitespacesAndNewlines)
-        if hasDate {
+        if isShopping {
+            target.dueDate = nil
+            target.hasTime = false
+            target.recurrence = .none
+            target.shopRecurring = shopRecurring
+            target.shopNeeded = shopRecurring ? shopNeeded : true
+            // 循环物品不会处于已买状态
+            if shopRecurring {
+                target.isDone = false
+                target.completedAt = nil
+            }
+        } else if hasDate {
             target.dueDate = hasTime ? date : Calendar.current.startOfDay(for: date)
             target.hasTime = hasTime
             target.leadDays = leadDays
