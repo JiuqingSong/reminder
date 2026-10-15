@@ -42,6 +42,12 @@ struct ReminderListView: View {
             .navigationDestination(for: Reminder.self) { reminder in
                 ReminderDetailView(reminder: reminder, now: now)
             }
+            .navigationDestination(for: ShoppingRoute.self) { route in
+                switch route {
+                case .list: ShoppingListView()
+                case .bought: BoughtListView()
+                }
+            }
             .toolbar { toolbar }
             .sheet(isPresented: $showingEditor) {
                 ReminderEditView(reminder: nil)
@@ -93,9 +99,7 @@ struct ReminderListView: View {
         let pinnedItems = pinned
         // 待买固定在常年分组第一行，即使是空的也显示
         Section {
-            NavigationLink {
-                ShoppingListView()
-            } label: {
+            NavigationLink(value: ShoppingRoute.list) {
                 HStack {
                     Label("待买", systemImage: "cart")
                     Spacer()

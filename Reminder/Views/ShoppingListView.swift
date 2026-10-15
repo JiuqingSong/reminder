@@ -1,6 +1,12 @@
 import SwiftUI
 import SwiftData
 
+/// 待买相关页面。都用 value 方式跳转，由主列表的 NavigationStack 统一注册目标页，
+/// 不和 NavigationLink { 目标页 } 混用（之前混用时，从待买页工具栏进入已买会卡死后闪退）
+enum ShoppingRoute: Hashable {
+    case list, bought
+}
+
 /// 待买：需要买的在上，"以后检查"的循环物品灰色排在最下面
 struct ShoppingListView: View {
     @Environment(\.modelContext) private var context
@@ -58,9 +64,7 @@ struct ShoppingListView: View {
                 Button("批量添加", systemImage: "text.badge.plus") { showingBatch = true }
                     .labelStyle(.titleAndIcon)
                 Spacer()
-                NavigationLink {
-                    BoughtListView()
-                } label: {
+                NavigationLink(value: ShoppingRoute.bought) {
                     Label("已买 \(boughtCount)", systemImage: "bag")
                         .labelStyle(.titleAndIcon)
                 }
