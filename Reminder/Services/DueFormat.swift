@@ -1,17 +1,18 @@
 import Foundation
 
+/// 日期格式跟随 App 当前语言，例如 10月14日 周二 / Tue, Oct 14
 enum DueFormat {
-    private static func formatter(_ format: String) -> DateFormatter {
+    private static func formatter(_ template: String) -> DateFormatter {
         let f = DateFormatter()
-        f.locale = Locale(identifier: "zh_CN")
-        f.dateFormat = format
+        f.locale = Locale.current
+        f.setLocalizedDateFormatFromTemplate(template)
         return f
     }
 
-    private static let sameYear = formatter("M月d日 EEE")
-    private static let otherYear = formatter("yyyy年M月d日 EEE")
-    private static let time = formatter("HH:mm")
-    private static let full = formatter("yyyy年M月d日 HH:mm")
+    private static let sameYear = formatter("MMMdEEE")
+    private static let otherYear = formatter("yMMMdEEE")
+    private static let time = formatter("HHmm")
+    private static let full = formatter("yMMMdHHmm")
 
     /// 例：10月14日 周二 14:30；跨年时带年份
     static func date(_ date: Date, hasTime: Bool, now: Date = Date()) -> String {
@@ -33,11 +34,11 @@ enum DueFormat {
 
     static func relative(days: Int) -> String {
         switch days {
-        case 0: "今天"
-        case 1: "明天"
-        case 2: "后天"
-        case let d where d > 2: "\(d)天后"
-        default: "已过\(-days)天"
+        case 0: String(localized: "今天")
+        case 1: String(localized: "明天")
+        case 2: String(localized: "后天")
+        case let d where d > 2: String(localized: "\(d)天后")
+        default: String(localized: "已过\(-days)天")
         }
     }
 }

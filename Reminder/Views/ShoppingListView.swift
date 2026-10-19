@@ -70,7 +70,7 @@ struct ShoppingListView: View {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 // 筛选时只是部分物品，不能排序
                 if activeFilter == nil, neededItems.count + laterItems.count > 1 {
-                    Button(editMode.isEditing ? "完成" : "排序") {
+                    Button(editMode.isEditing ? String(localized: "完成") : String(localized: "排序")) {
                         withAnimation { editMode = editMode.isEditing ? .inactive : .active }
                     }
                 }
@@ -137,7 +137,7 @@ struct ShoppingListView: View {
         if !list.isEmpty {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
-                    filterChip("全部", selected: activeFilter == nil) { placeFilterID = nil }
+                    filterChip(String(localized: "全部"), selected: activeFilter == nil) { placeFilterID = nil }
                     ForEach(list) { place in
                         filterChip(place.name, selected: activeFilter?.id == place.id) { placeFilterID = place.id }
                     }
@@ -168,11 +168,11 @@ struct ShoppingListView: View {
             ReminderRow(reminder: item, now: Date(), inShoppingList: true)
         }
         .swipeActions(edge: .trailing) {
-            swipeButton(item)
+            ShopSwipeButton(item: item)
         }
         .contextMenu {
-            swipeButton(item)
-            Button(item.shopRecurring ? "改为普通物品" : "改为循环物品", systemImage: "arrow.triangle.2.circlepath") {
+            ShopSwipeButton(item: item)
+            Button(item.shopRecurring ? String(localized: "改为普通物品") : String(localized: "改为循环物品"), systemImage: "arrow.triangle.2.circlepath") {
                 ShoppingActions.setRecurring(item, !item.shopRecurring, in: context)
             }
             Button("复制文字", systemImage: "doc.on.doc") {
@@ -185,8 +185,22 @@ struct ShoppingListView: View {
         }
     }
 
-    @ViewBuilder
-    private func swipeButton(_ item: Reminder) -> some View {
+    private func move(_ section: [Reminder], from source: IndexSet, to destination: Int) {
+        var list = section
+        list.move(fromOffsets: source, toOffset: destination)
+        for (index, item) in list.enumerated() {
+            item.sortOrder = Double(index)
+        }
+        try? context.save()
+    }
+}
+
+/// 待买物品的左划按钮：普通物品标记已买；循环物品在"需要买"和"以后检查"之间切换
+struct ShopSwipeButton: View {
+    let item: Reminder
+    @Environment(\.modelContext) private var context
+
+    var body: some View {
         if !item.shopRecurring {
             Button {
                 ShoppingActions.markBought(item, in: context)
@@ -210,15 +224,6 @@ struct ShoppingListView: View {
             .tint(.orange)
         }
     }
-
-    private func move(_ section: [Reminder], from source: IndexSet, to destination: Int) {
-        var list = section
-        list.move(fromOffsets: source, toOffset: destination)
-        for (index, item) in list.enumerated() {
-            item.sortOrder = Double(index)
-        }
-        try? context.save()
-    }
 }
 
 // MARK: - 已买
@@ -235,20 +240,13 @@ struct BoughtListView: View {
                 NavigationLink(value: item) {
                     ReminderRow(reminder: item, now: Date(), inShoppingList: true)
                 }
-                .swipeActions(edge: .leading) {
+                .swipeActions(edge: .trailing) {
                     Button {
                         ReminderActions.restore(item, in: context)
                     } label: {
                         Label("恢复", systemImage: "arrow.uturn.backward")
                     }
                     .tint(.blue)
-                }
-                .swipeActions(edge: .trailing) {
-                    Button(role: .destructive) {
-                        ReminderActions.delete(item, in: context)
-                    } label: {
-                        Label("删除", systemImage: "trash")
-                    }
                 }
                 .contextMenu {
                     Button("恢复为待买", systemImage: "arrow.uturn.backward") {
@@ -323,12 +321,12 @@ struct BatchAddView: View {
                     Button("取消") { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(names.isEmpty ? "添加" : "添加 \(names.count) 项") { add() }
+                    Button(names.isEmpty ? String(localized: "添加") : String(localized: "添加 \(names.count) 项")) { add() }
                         .disabled(names.isEmpty)
                 }
             }
             .onAppear { focused = true }
-            .alert(duplicates.map { "有 \($0.names.count) 项已在待买列表中" } ?? "",
+            .alert(duplicates.map { String(localized: "有 \($0.names.count) 项已在待买列表中") } ?? "",
                    isPresented: Binding(get: { duplicates != nil }, set: { if !$0 { duplicates = nil } }),
                    presenting: duplicates) { dup in
                 Button("跳过这些") { commit(skipping: dup) }
@@ -341,7 +339,7 @@ struct BatchAddView: View {
                 Button("重复添加") { commit(names) }
                 Button("返回修改", role: .cancel) {}
             } message: { dup in
-                Text(dup.names.joined(separator: "、"))
+                Text(L10n.join(dup.names))
             }
         }
     }

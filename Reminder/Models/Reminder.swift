@@ -77,7 +77,7 @@ extension Reminder {
             .map { $0.trimmingCharacters(in: .whitespaces) }
             .first { !$0.isEmpty }
         if let line { return line }
-        return (attachments?.isEmpty == false) ? "［图片］" : "（无内容）"
+        return (attachments?.isEmpty == false) ? String(localized: "［图片］") : String(localized: "（无内容）")
     }
 
     /// 判断待买物品是否同名：去掉首尾空格，不区分大小写和全半角

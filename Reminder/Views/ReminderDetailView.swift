@@ -77,7 +77,7 @@ struct ReminderDetailView: View {
         .fullScreenCover(item: $viewerStart) { start in
             ImageViewer(fileNames: reminder.sortedAttachments.map(\.fileName), startIndex: start.index)
         }
-        .confirmationDialog(reminder.isShopping ? "删除这件物品？" : "删除这条提醒？", isPresented: $confirmingDelete, titleVisibility: .visible) {
+        .confirmationDialog(reminder.isShopping ? String(localized: "删除这件物品？") : String(localized: "删除这条提醒？"), isPresented: $confirmingDelete, titleVisibility: .visible) {
             Button("删除", role: .destructive) {
                 dismiss()
                 // 等返回动画结束再删，避免视图访问已删除的对象
@@ -92,14 +92,14 @@ struct ReminderDetailView: View {
     private var infoCard: some View {
         VStack(alignment: .leading, spacing: 10) {
             if reminder.isShopping {
-                infoRow("cart", "类别", "待买物品")
+                infoRow("cart", "类别", String(localized: "待买物品"))
                 Toggle(isOn: Binding(get: { reminder.shopRecurring },
                                      set: { ShoppingActions.setRecurring(reminder, $0, in: context) })) {
                     Label("循环", systemImage: "arrow.triangle.2.circlepath").foregroundStyle(.secondary)
                 }
                 infoRow("info.circle", "状态", shopStatus)
                 if !reminder.sortedPlaces.isEmpty {
-                    infoRow("mappin.and.ellipse", "地点", reminder.sortedPlaces.map(\.name).joined(separator: "、"))
+                    infoRow("mappin.and.ellipse", "购买地点", L10n.join(reminder.sortedPlaces.map(\.name)))
                 }
             } else if let due = reminder.dueDate {
                 infoRow("calendar", "到期", DueFormat.date(due, hasTime: reminder.hasTime, now: now))
@@ -111,7 +111,7 @@ struct ReminderDetailView: View {
                     infoRow("repeat", "重复", reminder.recurrence.description(interval: reminder.recurrenceInterval))
                 }
             } else {
-                infoRow("pin", "类型", "常年提醒")
+                infoRow("pin", "类型", String(localized: "常年提醒"))
             }
             if let completedAt = reminder.completedAt {
                 infoRow("checkmark.circle", reminder.isShopping ? "已买于" : "完成于", DueFormat.timestamp(completedAt))
@@ -124,7 +124,7 @@ struct ReminderDetailView: View {
         .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
     }
 
-    private func infoRow(_ icon: String, _ title: String, _ value: String) -> some View {
+    private func infoRow(_ icon: String, _ title: LocalizedStringKey, _ value: String) -> some View {
         HStack {
             Label(title, systemImage: icon).foregroundStyle(.secondary)
             Spacer()
@@ -133,9 +133,9 @@ struct ReminderDetailView: View {
     }
 
     private var shopStatus: String {
-        if reminder.isDone { return "已买" }
-        if reminder.isShopLater { return "以后检查" }
-        return "需要买"
+        if reminder.isDone { return String(localized: "已买") }
+        if reminder.isShopLater { return String(localized: "以后检查") }
+        return String(localized: "需要买")
     }
 
     @ViewBuilder
@@ -148,7 +148,7 @@ struct ReminderDetailView: View {
     }
 
     private var shopButton: some View {
-        let (title, icon, tint): (String, String, Color) =
+        let (title, icon, tint): (LocalizedStringKey, String, Color) =
             reminder.isDone ? ("恢复为待买", "arrow.uturn.backward", Color.blue)
             : reminder.isShopLater ? ("需要买", "cart.badge.plus", Color.orange)
             : reminder.shopRecurring ? ("以后检查", "clock", Color.gray)
@@ -179,7 +179,7 @@ struct ReminderDetailView: View {
             }
             dismiss()
         } label: {
-            Label(reminder.isDone ? "恢复为待办" : "标记完成",
+            Label(reminder.isDone ? LocalizedStringKey("恢复为待办") : LocalizedStringKey("标记完成"),
                   systemImage: reminder.isDone ? "arrow.uturn.backward" : "checkmark")
                 .frame(maxWidth: .infinity)
         }

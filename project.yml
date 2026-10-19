@@ -33,6 +33,10 @@ targets:
       properties:
         CFBundleDisplayName: 瘦子提醒
         CFBundleDevelopmentRegion: zh-Hans
+        CFBundleLocalizations:
+          - zh-Hans
+          - zh-Hant
+          - en
         UILaunchScreen: {}
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait

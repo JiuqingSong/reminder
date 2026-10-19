@@ -34,6 +34,16 @@ jobs:
             CODE_SIGN_IDENTITY="" \
             build
 
+      # 确认 String Catalog 编进了 App：缺了英文或繁体就让构建失败
+      - name: Check localizations
+        run: |
+          app=build/Build/Products/Release-iphoneos/Reminder.app
+          ls -d "$app"/*.lproj
+          for lang in en zh-Hant; do
+            ls "$app/$lang.lproj/" | grep -q '^Localizable' || { echo "missing $lang Localizable"; exit 1; }
+            ls "$app/$lang.lproj/" | grep -q '^InfoPlist' || { echo "missing $lang InfoPlist"; exit 1; }
+          done
+
       - name: Package unsigned IPA
         run: |
           mkdir -p Payload

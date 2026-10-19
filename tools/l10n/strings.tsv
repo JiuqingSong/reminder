@@ -1,0 +1,195 @@
+、	, 	、
+不重复	Never	不重複
+每天	Daily	每天
+每周	Weekly	每週
+每月	Monthly	每月
+每年	Yearly	每年
+每%lld天	Every %lld days	每%lld天
+每%lld周	Every %lld weeks	每%lld週
+每%lld个月	Every %lld months	每%lld個月
+每%lld年	Every %lld years	每%lld年
+仅当天	On the day	僅當天
+提前%lld天	one=%lld day before|other=%lld days before	提前%lld天
+%lld 公里	%lld km	%lld 公里
+%lld 米	%lld m	%lld 公尺
+纯文字	Text only	純文字
+%lld 个位置	%lld locations	%lld 個位置
+今天	Today	今天
+明天	Tomorrow	明天
+后天	In 2 days	後天
+%lld天后	In %lld days	%lld天後
+已过%lld天	one=%lld day overdue|other=%lld days overdue	已過%lld天
+以下物品可以在这里购买：%@	You can buy these here: %@	以下物品可以在這裡購買：%@
+今天有 %lld 件事到期	one=%lld item due today|other=%lld items due today	今天有 %lld 件事到期
+有 %lld 件事即将到期	one=%lld item due soon|other=%lld items due soon	有 %lld 件事即將到期
+有 %lld 件事已过期	one=%lld item overdue|other=%lld items overdue	有 %lld 件事已過期
+今天：%@	Today: %@	今天：%@
+%@：%@	%1$@: %2$@	%1$@：%2$@
+%@（%lld天）	%1$@ (%2$lldd)	%1$@（%2$lld天）
+已过期：%@	Overdue: %@	已過期：%@
+［图片］	[Image]	［圖片］
+（无内容）	(No content)	（無內容）
+未命名地点	Unnamed place	未命名地點
+提醒备份-%@	Reminder Backup-%@	提醒備份-%@
+待办	To Do	待辦
+已完成	Done	已完成
+搜索关键词	Search	搜尋關鍵字
+待买	To Buy	待買
+常年	Ongoing	常駐
+完成	Done	完成
+排序	Reorder	排序
+已过期	Overdue	已過期
+近期	Soon	近期
+以后	Later	以後
+找到 %lld 条	one=%lld result|other=%lld results	找到 %lld 筆
+恢复	Restore	復原
+删除	Delete	刪除
+恢复为待办	Restore to To Do	復原為待辦
+标记完成	Mark Done	標記完成
+推迟一天	Postpone 1 Day	延後一天
+推迟一周	Postpone 1 Week	延後一週
+复制文字	Copy Text	拷貝文字
+还没有已完成的事项	No completed items yet	還沒有已完成的事項
+视图	View	檢視
+完成于 %@	Done %@	完成於 %@
+已买	Bought	已買
+循环	Recurring	循環
+以后检查	Check Later	以後檢查
+买于 %@	Bought %@	買於 %@
+编辑	Edit	編輯
+删除这件物品？	Delete this item?	刪除這件物品？
+删除这条提醒？	Delete this reminder?	刪除這則提醒？
+类别	Type	類別
+待买物品	Shopping item	待買物品
+状态	Status	狀態
+到期	Due	到期
+剩余	Remaining	剩餘
+提醒	Alert	提醒
+重复	Repeat	重複
+类型	Type	類型
+常年提醒	Ongoing	常駐提醒
+已买于	Bought	已買於
+完成于	Done	完成於
+创建于	Created	建立於
+需要买	Need to Buy	需要買
+恢复为待买	Back to To Buy	復原為待買
+物品名称（第一行），可以附上链接、说明	Item name (first line); add links or notes	物品名稱（第一行），可以附上連結、說明
+写点什么……链接、地址会自动识别	Write something… links and addresses are detected	寫點什麼……連結、地址會自動辨識
+新物品	New Item	新物品
+编辑物品	Edit Item	編輯物品
+新提醒	New Reminder	新提醒
+编辑提醒	Edit Reminder	編輯提醒
+已有同名物品	Item Already Exists	已有同名物品
+仍然添加	Add Anyway	仍然加入
+不添加，把原有的改为需要买	Don't Add; Mark Existing as Need to Buy	不加入，把原有的改為需要買
+不添加	Don't Add	不加入
+返回修改	Go Back	返回修改
+「%@」已在待买列表中（循环，以后检查）。	"%@" is already on the list (recurring, check later).	「%@」已在待買清單中（循環，以後檢查）。
+「%@」已在待买列表中。	"%@" is already on the list.	「%@」已在待買清單中。
+取消	Cancel	取消
+保存	Save	儲存
+图片	Images	圖片
+相册	Photos	相簿
+拍照	Camera	拍照
+设置日期	Set Date	設定日期
+日期	Date	日期
+具体时间	Time	具體時間
+时间	Time	時間
+不设日期即为常年提醒，固定显示在列表顶部，不发通知。	Without a date it's an ongoing reminder: pinned to the top, no notifications.	不設日期即為常駐提醒，固定顯示在清單頂部，不發通知。
+到期当天提醒；过期后每天继续提醒，直到标记完成。	Alerts on the due date, then daily while overdue until marked done.	到期當天提醒；過期後每天繼續提醒，直到標記完成。
+从到期前 %lld 天起每天提醒；过期后每天继续提醒，直到标记完成。	one=Alerts daily from %lld day before the due date, then daily while overdue until marked done.|other=Alerts daily from %lld days before the due date, then daily while overdue until marked done.	從到期前 %lld 天起每天提醒；過期後每天繼續提醒，直到標記完成。
+购买地点	Where to Buy	購買地點
+选择地点	Choose Places	選擇地點
+更改地点	Change Places	更改地點
+普通	Regular	一般
+循环物品左划不会变成已买，而是改为"以后检查"，灰色显示在列表最下面，用完了再改回"需要买"。	Swiping a recurring item doesn't mark it bought; it moves to "Check Later" (gray, at the bottom). Switch it back to "Need to Buy" when you run out.	循環物品左滑不會變成已買，而是改為「以後檢查」，灰色顯示在清單最下面，用完了再改回「需要買」。
+普通物品左划即标记为已买。	Swipe left on a regular item to mark it bought.	一般物品左滑即標記為已買。
+用完了左划或在详情里改为"需要买"。	When you run out, swipe left or switch to "Need to Buy" in details.	用完了左滑或在詳細資訊裡改為「需要買」。
+没有待买物品	Nothing to Buy	沒有待買物品
+点右上角 ＋ 添加，或用"批量添加"一次加多项	Tap + to add, or use "Add Multiple" to add several at once	點右上角 ＋ 加入，或用「批次加入」一次加多項
+批量添加	Add Multiple	批次加入
+已买 %lld	Bought %lld	已買 %lld
+全部	All	全部
+改为普通物品	Make Regular	改為一般物品
+改为循环物品	Make Recurring	改為循環物品
+没有已买物品	No Bought Items	沒有已買物品
+清空	Clear	清空
+永久删除全部 %lld 件已买物品？	one=Permanently delete %lld bought item?|other=Permanently delete all %lld bought items?	永久刪除全部 %lld 件已買物品？
+全部删除	Delete All	全部刪除
+图片也会一起删除，无法恢复。	Images will be deleted too. This can't be undone.	圖片也會一起刪除，無法復原。
+每行一项，添加为普通待买物品。空行会忽略，同一次输入里重复的只加一次。	One item per line, added as regular items. Blank lines are ignored; duplicates within the input are added once.	每行一項，加入為一般待買物品。空行會忽略，同一次輸入裡重複的只加一次。
+添加	Add	加入
+添加 %lld 项	one=Add %lld Item|other=Add %lld Items	加入 %lld 項
+有 %lld 项已在待买列表中	one=%lld item is already on the list|other=%lld items are already on the list	有 %lld 項已在待買清單中
+跳过这些	Skip These	略過這些
+跳过，并把 %lld 件循环物品改为需要买	one=Skip, and mark %lld recurring item as Need to Buy|other=Skip, and mark %lld recurring items as Need to Buy	略過，並把 %lld 件循環物品改為需要買
+重复添加	Add Duplicates	重複加入
+从	From	從
+到	To	到
+按到期日期筛选，待办和已完成都会搜索。可与关键词同时使用。	Filters by due date across To Do and Done. Works together with keyword search.	依到期日期篩選，待辦和已完成都會搜尋。可與關鍵字同時使用。
+快捷	Quick	快速
+本周	This Week	本週
+本月	This Month	本月
+今年	This Year	今年
+清除日期筛选	Clear Date Filter	清除日期篩選
+按日期筛选	Filter by Date	依日期篩選
+应用	Apply	套用
+没有常用地点	No Saved Places	沒有常用地點
+点右上角 ＋ 在地图上搜索，或添加纯文字地点	Tap + to search the map or add a text-only place	點右上角 ＋ 在地圖上搜尋，或加入純文字地點
+常用购物地点	Shopping Places	常用購物地點
+纯文字地点	Text-Only Place	純文字地點
+名称，例如 菜市场	Name, e.g. Farmers Market	名稱，例如 傳統市場
+不关联地图，不能开启到店提醒。	Not linked to the map, so arrival alerts are unavailable.	不連結地圖，無法開啟到店提醒。
+在地图上搜索	Search Map	在地圖上搜尋
+名称	Name	名稱
+添加地图位置	Add Map Location	加入地圖位置
+地图位置	Map Locations	地圖位置
+没有地图位置的是纯文字地点，不能开启到店提醒。	A place without map locations is text-only and can't have arrival alerts.	沒有地圖位置的是純文字地點，無法開啟到店提醒。
+同一家店的几个分店都可以加进来，到达任何一个都会提醒。	Add every branch you visit; arriving at any of them triggers the alert.	同一家店的幾間分店都可以加進來，到達任何一間都會提醒。
+到店提醒	Arrival Alert	到店提醒
+提醒范围	Alert Radius	提醒範圍
+待买列表中有 %lld 件物品可以在这里买	one=%lld item on your list can be bought here|other=%lld items on your list can be bought here	待買清單中有 %lld 件物品可以在這裡買
+地点	Place	地點
+到达这个地点、并且有需要在这里买的物品时，马上提醒你。每次到达都会提醒。	When you arrive and there are items to buy here, you'll be alerted right away—every time you arrive.	到達這個地點、並且有需要在這裡買的物品時，馬上提醒你。每次到達都會提醒。
+定位权限已关闭，到店提醒不会生效。	Location access is off, so arrival alerts won't work.	定位權限已關閉，到店提醒不會生效。
+前往系统设置开启	Open Settings	前往系統設定開啟
+已开启提醒的地图位置超过 %lld 个（iOS 的限制），超出的位置不会提醒。	More than %lld map locations have alerts on (an iOS limit); the extra ones won't alert.	已開啟提醒的地圖位置超過 %lld 個（iOS 的限制），超出的位置不會提醒。
+没有找到	No Results	沒有找到
+搜索地点	Search Places	搜尋地點
+换个关键词试试	Try a different search	換個關鍵字試試
+例如 Costco、大华超市，会优先显示地图当前区域附近的结果	e.g. Costco or Target. Results near the visible map area come first.	例如 Costco、全聯，會優先顯示地圖目前區域附近的結果
+选择位置	Choose Location	選擇位置
+添加 %@	Add %@	加入 %@
+这个位置	This Location	這個位置
+不关联地图，不能开启到店提醒。会同时加入常用地点。	Not linked to the map, so arrival alerts are unavailable. It's also saved to your places.	不連結地圖，無法開啟到店提醒。會同時加入常用地點。
+每日提醒时间	Daily Alert Time	每日提醒時間
+每天在这个时间把需要注意的事项汇总成一条通知。	At this time each day, items that need attention are summarized in one notification.	每天在這個時間把需要注意的事項彙整成一則通知。
+新建时默认提醒	Default Alert	新增時預設提醒
+每条提醒都可以单独修改。	Each reminder can be changed individually.	每則提醒都可以個別修改。
+定位权限	Location Access	定位權限
+购物地点	Shopping Places	購物地點
+给购物地点开启到店提醒后，到了那里会提醒你可以买的物品。只需要"使用 App 期间"的定位权限。	With arrival alerts on, you'll be reminded what you can buy when you get there. Only "While Using the App" location access is needed.	為購物地點開啟到店提醒後，到了那裡會提醒你可以買的物品。只需要「使用 App 期間」的定位權限。
+导出备份	Export Backup	匯出備份
+从备份恢复	Restore from Backup	從備份復原
+备份	Backup	備份
+通知权限	Notifications	通知權限
+所有提醒都是普通的 iPhone 通知，Apple Watch 会自动显示：iPhone 锁屏或黑屏、手表戴在手上时，通知出现在手表上；正在用 iPhone 时只出现在手机上。这是系统规则，App 无法改变。\n\n是否在手表上显示，在 iPhone 的 Watch App 里设置：我的手表 → 通知 → 瘦子提醒，选"镜像我的 iPhone"或关闭。	All alerts are regular iPhone notifications, and Apple Watch shows them automatically: when your iPhone is locked or asleep and you're wearing the watch, they appear on the watch; while you're using the iPhone they appear only on the phone. This is a system rule the app can't change.\n\nTo choose whether they appear on the watch, open the Watch app on iPhone: My Watch → Notifications → Slim Reminder, then pick "Mirror my iPhone" or off.	所有提醒都是一般的 iPhone 通知，Apple Watch 會自動顯示：iPhone 鎖定或螢幕關閉、手錶戴在手上時，通知出現在手錶上；正在用 iPhone 時只出現在手機上。這是系統規則，App 無法改變。\n\n是否在手錶上顯示，在 iPhone 的 Watch App 裡設定：我的手錶 → 通知 → 瘦子提醒，選「鏡像輸出我的 iPhone」或關閉。
+打开 Watch App	Open Watch App	打開 Watch App
+版本	Version	版本
+设置	Settings	設定
+无法读取备份文件：%@	Couldn't read the backup file: %@	無法讀取備份檔案：%@
+合并（保留现有数据）	Merge (Keep Existing Data)	合併（保留現有資料）
+替换全部现有数据	Replace All Existing Data	取代全部現有資料
+备份中有 %lld 条提醒，导出于 %@。合并时会跳过已存在的事项。	The backup has %1$lld reminders, exported %2$@. Merging skips items that already exist.	備份中有 %1$lld 則提醒，匯出於 %2$@。合併時會略過已存在的事項。
+好	OK	好
+还没有导出过备份。	No backup exported yet. 	還沒有匯出過備份。
+上次导出：%@。	Last exported: %@. 	上次匯出：%@。
+备份是一个包含文字和图片的文件，可以存到“文件”App、iCloud Drive，或者用隔空投送发到 Mac。	The backup is a single file with text and images. Save it to Files, iCloud Drive, or AirDrop it to a Mac.	備份是一個包含文字和圖片的檔案，可以存到「檔案」App、iCloud Drive，或者用 AirDrop 傳到 Mac。
+导出失败：%@	Export failed: %@	匯出失敗：%@
+已恢复 %lld 条提醒。	one=Restored %lld reminder.|other=Restored %lld reminders.	已復原 %lld 則提醒。
+恢复失败：%@	Restore failed: %@	復原失敗：%@
+使用 App 期间	While Using the App	使用 App 期間
+始终	Always	永遠
+已关闭	Off	已關閉
+未设置	Not Set	未設定
+已开启	On	已開啟

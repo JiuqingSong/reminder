@@ -20,7 +20,7 @@ enum PlaceActions {
 
     /// 从地图搜索结果新建地点；同名地点已存在时把位置加到它下面
     static func create(from mapItem: MKMapItem, in context: ModelContext) -> Place {
-        let place = findOrCreate(name: mapItem.name ?? "未命名地点", in: context)
+        let place = findOrCreate(name: mapItem.name ?? String(localized: "未命名地点"), in: context)
         addLocation(mapItem, to: place, in: context)
         return place
     }

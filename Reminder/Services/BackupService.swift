@@ -102,7 +102,7 @@ enum BackupService {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyyMMdd-HHmm"
         let url = FileManager.default.temporaryDirectory
-            .appendingPathComponent("提醒备份-\(formatter.string(from: Date())).json")
+            .appendingPathComponent(String(localized: "提醒备份-\(formatter.string(from: Date()))") + ".json")
         try data.write(to: url, options: .atomic)
         return url
     }

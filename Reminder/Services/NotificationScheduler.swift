@@ -135,7 +135,7 @@ enum NotificationScheduler {
         region.notifyOnExit = false
         let content = UNMutableNotificationContent()
         content.title = location.title
-        content.body = "以下物品可以在这里购买：" + location.items.joined(separator: "、")
+        content.body = String(localized: "以下物品可以在这里购买：\(L10n.join(location.items))")
         content.sound = .default
         content.userInfo = [openShoppingKey: true]
         let trigger = UNLocationNotificationTrigger(region: region, repeats: true)
@@ -182,22 +182,24 @@ private struct Digest {
     func content() -> UNNotificationContent {
         let content = UNMutableNotificationContent()
         if !dueToday.isEmpty {
-            content.title = "今天有 \(dueToday.count) 件事到期"
+            content.title = String(localized: "今天有 \(dueToday.count) 件事到期")
         } else if !upcoming.isEmpty {
-            content.title = "有 \(upcoming.count) 件事即将到期"
+            content.title = String(localized: "有 \(upcoming.count) 件事即将到期")
         } else {
-            content.title = "有 \(overdue.count) 件事已过期"
+            content.title = String(localized: "有 \(overdue.count) 件事已过期")
         }
 
         var lines: [String] = []
         if !dueToday.isEmpty {
-            lines.append("今天：" + dueToday.joined(separator: "、"))
+            lines.append(String(localized: "今天：\(L10n.join(dueToday))"))
         }
         for group in Dictionary(grouping: upcoming, by: \.days).sorted(by: { $0.key < $1.key }) {
-            lines.append("\(DueFormat.relative(days: group.key))：" + group.value.map(\.title).joined(separator: "、"))
+            let titles = L10n.join(group.value.map(\.title))
+            lines.append(String(localized: "\(DueFormat.relative(days: group.key))：\(titles)"))
         }
         if !overdue.isEmpty {
-            lines.append("已过期：" + overdue.map { "\($0.title)（\($0.days)天）" }.joined(separator: "、"))
+            let titles = L10n.join(overdue.map { String(localized: "\($0.title)（\($0.days)天）") })
+            lines.append(String(localized: "已过期：\(titles)"))
         }
         content.body = lines.joined(separator: "\n")
         content.sound = .default

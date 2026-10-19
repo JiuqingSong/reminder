@@ -115,7 +115,7 @@ struct SettingsView: View {
                 do {
                     pendingBackup = try BackupService.read(result.get())
                 } catch {
-                    message = "无法读取备份文件：\(error.localizedDescription)"
+                    message = String(localized: "无法读取备份文件：\(error.localizedDescription)")
                 }
             }
             .confirmationDialog(
@@ -140,9 +140,9 @@ struct SettingsView: View {
 
     private var backupFooter: String {
         let last = lastBackupAt == 0
-            ? "还没有导出过备份。"
-            : "上次导出：\(DueFormat.timestamp(Date(timeIntervalSince1970: lastBackupAt)))。"
-        return last + "备份是一个包含文字和图片的文件，可以存到“文件”App、iCloud Drive，或者用隔空投送发到 Mac。"
+            ? String(localized: "还没有导出过备份。")
+            : String(localized: "上次导出：\(DueFormat.timestamp(Date(timeIntervalSince1970: lastBackupAt)))。")
+        return last + String(localized: "备份是一个包含文字和图片的文件，可以存到“文件”App、iCloud Drive，或者用隔空投送发到 Mac。")
     }
 
     private func exportBackup() {
@@ -150,16 +150,16 @@ struct SettingsView: View {
             exported = ExportedFile(url: try BackupService.export(context: context))
             lastBackupAt = Date().timeIntervalSince1970
         } catch {
-            message = "导出失败：\(error.localizedDescription)"
+            message = String(localized: "导出失败：\(error.localizedDescription)")
         }
     }
 
     private func restore(_ backup: BackupFile, mode: BackupService.ImportMode) {
         do {
             let count = try BackupService.restore(backup, mode: mode, context: context)
-            message = "已恢复 \(count) 条提醒。"
+            message = String(localized: "已恢复 \(count) 条提醒。")
         } catch {
-            message = "恢复失败：\(error.localizedDescription)"
+            message = String(localized: "恢复失败：\(error.localizedDescription)")
         }
     }
 
@@ -174,18 +174,18 @@ struct SettingsView: View {
 
     private var locationLabel: String {
         switch location.status {
-        case .authorizedWhenInUse: "使用 App 期间"
-        case .authorizedAlways: "始终"
-        case .denied, .restricted: "已关闭"
-        default: "未设置"
+        case .authorizedWhenInUse: String(localized: "使用 App 期间")
+        case .authorizedAlways: String(localized: "始终")
+        case .denied, .restricted: String(localized: "已关闭")
+        default: String(localized: "未设置")
         }
     }
 
     private var authLabel: String {
         switch authStatus {
-        case .authorized, .provisional, .ephemeral: "已开启"
-        case .denied: "已关闭"
-        default: "未设置"
+        case .authorized, .provisional, .ephemeral: String(localized: "已开启")
+        case .denied: String(localized: "已关闭")
+        default: String(localized: "未设置")
         }
     }
 }

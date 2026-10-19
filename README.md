@@ -25,7 +25,9 @@
 | 地址 | 用 Google 地图打开：装了 App 就打开 App，没装就打开网页版 |
 | 链接、电话 | 链接用系统默认浏览器打开，电话号码点击即可拨打 |
 | 图片 | 支持拍照和从相册多选。压缩到长边 2048 像素后存在 App 目录，会随 iPhone 备份一起备份 |
+| 滑动 | 全 App 统一：左划完成或买完（已完成、已买的左划恢复），右划没有操作。删除在长按菜单和详情页里。常用地点和地图位置仍可左划删除 |
 | 长按菜单 | 列表中长按某条提醒：完成或恢复、推迟一天、推迟一周、复制文字、删除 |
+| 语言 | 简体中文、繁体中文（台湾用词）、英文，英文名 Slim Reminder。跟随系统语言，也可以在 设置 → 瘦子提醒 → 语言 单独选。Siri 目前只支持中文 |
 | 备份 | 在设置里导出成一个 JSON 文件（图片内嵌），可以存到"文件"或 iCloud Drive。恢复时可选"合并"或"替换全部" |
 | Siri | 说"用瘦子提醒记一下"（或"瘦子提醒添加待办"等），Siri 问"要提醒什么？"，回答"明天下午2点去洗车"即可。自动识别日期时间，没说日期的进常年提醒 |
 
@@ -36,6 +38,23 @@
 - 只说时间没说日期：今天还没过就是今天，已过就是明天
 - 触发语都要带 App 名，这是 iOS 的限制；直接说"添加待办"会交给系统自带的"提醒事项"
 - 第一次装好后，可能要先打开一次 App，Siri 才能认出这些触发语。Siri 的语言要设成中文（普通话）
+- Siri 的触发语、回答和日期识别都还只有中文
+
+## 多语言
+
+界面文字的原文（key）就是代码里的简体中文，翻译在 `Reminder/Localizable.xcstrings`，App 名和权限说明在 `Reminder/InfoPlist.xcstrings`。这两个文件由 `tools/l10n` 里的表格生成，不要手改：
+
+1. 代码里新加的中文：直接写在 `Text("…")`、`Button("…")` 等字面量里会自动翻译；先拼成 `String` 再显示的（三元表达式、函数参数、通知内容等）要写成 `String(localized: "…")`
+2. 在 `tools/l10n/strings.tsv` 加一行：简体原文、英文、繁体，用 Tab 分隔。插值写成 `%lld`（整数）、`%@`（文字）；英文需要单复数时写成 `one=…|other=…`
+3. 检查和生成：
+   ```sh
+   perl tools/l10n/check.pl tools/l10n/strings.tsv $(git ls-files 'Reminder/*.swift' | grep -v -e Intents -e SpokenDateParser -e AppModel)
+   perl tools/l10n/gen.pl tools/l10n/strings.tsv > Reminder/Localizable.xcstrings
+   perl tools/l10n/gen.pl tools/l10n/infoplist.tsv > Reminder/InfoPlist.xcstrings
+   ```
+   `check.pl` 列出缺翻译（MISSING）和多余（UNUSED）的条目；插值里又嵌套字符串的、注释参数会误报。
+
+CI 会检查编出来的 App 里有没有英文和繁体的翻译文件。
 
 ## 在 Mac 上装到 iPhone（免费 Apple ID）
 

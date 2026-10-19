@@ -121,7 +121,7 @@ struct ReminderListView: View {
                 Label("常年", systemImage: "pin.fill")
                 Spacer()
                 if pinnedItems.count > 1 {
-                    Button(editMode.isEditing ? "完成" : "排序") {
+                    Button(editMode.isEditing ? String(localized: "完成") : String(localized: "排序")) {
                         withAnimation { editMode = editMode.isEditing ? .inactive : .active }
                     }
                     .font(.footnote)
@@ -136,7 +136,7 @@ struct ReminderListView: View {
     }
 
     @ViewBuilder
-    private func datedSection(_ phase: ReminderPhase, title: String, icon: String, tint: Color) -> some View {
+    private func datedSection(_ phase: ReminderPhase, title: LocalizedStringKey, icon: String, tint: Color) -> some View {
         let items = dated(phase)
         if !items.isEmpty {
             Section {
@@ -186,10 +186,11 @@ struct ReminderListView: View {
         NavigationLink(value: reminder) {
             ReminderRow(reminder: reminder, now: now)
         }
-        // 待买物品只会出现在搜索结果里，它的已买等操作在待买页和详情页中
-        .swipeActions(edge: .leading) {
-            if reminder.isShopping {
-                EmptyView()
+        // 全 App 统一：左划完成（或恢复），右划没有操作；删除在长按菜单和详情页里。
+        // 待买物品只会出现在搜索结果里，左划和待买页一样
+        .swipeActions(edge: .trailing) {
+            if reminder.isShopping, !reminder.isDone {
+                ShopSwipeButton(item: reminder)
             } else if reminder.isDone {
                 Button {
                     ReminderActions.restore(reminder, in: context)
@@ -204,13 +205,6 @@ struct ReminderListView: View {
                     Label("完成", systemImage: "checkmark")
                 }
                 .tint(.green)
-            }
-        }
-        .swipeActions(edge: .trailing) {
-            Button(role: .destructive) {
-                ReminderActions.delete(reminder, in: context)
-            } label: {
-                Label("删除", systemImage: "trash")
             }
         }
         .contextMenu {
@@ -263,7 +257,7 @@ struct ReminderListView: View {
         }
         ToolbarItem(placement: .principal) {
             Picker("视图", selection: $tab) {
-                ForEach(Tab.allCases) { Text($0.rawValue).tag($0) }
+                ForEach(Tab.allCases) { Text(LocalizedStringKey($0.rawValue)).tag($0) }
             }
             .pickerStyle(.segmented)
             .frame(width: 180)
@@ -333,7 +327,7 @@ struct ReminderRow: View {
         if reminder.isShopping {
             shopSubtitle
         } else if reminder.isDone, let completedAt = reminder.completedAt {
-            Text("完成于 " + DueFormat.timestamp(completedAt))
+            Text("完成于 \(DueFormat.timestamp(completedAt))")
         } else if let due = reminder.dueDate {
             HStack(spacing: 4) {
                 Text(DueFormat.date(due, hasTime: reminder.hasTime, now: now))
@@ -347,11 +341,11 @@ struct ReminderRow: View {
 
     private var shopParts: [String] {
         var parts: [String] = []
-        if !inShoppingList { parts.append(reminder.isDone ? "已买" : "待买") }
-        if reminder.shopRecurring { parts.append("循环") }
-        if reminder.isShopLater { parts.append("以后检查") }
+        if !inShoppingList { parts.append(reminder.isDone ? String(localized: "已买") : String(localized: "待买")) }
+        if reminder.shopRecurring { parts.append(String(localized: "循环")) }
+        if reminder.isShopLater { parts.append(String(localized: "以后检查")) }
         if reminder.isDone, let completedAt = reminder.completedAt {
-            parts.append("买于 " + DueFormat.timestamp(completedAt))
+            parts.append(String(localized: "买于 \(DueFormat.timestamp(completedAt))"))
         }
         parts += reminder.sortedPlaces.map(\.name)
         return parts

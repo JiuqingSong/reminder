@@ -47,7 +47,7 @@ enum PlaceRadius {
     static let options: [Double] = [100, 200, 300, 500, 1000]
 
     static func label(_ meters: Double) -> String {
-        meters >= 1000 ? "\(Int(meters / 1000)) 公里" : "\(Int(meters)) 米"
+        meters >= 1000 ? String(localized: "\(Int(meters / 1000)) 公里") : String(localized: "\(Int(meters)) 米")
     }
 }
 
@@ -63,7 +63,9 @@ extension Place {
 
     var summary: String {
         let count = locations?.count ?? 0
-        return count == 0 ? "纯文字" : count == 1 ? (sortedLocations.first?.address ?? "") : "\(count) 个位置"
+        if count == 0 { return String(localized: "纯文字") }
+        if count == 1 { return sortedLocations.first?.address ?? "" }
+        return String(localized: "\(count) 个位置")
     }
 
     /// 在这里需要买的物品

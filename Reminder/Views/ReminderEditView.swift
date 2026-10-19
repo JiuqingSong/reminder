@@ -36,7 +36,7 @@ struct ReminderEditView: View {
         NavigationStack {
             Form {
                 Section {
-                    TextField(isShopping ? "物品名称（第一行），可以附上链接、说明" : "写点什么……链接、地址会自动识别",
+                    TextField(isShopping ? String(localized: "物品名称（第一行），可以附上链接、说明") : String(localized: "写点什么……链接、地址会自动识别"),
                               text: $text, axis: .vertical)
                         .lineLimit(isShopping ? 2...20 : 4...20)
                         .focused($textFocused)
@@ -54,9 +54,7 @@ struct ReminderEditView: View {
                     }
                 }
             }
-            .navigationTitle(isShopping
-                             ? (reminder == nil ? "新物品" : "编辑物品")
-                             : (reminder == nil ? "新提醒" : "编辑提醒"))
+            .navigationTitle(titleText)
             .alert("已有同名物品", isPresented: Binding(get: { duplicate != nil }, set: { if !$0 { duplicate = nil } }),
                    presenting: duplicate) { existing in
                 Button("仍然添加") { save() }
@@ -70,8 +68,8 @@ struct ReminderEditView: View {
                 Button("返回修改", role: .cancel) {}
             } message: { existing in
                 Text(existing.isShopLater
-                     ? "「\(existing.title)」已在待买列表中（循环，以后检查）。"
-                     : "「\(existing.title)」已在待买列表中。")
+                     ? String(localized: "「\(existing.title)」已在待买列表中（循环，以后检查）。")
+                     : String(localized: "「\(existing.title)」已在待买列表中。"))
             }
             .sheet(isPresented: $pickingPlaces) {
                 PlacePickerView(selection: $places)
@@ -186,12 +184,12 @@ struct ReminderEditView: View {
                 ForEach(Recurrence.allCases) { Text($0.label).tag($0) }
             }
             if recurrence != .none {
-                Stepper("每 \(interval) \(recurrence.unitLabel)", value: $interval, in: 1...99)
+                Stepper(recurrence.description(interval: interval), value: $interval, in: 1...99)
             }
         } footer: {
             Text(leadDays == 0
-                 ? "到期当天提醒；过期后每天继续提醒，直到标记完成。"
-                 : "从到期前 \(leadDays) 天起每天提醒；过期后每天继续提醒，直到标记完成。")
+                 ? String(localized: "到期当天提醒；过期后每天继续提醒，直到标记完成。")
+                 : String(localized: "从到期前 \(leadDays) 天起每天提醒；过期后每天继续提醒，直到标记完成。"))
         }
     }
 
@@ -209,7 +207,7 @@ struct ReminderEditView: View {
                     .buttonStyle(.plain)
                 }
             }
-            Button(places.isEmpty ? "选择地点" : "更改地点", systemImage: "mappin.and.ellipse") {
+            Button(places.isEmpty ? String(localized: "选择地点") : String(localized: "更改地点"), systemImage: "mappin.and.ellipse") {
                 pickingPlaces = true
             }
         }
@@ -229,9 +227,16 @@ struct ReminderEditView: View {
             }
         } footer: {
             Text(shopRecurring
-                 ? "循环物品左划不会变成已买，而是改为\"以后检查\"，灰色显示在列表最下面，用完了再改回\"需要买\"。"
-                 : "普通物品左划即标记为已买。")
+                 ? String(localized: "循环物品左划不会变成已买，而是改为\"以后检查\"，灰色显示在列表最下面，用完了再改回\"需要买\"。")
+                 : String(localized: "普通物品左划即标记为已买。"))
         }
+    }
+
+    private var titleText: String {
+        if isShopping {
+            return reminder == nil ? String(localized: "新物品") : String(localized: "编辑物品")
+        }
+        return reminder == nil ? String(localized: "新提醒") : String(localized: "编辑提醒")
     }
 
     private var leadOptions: [Int] {

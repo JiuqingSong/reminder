@@ -160,8 +160,8 @@ struct PlaceEditView: View {
                 Text("地图位置")
             } footer: {
                 Text(locations.isEmpty
-                     ? "没有地图位置的是纯文字地点，不能开启到店提醒。"
-                     : "同一家店的几个分店都可以加进来，到达任何一个都会提醒。")
+                     ? String(localized: "没有地图位置的是纯文字地点，不能开启到店提醒。")
+                     : String(localized: "同一家店的几个分店都可以加进来，到达任何一个都会提醒。"))
             }
 
             Section {
@@ -188,7 +188,7 @@ struct PlaceEditView: View {
                 }
             }
         }
-        .navigationTitle(place.name.isEmpty ? "地点" : place.name)
+        .navigationTitle(place.name.isEmpty ? String(localized: "地点") : place.name)
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $searching) {
             LocationSearchView(initialQuery: place.name) { item in
@@ -198,7 +198,7 @@ struct PlaceEditView: View {
         .onChange(of: place.radius) { _, _ in ReminderActions.save(context) }
         .onDisappear {
             if place.name.trimmingCharacters(in: .whitespaces).isEmpty {
-                place.name = place.sortedLocations.first?.title ?? "未命名地点"
+                place.name = place.sortedLocations.first?.title ?? String(localized: "未命名地点")
             }
             ReminderActions.save(context)
         }
@@ -259,7 +259,7 @@ struct LocationSearchView: View {
                     } label: {
                         HStack {
                             VStack(alignment: .leading, spacing: 2) {
-                                Text(item.name ?? "未命名地点").foregroundStyle(Color.primary)
+                                Text(item.name ?? String(localized: "未命名地点")).foregroundStyle(Color.primary)
                                 Text(item.placemark.title ?? "")
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
@@ -275,9 +275,9 @@ struct LocationSearchView: View {
                 .listStyle(.plain)
                 .overlay {
                     if results.isEmpty {
-                        ContentUnavailableView(failed ? "没有找到" : "搜索地点",
+                        ContentUnavailableView(failed ? String(localized: "没有找到") : String(localized: "搜索地点"),
                                                systemImage: "magnifyingglass",
-                                               description: Text(failed ? "换个关键词试试" : "例如 Costco、大华超市，会优先显示地图当前区域附近的结果"))
+                                               description: Text(failed ? String(localized: "换个关键词试试") : String(localized: "例如 Costco、大华超市，会优先显示地图当前区域附近的结果")))
                     }
                 }
             }
@@ -296,7 +296,7 @@ struct LocationSearchView: View {
                         onPick(selected)
                         dismiss()
                     } label: {
-                        Label("添加 \(selected.name ?? "这个位置")", systemImage: "plus.circle.fill")
+                        Label("添加 \(selected.name ?? String(localized: "这个位置"))", systemImage: "plus.circle.fill")
                             .lineLimit(1)
                             .frame(maxWidth: .infinity)
                     }
