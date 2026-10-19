@@ -14,10 +14,13 @@
 | 普通物品 | 左划标记已买，移到"已买"列表（待买页底部入口）。已买的可以恢复，也可以一键清空（永久删除） |
 | 循环物品 | 状态分为"需要买"和"以后检查"。左划只切换状态，不会变成已买。"以后检查"的灰色排在最下面 |
 | 批量添加 | 每行一项，添加为普通物品。和待买列表里已有物品重名时，可以选择跳过或重复添加；重名的是"以后检查"的循环物品时，也可以选择把它改回需要买。单个添加时同样检查重名 |
+| 购买地点 | 每件物品可以有 0 到多个购买地点，从常用地点里选，也可以当场新建。常用地点在设置或待买页右上角管理：在地图上搜索（一个地点可以加多家分店），或者用纯文字。待买页顶部可以按地点筛选 |
+| 到店提醒 | 地图地点可以开启提醒（默认 200 米范围）。到达时如果有需要在那里买的物品，马上通知"以下物品可以在这里购买"，每次到达都会提醒，点通知打开待买页。只需要"使用 App 期间"定位权限。iOS 限制最多同时 64 条待发通知，所以开启提醒的地图位置最多 20 个 |
+| Apple Watch | 通知由系统自动转到手表：iPhone 锁屏或黑屏且戴着手表时显示在手表上。在 iPhone 的 Watch App → 通知 → 瘦子提醒 里设置是否在手表显示 |
 | 日期 | 可以精确到分钟，也可以只设日期。计算提醒时只看日期部分 |
 | 提醒区间 | 每条可单独设置，默认"提前 1 天"。从到期前 N 天起，每天在设定时刻（默认 9:00）汇总发一条通知 |
 | 过期 | 显示在"已过期"分组，之后每天继续提醒，直到标记完成 |
-| 角标 | 已进入提醒区间且未过期的事项数，不含常年和已过期事项 |
+| 角标 | 已进入提醒区间且未过期的事项数，不含常年、已过期和待买 |
 | 重复 | 每天、每周、每月、每年，可设间隔。完成后生成一条历史记录，原事项顺延到下一次 |
 | 地址 | 用 Google 地图打开：装了 App 就打开 App，没装就打开网页版 |
 | 链接、电话 | 链接用系统默认浏览器打开，电话号码点击即可拨打 |
@@ -66,16 +69,19 @@
 Reminder/
   App/        入口、AppDelegate（前台通知）、RootView（回到前台时刷新）、AppModel（共用数据库）
   Intents/    Siri 添加提醒（AddReminderIntent、触发语）
-  Models/     Reminder（待买物品也是 Reminder，用 isShopping 区分）、Attachment（SwiftData，兼容 CloudKit）、Recurrence
+  Models/     Reminder（待买物品也是 Reminder，用 isShopping 区分）、Attachment（SwiftData，兼容 CloudKit）、
+              Place / PlaceLocation（购物地点和它的地图位置）、Recurrence
   Services/   BackupService（导出/恢复备份）
               ShoppingActions（待买：已买、循环状态、批量添加、查重）
-              NotificationScheduler（每日汇总通知、角标）
+              PlaceActions、LocationAuthorization（购物地点、定位权限）
+              NotificationScheduler（每日汇总通知、到店提醒、角标）
               ReminderActions（完成、恢复、删除，以及保存后重建通知）
               AttachmentStore（图片文件）
               ContentDetector / MapOpener（链接、地址识别）
               SpokenDateParser（从口语里识别日期时间）
               DueFormat、AppSettings
-  Views/      列表、详情、编辑、待买（含已买、批量添加）、图片浏览、日期筛选、设置
+  Views/      列表、详情、编辑、待买（含已买、批量添加）、购物地点（管理、地图搜索、选择）、
+              图片浏览、日期筛选、设置
 ```
 
 ## 后续计划

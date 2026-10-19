@@ -30,6 +30,17 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
     ) async -> UNNotificationPresentationOptions {
         [.banner, .list, .badge, .sound]
     }
+
+    // 点击到店提醒：打开待买页
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse
+    ) async {
+        let openShopping = response.notification.request.content.userInfo[NotificationScheduler.openShoppingKey] as? Bool ?? false
+        if openShopping {
+            await MainActor.run { Navigator.shared.openShopping() }
+        }
+    }
 }
 
 struct RootView: View {

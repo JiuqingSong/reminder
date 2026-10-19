@@ -5,7 +5,7 @@ import SwiftData
 enum AppModel {
     static let container: ModelContainer = {
         do {
-            return try ModelContainer(for: Reminder.self, Attachment.self)
+            return try ModelContainer(for: Reminder.self, Attachment.self, Place.self, PlaceLocation.self)
         } catch {
             fatalError("无法打开数据库：\(error)")
         }

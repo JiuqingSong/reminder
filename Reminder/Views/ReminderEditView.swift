@@ -25,6 +25,8 @@ struct ReminderEditView: View {
     @State private var shopRecurring = false
     @State private var shopNeeded = true
     @State private var duplicate: Reminder?
+    @State private var places: [Place] = []
+    @State private var pickingPlaces = false
     @State private var loaded = false
     @FocusState private var textFocused: Bool
 
@@ -43,6 +45,7 @@ struct ReminderEditView: View {
                 imageSection
 
                 if isShopping {
+                    placeSection
                     shopSection
                 } else {
                     dateSection
@@ -69,6 +72,9 @@ struct ReminderEditView: View {
                 Text(existing.isShopLater
                      ? "「\(existing.title)」已在待买列表中（循环，以后检查）。"
                      : "「\(existing.title)」已在待买列表中。")
+            }
+            .sheet(isPresented: $pickingPlaces) {
+                PlacePickerView(selection: $places)
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -189,6 +195,26 @@ struct ReminderEditView: View {
         }
     }
 
+    private var placeSection: some View {
+        Section("购买地点") {
+            ForEach(places) { place in
+                HStack {
+                    Label(place.name, systemImage: place.isTextOnly ? "character.cursor.ibeam" : "mappin.and.ellipse")
+                    Spacer()
+                    Button {
+                        places.removeAll { $0.id == place.id }
+                    } label: {
+                        Image(systemName: "xmark.circle.fill").foregroundStyle(.secondary)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            Button(places.isEmpty ? "选择地点" : "更改地点", systemImage: "mappin.and.ellipse") {
+                pickingPlaces = true
+            }
+        }
+    }
+
     private var shopSection: some View {
         Section {
             Picker("类别", selection: $shopRecurring.animation()) {
@@ -232,6 +258,7 @@ struct ReminderEditView: View {
             images = reminder.sortedAttachments.map { DraftImage(source: .existing($0)) }
             shopRecurring = reminder.shopRecurring
             shopNeeded = reminder.shopNeeded
+            places = reminder.sortedPlaces
         } else {
             leadDays = defaultLeadDays
             textFocused = true
@@ -269,6 +296,7 @@ struct ReminderEditView: View {
             target.recurrence = .none
             target.shopRecurring = shopRecurring
             target.shopNeeded = shopRecurring ? shopNeeded : true
+            target.places = places
             // 循环物品不会处于已买状态
             if shopRecurring {
                 target.isDone = false

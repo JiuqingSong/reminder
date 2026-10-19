@@ -7,10 +7,17 @@ enum ShoppingRoute: Hashable {
     case list, bought
 }
 
-/// 主列表 NavigationStack 的导航路径，子页面用按钮跳转时往里追加
+/// 主列表 NavigationStack 的导航路径，子页面用按钮跳转时往里追加。
+/// 点击到店提醒通知时，AppDelegate 也通过它打开待买页
+@MainActor
 @Observable
 final class Navigator {
+    static let shared = Navigator()
     var path = NavigationPath()
+
+    func openShopping() {
+        path = NavigationPath([ShoppingRoute.list])
+    }
 }
 
 /// 待买：需要买的在上，"以后检查"的循环物品灰色排在最下面
@@ -18,10 +25,14 @@ struct ShoppingListView: View {
     @Environment(\.modelContext) private var context
     @Environment(Navigator.self) private var navigator
     @Query(filter: #Predicate<Reminder> { $0.isShopping == true }) private var items: [Reminder]
+    @Query(sort: \Place.createdAt) private var places: [Place]
 
     @State private var showingEditor = false
     @State private var showingBatch = false
     @State private var editMode: EditMode = .inactive
+    @State private var showingPlaces = false
+    /// 只显示在某个地点买的物品
+    @State private var placeFilterID: UUID?
 
     var body: some View {
         let neededItems = needed
@@ -46,6 +57,7 @@ struct ShoppingListView: View {
         }
         .listStyle(.insetGrouped)
         .environment(\.editMode, $editMode)
+        .safeAreaInset(edge: .top, spacing: 0) { filterBar }
         .overlay {
             if neededItems.isEmpty, laterItems.isEmpty {
                 ContentUnavailableView("没有待买物品", systemImage: "cart",
@@ -56,10 +68,16 @@ struct ShoppingListView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
-                if neededItems.count + laterItems.count > 1 {
+                // 筛选时只是部分物品，不能排序
+                if activeFilter == nil, neededItems.count + laterItems.count > 1 {
                     Button(editMode.isEditing ? "完成" : "排序") {
                         withAnimation { editMode = editMode.isEditing ? .inactive : .active }
                     }
+                }
+                Button {
+                    showingPlaces = true
+                } label: {
+                    Image(systemName: "mappin.and.ellipse")
                 }
                 Button {
                     showingEditor = true
@@ -86,14 +104,63 @@ struct ShoppingListView: View {
         .sheet(isPresented: $showingBatch) {
             BatchAddView()
         }
+        .sheet(isPresented: $showingPlaces) {
+            PlacesView()
+        }
     }
 
     private func ordered(_ list: [Reminder]) -> [Reminder] {
         list.sorted { ($0.sortOrder, $0.createdAt) < ($1.sortOrder, $1.createdAt) }
     }
 
-    private var needed: [Reminder] { ordered(items.filter(\.isShopNeeded)) }
-    private var later: [Reminder] { ordered(items.filter(\.isShopLater)) }
+    /// 有未买物品的地点，显示在筛选栏里
+    private var filterPlaces: [Place] {
+        places.filter { $0.items?.contains { !$0.isDone } ?? false }
+    }
+
+    /// 筛选的地点不再有未买物品时自动取消筛选
+    private var activeFilter: Place? {
+        filterPlaces.first { $0.id == placeFilterID }
+    }
+
+    private var filtered: [Reminder] {
+        guard let place = activeFilter else { return items }
+        return items.filter { $0.places?.contains { $0.id == place.id } ?? false }
+    }
+
+    private var needed: [Reminder] { ordered(filtered.filter { $0.isShopNeeded }) }
+    private var later: [Reminder] { ordered(filtered.filter { $0.isShopLater }) }
+
+    @ViewBuilder
+    private var filterBar: some View {
+        let list = filterPlaces
+        if !list.isEmpty {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    filterChip("全部", selected: activeFilter == nil) { placeFilterID = nil }
+                    ForEach(list) { place in
+                        filterChip(place.name, selected: activeFilter?.id == place.id) { placeFilterID = place.id }
+                    }
+                }
+                .padding(.horizontal)
+                .padding(.vertical, 8)
+            }
+            .background(.bar)
+        }
+    }
+
+    private func filterChip(_ title: String, selected: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .font(.subheadline)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .foregroundStyle(selected ? Color.white : Color.primary)
+                .background(selected ? Color.accentColor : Color(.tertiarySystemFill), in: Capsule())
+        }
+        .buttonStyle(.plain)
+    }
+
     private var boughtCount: Int { items.filter(\.isDone).count }
 
     private func row(_ item: Reminder) -> some View {

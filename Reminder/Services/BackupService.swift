@@ -1,11 +1,32 @@
 import Foundation
 import SwiftData
+import CoreLocation
 
 /// 备份文件：单个 JSON，图片以 base64 内嵌。不依赖 zip，导入导出都只用系统 API。
 struct BackupFile: Codable {
     var version: Int
     var exportedAt: Date
     var reminders: [BackupReminder]
+    /// 购物地点（后来加的，旧备份里没有）
+    var places: [BackupPlace]?
+}
+
+struct BackupPlace: Codable {
+    var id: UUID
+    var name: String
+    var alertEnabled: Bool
+    var radius: Double
+    var createdAt: Date
+    var locations: [BackupLocation]
+}
+
+struct BackupLocation: Codable {
+    var id: UUID
+    var title: String
+    var address: String
+    var latitude: Double
+    var longitude: Double
+    var createdAt: Date
 }
 
 struct BackupReminder: Codable {
@@ -26,6 +47,7 @@ struct BackupReminder: Codable {
     var isShopping: Bool?
     var shopRecurring: Bool?
     var shopNeeded: Bool?
+    var placeIDs: [UUID]?
 }
 
 @MainActor
@@ -56,7 +78,20 @@ enum BackupService {
                 images: r.sortedAttachments.compactMap { try? Data(contentsOf: AttachmentStore.url(for: $0.fileName)) },
                 isShopping: r.isShopping,
                 shopRecurring: r.shopRecurring,
-                shopNeeded: r.shopNeeded
+                shopNeeded: r.shopNeeded,
+                placeIDs: r.sortedPlaces.map { $0.id }
+            )
+        }, places: try context.fetch(FetchDescriptor<Place>()).map { p in
+            BackupPlace(
+                id: p.id,
+                name: p.name,
+                alertEnabled: p.alertEnabled,
+                radius: p.radius,
+                createdAt: p.createdAt,
+                locations: p.sortedLocations.map { l in
+                    BackupLocation(id: l.id, title: l.title, address: l.address,
+                                   latitude: l.latitude, longitude: l.longitude, createdAt: l.createdAt)
+                }
             )
         })
 
@@ -93,6 +128,7 @@ enum BackupService {
             }
             existingIDs = []
         }
+        let placesByID = restorePlaces(backup.places ?? [], mode: mode, context: context)
 
         var count = 0
         for item in backup.reminders where !existingIDs.contains(item.id) {
@@ -109,6 +145,7 @@ enum BackupService {
             r.shopRecurring = item.shopRecurring ?? false
             r.shopNeeded = item.shopNeeded ?? true
             context.insert(r)
+            r.places = (item.placeIDs ?? []).compactMap { placesByID[$0] }
             for (index, data) in item.images.enumerated() {
                 guard let name = try? AttachmentStore.save(data: data) else { continue }
                 let attachment = Attachment(fileName: name, order: index)
@@ -119,5 +156,34 @@ enum BackupService {
         }
         ReminderActions.save(context)
         return count
+    }
+
+    /// 合并时保留 id 已存在的地点；返回 id → 地点，供物品关联
+    private static func restorePlaces(_ places: [BackupPlace], mode: ImportMode, context: ModelContext) -> [UUID: Place] {
+        let existing = (try? context.fetch(FetchDescriptor<Place>())) ?? []
+        var byID: [UUID: Place] = [:]
+        if mode == .replace {
+            for place in existing { context.delete(place) }
+        } else {
+            for place in existing { byID[place.id] = place }
+        }
+        for item in places where byID[item.id] == nil {
+            let place = Place(name: item.name)
+            place.id = item.id
+            place.alertEnabled = item.alertEnabled
+            place.radius = item.radius
+            place.createdAt = item.createdAt
+            context.insert(place)
+            for l in item.locations {
+                let location = PlaceLocation(title: l.title, address: l.address,
+                                             coordinate: CLLocationCoordinate2D(latitude: l.latitude, longitude: l.longitude))
+                location.id = l.id
+                location.createdAt = l.createdAt
+                context.insert(location)
+                location.place = place
+            }
+            byID[item.id] = place
+        }
+        return byID
     }
 }

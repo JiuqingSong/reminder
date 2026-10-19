@@ -22,7 +22,7 @@ struct ReminderListView: View {
     @State private var showingSettings = false
     @State private var showingDateFilter = false
     @State private var editMode: EditMode = .inactive
-    @State private var navigator = Navigator()
+    @State private var navigator = Navigator.shared
 
     var body: some View {
         NavigationStack(path: $navigator.path) {
@@ -345,14 +345,21 @@ struct ReminderRow: View {
         }
     }
 
+    private var shopParts: [String] {
+        var parts: [String] = []
+        if !inShoppingList { parts.append(reminder.isDone ? "已买" : "待买") }
+        if reminder.shopRecurring { parts.append("循环") }
+        if reminder.isShopLater { parts.append("以后检查") }
+        if reminder.isDone, let completedAt = reminder.completedAt {
+            parts.append("买于 " + DueFormat.timestamp(completedAt))
+        }
+        parts += reminder.sortedPlaces.map(\.name)
+        return parts
+    }
+
     @ViewBuilder
     private var shopSubtitle: some View {
-        let parts: [String] = [
-            inShoppingList ? nil : (reminder.isDone ? "已买" : "待买"),
-            reminder.shopRecurring ? "循环" : nil,
-            reminder.isShopLater ? "以后检查" : nil,
-            reminder.isDone ? reminder.completedAt.map { "买于 " + DueFormat.timestamp($0) } : nil,
-        ].compactMap { (part: String?) in part }
+        let parts = shopParts
         if !parts.isEmpty {
             HStack(spacing: 4) {
                 if !inShoppingList { Image(systemName: "cart") }

@@ -98,6 +98,9 @@ struct ReminderDetailView: View {
                     Label("循环", systemImage: "arrow.triangle.2.circlepath").foregroundStyle(.secondary)
                 }
                 infoRow("info.circle", "状态", shopStatus)
+                if !reminder.sortedPlaces.isEmpty {
+                    infoRow("mappin.and.ellipse", "地点", reminder.sortedPlaces.map(\.name).joined(separator: "、"))
+                }
             } else if let due = reminder.dueDate {
                 infoRow("calendar", "到期", DueFormat.date(due, hasTime: reminder.hasTime, now: now))
                 if !reminder.isDone, let days = reminder.daysUntilDue(from: now) {

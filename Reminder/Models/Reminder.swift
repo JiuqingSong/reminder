@@ -30,6 +30,9 @@ final class Reminder {
     @Relationship(deleteRule: .cascade, inverse: \Attachment.reminder)
     var attachments: [Attachment]? = []
 
+    /// 待买物品的购买地点，可以有多个
+    var places: [Place]? = []
+
     init(text: String = "", dueDate: Date? = nil, hasTime: Bool = false, leadDays: Int = 1) {
         self.text = text
         self.dueDate = dueDate
@@ -62,6 +65,10 @@ extension Reminder {
 
     var sortedAttachments: [Attachment] {
         (attachments ?? []).sorted { $0.order < $1.order }
+    }
+
+    var sortedPlaces: [Place] {
+        (places ?? []).sorted { $0.createdAt < $1.createdAt }
     }
 
     /// 列表和通知里显示的标题：第一行非空文字

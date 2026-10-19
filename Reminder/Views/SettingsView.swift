@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 import UserNotifications
 import UniformTypeIdentifiers
+import CoreLocation
 
 struct SettingsView: View {
     @Environment(\.modelContext) private var context
@@ -15,6 +16,8 @@ struct SettingsView: View {
     @State private var importing = false
     @State private var pendingBackup: BackupFile?
     @State private var message: String?
+    @State private var showingPlaces = false
+    private let location = LocationAuthorization.shared
 
     var body: some View {
         NavigationStack {
@@ -31,6 +34,24 @@ struct SettingsView: View {
                     }
                 } footer: {
                     Text("每条提醒都可以单独修改。")
+                }
+
+                Section {
+                    Button("常用购物地点", systemImage: "mappin.and.ellipse") { showingPlaces = true }
+                    HStack {
+                        Text("定位权限")
+                        Spacer()
+                        Text(locationLabel).foregroundStyle(.secondary)
+                    }
+                    if location.status == .denied || location.status == .restricted {
+                        Button("前往系统设置开启") {
+                            if let url = URL(string: UIApplication.openSettingsURLString) { openURL(url) }
+                        }
+                    }
+                } header: {
+                    Text("购物地点")
+                } footer: {
+                    Text("给购物地点开启到店提醒后，到了那里会提醒你可以买的物品。只需要\"使用 App 期间\"的定位权限。")
                 }
 
                 Section {
@@ -56,6 +77,17 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    Text("所有提醒都是普通的 iPhone 通知，Apple Watch 会自动显示：iPhone 锁屏或黑屏、手表戴在手上时，通知出现在手表上；正在用 iPhone 时只出现在手机上。这是系统规则，App 无法改变。\n\n是否在手表上显示，在 iPhone 的 Watch App 里设置：我的手表 → 通知 → 瘦子提醒，选\"镜像我的 iPhone\"或关闭。")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                    Button("打开 Watch App") {
+                        if let url = URL(string: "itms-watchs://") { openURL(url) }
+                    }
+                } header: {
+                    Text("Apple Watch")
+                }
+
+                Section {
                     LabeledContent("版本", value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "-")
                 }
             }
@@ -71,6 +103,9 @@ struct SettingsView: View {
             }
             .onChange(of: notifyMinutes) { _, _ in
                 NotificationScheduler.reschedule(context: context)
+            }
+            .sheet(isPresented: $showingPlaces) {
+                PlacesView()
             }
             .sheet(item: $exported) { file in
                 ShareSheet(items: [file.url])
@@ -134,6 +169,15 @@ struct SettingsView: View {
         } set: { date in
             let c = Calendar.current.dateComponents([.hour, .minute], from: date)
             notifyMinutes = (c.hour ?? 9) * 60 + (c.minute ?? 0)
+        }
+    }
+
+    private var locationLabel: String {
+        switch location.status {
+        case .authorizedWhenInUse: "使用 App 期间"
+        case .authorizedAlways: "始终"
+        case .denied, .restricted: "已关闭"
+        default: "未设置"
         }
     }
 
