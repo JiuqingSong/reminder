@@ -288,12 +288,22 @@ struct LocationSearchView: View {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("取消") { dismiss() }
                 }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("添加") {
-                        if let selected { onPick(selected) }
+            }
+            // 新版 iOS 的搜索框会占掉导航栏，右上角的按钮显示不出来，所以确认按钮放在底部
+            .safeAreaInset(edge: .bottom) {
+                if let selected {
+                    Button {
+                        onPick(selected)
                         dismiss()
+                    } label: {
+                        Label("添加 \(selected.name ?? "这个位置")", systemImage: "plus.circle.fill")
+                            .lineLimit(1)
+                            .frame(maxWidth: .infinity)
                     }
-                    .disabled(selected == nil)
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                    .padding()
+                    .background(.bar)
                 }
             }
             .onAppear {
