@@ -31,7 +31,7 @@ targets:
     info:
       path: Reminder/Info.plist
       properties:
-        CFBundleDisplayName: 瘦子提醒
+        CFBundleDisplayName: 不着急
         CFBundleDevelopmentRegion: zh-Hans
         CFBundleLocalizations:
           - zh-Hans

@@ -173,7 +173,7 @@
 从备份恢复	Restore from Backup	從備份復原
 备份	Backup	備份
 通知权限	Notifications	通知權限
-所有提醒都是普通的 iPhone 通知，Apple Watch 会自动显示：iPhone 锁屏或黑屏、手表戴在手上时，通知出现在手表上；正在用 iPhone 时只出现在手机上。这是系统规则，App 无法改变。\n\n是否在手表上显示，在 iPhone 的 Watch App 里设置：我的手表 → 通知 → 瘦子提醒，选"镜像我的 iPhone"或关闭。	All alerts are regular iPhone notifications, and Apple Watch shows them automatically: when your iPhone is locked or asleep and you're wearing the watch, they appear on the watch; while you're using the iPhone they appear only on the phone. This is a system rule the app can't change.\n\nTo choose whether they appear on the watch, open the Watch app on iPhone: My Watch → Notifications → Slim Reminder, then pick "Mirror my iPhone" or off.	所有提醒都是一般的 iPhone 通知，Apple Watch 會自動顯示：iPhone 鎖定或螢幕關閉、手錶戴在手上時，通知出現在手錶上；正在用 iPhone 時只出現在手機上。這是系統規則，App 無法改變。\n\n是否在手錶上顯示，在 iPhone 的 Watch App 裡設定：我的手錶 → 通知 → 瘦子提醒，選「鏡像輸出我的 iPhone」或關閉。
+所有提醒都是普通的 iPhone 通知，Apple Watch 会自动显示：iPhone 锁屏或黑屏、手表戴在手上时，通知出现在手表上；正在用 iPhone 时只出现在手机上。这是系统规则，App 无法改变。\n\n是否在手表上显示，在 iPhone 的 Watch App 里设置：我的手表 → 通知 → 不着急，选"镜像我的 iPhone"或关闭。	All alerts are regular iPhone notifications, and Apple Watch shows them automatically: when your iPhone is locked or asleep and you're wearing the watch, they appear on the watch; while you're using the iPhone they appear only on the phone. This is a system rule the app can't change.\n\nTo choose whether they appear on the watch, open the Watch app on iPhone: My Watch → Notifications → Will Do, then pick "Mirror my iPhone" or off.	所有提醒都是一般的 iPhone 通知，Apple Watch 會自動顯示：iPhone 鎖定或螢幕關閉、手錶戴在手上時，通知出現在手錶上；正在用 iPhone 時只出現在手機上。這是系統規則，App 無法改變。\n\n是否在手錶上顯示，在 iPhone 的 Watch App 裡設定：我的手錶 → 通知 → 不著急，選「鏡像輸出我的 iPhone」或關閉。
 打开 Watch App	Open Watch App	打開 Watch App
 版本	Version	版本
 设置	Settings	設定

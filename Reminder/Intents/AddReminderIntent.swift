@@ -1,7 +1,7 @@
 import AppIntents
 import SwiftData
 
-/// Siri："用瘦子提醒记一下" → "要提醒什么？" → "明天下午2点去洗车"
+/// Siri："用不着急记一下" → "要提醒什么？" → "明天下午2点去洗车"
 struct AddReminderIntent: AppIntent {
     static let title: LocalizedStringResource = "添加提醒"
     static let description = IntentDescription("说一句话添加提醒，会自动识别里面的日期和时间。")

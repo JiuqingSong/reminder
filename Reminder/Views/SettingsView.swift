@@ -77,7 +77,7 @@ struct SettingsView: View {
                 }
 
                 Section {
-                    Text("所有提醒都是普通的 iPhone 通知，Apple Watch 会自动显示：iPhone 锁屏或黑屏、手表戴在手上时，通知出现在手表上；正在用 iPhone 时只出现在手机上。这是系统规则，App 无法改变。\n\n是否在手表上显示，在 iPhone 的 Watch App 里设置：我的手表 → 通知 → 瘦子提醒，选\"镜像我的 iPhone\"或关闭。")
+                    Text("所有提醒都是普通的 iPhone 通知，Apple Watch 会自动显示：iPhone 锁屏或黑屏、手表戴在手上时，通知出现在手表上；正在用 iPhone 时只出现在手机上。这是系统规则，App 无法改变。\n\n是否在手表上显示，在 iPhone 的 Watch App 里设置：我的手表 → 通知 → 不着急，选\"镜像我的 iPhone\"或关闭。")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                     Button("打开 Watch App") {
