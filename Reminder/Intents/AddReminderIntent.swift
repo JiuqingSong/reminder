@@ -41,6 +41,7 @@ struct AddReminderIntent: AppIntent {
     }
 }
 
+/// 触发语的各语言版本在 AppShortcuts.xcstrings，这里增删要同步改那边
 struct ReminderShortcuts: AppShortcutsProvider {
     static var appShortcuts: [AppShortcut] {
         AppShortcut(
@@ -54,6 +55,10 @@ struct ReminderShortcuts: AppShortcutsProvider {
                 "\(.applicationName)添加",
                 "\(.applicationName)添加待办",
                 "\(.applicationName)添加提醒",
+                // "用不着急"本身是常用语，Siri 容易拆错，多给几个不以"用"开头的说法
+                "在\(.applicationName)记一下",
+                "在\(.applicationName)添加提醒",
+                "\(.applicationName)新建提醒",
             ],
             shortTitle: "添加提醒",
             systemImageName: "plus.circle"

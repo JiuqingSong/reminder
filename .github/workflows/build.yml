@@ -44,6 +44,16 @@ jobs:
             ls "$app/$lang.lproj/" | grep -q '^InfoPlist' || { echo "missing $lang InfoPlist"; exit 1; }
           done
 
+      # 确认 Siri 触发语编进了 App：没有它们 Siri 根本认不出这个 App
+      - name: Check Siri shortcuts
+        run: |
+          app=build/Build/Products/Release-iphoneos/Reminder.app
+          ls -R "$app/Metadata.appintents" || { echo "missing Metadata.appintents"; exit 1; }
+          grep -rq 'applicationName' "$app/Metadata.appintents" || { echo "no App Shortcut phrases in metadata"; exit 1; }
+          for lang in zh-Hans zh-Hant; do
+            ls "$app/$lang.lproj/" | grep -q '^AppShortcuts' || { echo "missing $lang AppShortcuts"; exit 1; }
+          done
+
       - name: Package unsigned IPA
         run: |
           mkdir -p Payload
