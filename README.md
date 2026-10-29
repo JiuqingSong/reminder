@@ -76,7 +76,7 @@ CI 会检查编出来的 App 里有没有英文和繁体的翻译文件。
 
 > 免费账号的签名 **7 天后过期**，过期后 App 无法打开。重新连接手机并在 Xcode 里运行一次即可。
 > 这是覆盖安装，**数据不会丢**。注意：不要先删除 App 再重装，删除会清空数据。
-> 另外，bundle ID `com.songthin.reminder` 在 Apple 账号下必须唯一。如果签名提示被占用，在 `project.yml` 里换一个。
+> 另外，bundle ID `com.songthin.willdo` 在 Apple 账号下必须唯一。如果签名提示被占用，在 `project.yml` 里换一个。
 
 ## GitHub Actions
 

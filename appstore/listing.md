@@ -6,7 +6,7 @@
 
 | 项目 | 值 |
 |---|---|
-| Bundle ID | com.songthin.reminder |
+| Bundle ID | com.songthin.willdo |
 | SKU | willdo-ios |
 | 主要语言 | English (U.S.) |
 | 类别 | 主要：Productivity（效率）；次要：Lifestyle（生活） |
@@ -21,11 +21,13 @@
 
 ## English (U.S.)
 
-**Name**: Will Do
+**Name**: Will Do: Reminders & Lists
 
-备选（如果 Will Do 被占用）：`Will Do: Reminders & Lists`、`Will Do – Reminder & Shopping`
+（`Will Do` 已被占用。手机桌面上仍显示 Will Do，商店名和桌面名可以不同。）
 
-**Subtitle**: Reminders & store alerts
+**Subtitle**: Shop alerts when you arrive
+
+名称里的词已经计入搜索，副标题和关键词不要再重复 reminder、list。
 
 **Promotional Text**:
 
@@ -58,7 +60,7 @@ THE DETAILS
 PRIVATE BY DESIGN
 No account, no ads, no tracking. Everything is stored on your iPhone. Export a backup file whenever you like and restore it on another phone.
 
-**Keywords**: reminder,todo,shopping list,grocery,errands,location,arrival,checklist,recurring,notes,alert
+**Keywords**: todo,shopping,grocery,errands,location,arrival,geofence,checklist,recurring,notes,alert,planner,siri
 
 **What's New**（首发版本不需要填）
 

@@ -21,7 +21,7 @@ targets:
     scheme: {}
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.songthin.reminder
+        PRODUCT_BUNDLE_IDENTIFIER: com.songthin.willdo
         PRODUCT_NAME: Reminder
         TARGETED_DEVICE_FAMILY: "1"
         CODE_SIGN_STYLE: Automatic
