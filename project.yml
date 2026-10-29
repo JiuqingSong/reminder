@@ -45,3 +45,5 @@ targets:
         NSLocationWhenInUseUsageDescription: 用于在地图上搜索购物地点，并在你到达开启了提醒的地点时，提醒你可以在那里买的物品
         LSApplicationQueriesSchemes:
           - comgooglemaps
+        # 只用系统自带的加密（HTTPS 等），上传 App Store 时不用再回答出口合规
+        ITSAppUsesNonExemptEncryption: false

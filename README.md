@@ -84,6 +84,11 @@ CI 会检查编出来的 App 里有没有英文和繁体的翻译文件。
 产物是**未签名**的 `Reminder-unsigned.ipa`，在 Actions 页面下载。
 这个 ipa 不能直接安装，需要用 Sideloadly 或 AltStore 加上你的 Apple ID 签名后再装，同样 7 天有效。
 
+发布到 App Store 用 **Release** workflow（Actions 页面手动 Run workflow）：用 App Store Connect API 密钥云签名后上传到 TestFlight，构建号取运行次数，版本号是 `project.yml` 的 `MARKETING_VERSION`。需要 Secrets：`APPLE_TEAM_ID`、`ASC_KEY_ID`、`ASC_ISSUER_ID`、`ASC_KEY_P8`。
+
+- 商店文案、审核备注：`appstore/listing.md`
+- 隐私政策和支持页面：`docs/`，由 GitHub Pages 发布到 https://jiuqingsong.github.io/reminder/
+
 ## 目录
 
 ```

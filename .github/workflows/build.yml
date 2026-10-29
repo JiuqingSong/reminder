@@ -54,6 +54,11 @@ jobs:
             ls "$app/$lang.lproj/" | grep -q '^AppShortcuts' || { echo "missing $lang AppShortcuts"; exit 1; }
           done
 
+      # App Store 要求隐私清单，缺了上传会被拒
+      - name: Check privacy manifest
+        run: |
+          ls build/Build/Products/Release-iphoneos/Reminder.app/PrivacyInfo.xcprivacy
+
       - name: Package unsigned IPA
         run: |
           mkdir -p Payload
