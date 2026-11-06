@@ -289,6 +289,7 @@ struct LocationSearchView: View {
     @State private var position: MapCameraPosition = LocationSearchView.initialPosition
     @State private var visibleRegion: MKCoordinateRegion?
     @State private var failed = false
+    @State private var searchGeneration = 0
     /// 用户按了搜索或选了地点后，地图就停在那里，不再跟着当前位置走
     @State private var placed = false
     private let auth = LocationAuthorization.shared
@@ -446,9 +447,12 @@ struct LocationSearchView: View {
             failed = false
             return
         }
+        // 输入停顿和按搜索键可能各发起一次搜索，只用最后发起的那次的结果
+        searchGeneration += 1
+        let generation = searchGeneration
         // 地图范围和周围稍远的地方都搜，按名字匹配程度和距离排序
         let found = await PlaceSearch.search(text, visible: visibleRegion, center: auth.location?.coordinate)
-        guard text == query.trimmingCharacters(in: .whitespaces) else { return }
+        guard generation == searchGeneration, text == query.trimmingCharacters(in: .whitespaces) else { return }
         results = found
         failed = found.isEmpty
         selected = nil

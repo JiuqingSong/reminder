@@ -4,8 +4,10 @@ import SwiftUI
 
 /// 地图搜索地点。
 ///
-/// MKLocalSearch 基本只返回给定范围内的结果，地图显示得小时，稍远一点的店就搜不到。
-/// 所以地图当前范围和周围 60 公里各搜一次，合并去重，再按"名字匹配程度 + 距离"排序：
+/// MKLocalSearch 基本只返回给定范围内的结果，地图显示得小时，稍远一点的店就搜不到；
+/// 它还会把搜索词理解成别的品牌（搜 T&T 只给 AT&T）。
+/// 所以地图当前范围和周围 60 公里各搜一次，再用自动补全（按名字开头匹配）补上漏掉的，
+/// 合并去重，再按"名字匹配程度 + 距离"排序：
 /// 名字以搜索词开头的（T&T Supermarket）排在只是包含搜索词的（AT&T）前面，即使后者更近；
 /// 同一档里近的在前。超过 50 公里的不因名字匹配往前排。
 enum PlaceSearch {
@@ -27,22 +29,34 @@ enum PlaceSearch {
             if (visible?.span.latitudeDelta ?? 0) < wide.span.latitudeDelta { regions.append(wide) }
         }
 
-        // 两次搜索同时进行；没有结果时 MKLocalSearch 会抛错，当作空列表
+        // 自动补全和搜索是两个服务，可以同时进行；
+        // MKLocalSearch 同时发多个请求会被限流而失败，所以一个接一个地搜
+        async let suggested = completions.fetch(text, region: regions.last)
+        let searchRegions: [MKCoordinateRegion?] = regions.isEmpty ? [nil] : regions
         var lists: [[MKMapItem]] = []
-        if regions.isEmpty {
-            lists = [await run(text, region: nil)]
-        } else if regions.count == 1 {
-            lists = [await run(text, region: regions[0])]
-        } else {
-            async let near = run(text, region: regions[0])
-            async let wide = run(text, region: regions[1])
-            lists = [await near, await wide]
+        for region in searchRegions {
+            lists.append(await run(text, region: region))
         }
 
         var seen = Set<String>()
-        let merged = lists.joined().filter { seen.insert(key($0)).inserted }
+        var merged = lists.joined().filter { seen.insert(key($0)).inserted }
+
+        // MKLocalSearch 有时把搜索词当成别的品牌（搜 T&T 只给 AT&T）。
+        // 自动补全按名字开头匹配，更准：名字以搜索词开头、结果里还没有的建议，查出位置后补进来
+        let names = Set(merged.map { normalize($0.name ?? "") })
+        let missing = await suggested
+            .filter { matchTier($0.title, query: text) >= 2 && !names.contains(normalize($0.title)) }
+            .prefix(maxResolved)
+        for completion in missing {
+            let items = (try? await MKLocalSearch(request: MKLocalSearch.Request(completion: completion)).start().mapItems) ?? []
+            merged += items.filter { seen.insert(key($0)).inserted }
+        }
         return rank(merged, query: text, origin: origin)
     }
+
+    /// 每次搜索最多再查几个自动补全建议（MKLocalSearch 有频率限制）
+    private static let maxResolved = 3
+    @MainActor private static let completions = CompletionFetcher()
 
     @MainActor
     private static func run(_ text: String, region: MKCoordinateRegion?) async -> [MKMapItem] {
@@ -111,5 +125,53 @@ enum PlaceSearch {
         let pointsPerMeter = MKMapPointsPerMeterAtLatitude(items[items.startIndex].placemark.coordinate.latitude)
         let pad = max(rect.width, rect.height) * 0.25 + 1500 * pointsPerMeter
         return .rect(rect.insetBy(dx: -pad, dy: -pad))
+    }
+}
+
+/// 把 MKLocalSearchCompleter（委托回调）包成一次 async 调用。
+/// 新的请求会让还没返回的旧请求直接得到空结果；2 秒没回应也返回空
+@MainActor
+final class CompletionFetcher: NSObject, MKLocalSearchCompleterDelegate {
+    private let completer = MKLocalSearchCompleter()
+    private var continuation: CheckedContinuation<[MKLocalSearchCompletion], Never>?
+    private var token = 0
+
+    override init() {
+        super.init()
+        completer.delegate = self
+        completer.resultTypes = [.pointOfInterest, .address]
+    }
+
+    func fetch(_ text: String, region: MKCoordinateRegion?) async -> [MKLocalSearchCompletion] {
+        if let region { completer.region = region }
+        // 搜索词没变（例如按搜索键）时不会再回调，直接用上次的结果
+        if text == completer.queryFragment && !completer.isSearching {
+            return completer.results
+        }
+        finish([], token: token)
+        token += 1
+        let current = token
+        return await withCheckedContinuation { c in
+            continuation = c
+            completer.queryFragment = text
+            Task { @MainActor [weak self] in
+                try? await Task.sleep(for: .seconds(2))
+                self?.finish([], token: current)
+            }
+        }
+    }
+
+    private func finish(_ results: [MKLocalSearchCompletion], token: Int) {
+        guard token == self.token, let continuation else { return }
+        self.continuation = nil
+        continuation.resume(returning: results)
+    }
+
+    nonisolated func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+        Task { @MainActor in finish(self.completer.results, token: token) }
+    }
+
+    nonisolated func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
+        Task { @MainActor in finish([], token: token) }
     }
 }
