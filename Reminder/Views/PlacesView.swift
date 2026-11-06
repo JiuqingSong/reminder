@@ -290,6 +290,9 @@ struct LocationSearchView: View {
     @State private var visibleRegion: MKCoordinateRegion?
     @State private var failed = false
     @State private var searchGeneration = 0
+    @State private var showingSearchLog = false
+    /// TestFlight 版才显示搜索诊断按钮（TestFlight 的收据文件名是 sandboxReceipt）
+    private let isTestFlight = Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
     /// 用户按了搜索或选了地点后，地图就停在那里，不再跟着当前位置走
     @State private var placed = false
     private let auth = LocationAuthorization.shared
@@ -321,6 +324,23 @@ struct LocationSearchView: View {
                 }
                 .frame(height: 280)
                 .onMapCameraChange(frequency: .onEnd) { visibleRegion = $0.region }
+                // 只在 TestFlight 版出现，正式版用户看不到，所以不翻译
+                .overlay(alignment: .topTrailing) {
+                    if isTestFlight {
+                        Button {
+                            showingSearchLog = true
+                        } label: {
+                            Image(systemName: "ladybug")
+                                .padding(10)
+                                .background(.regularMaterial, in: Circle())
+                        }
+                        .accessibilityLabel(Text(verbatim: "Search diagnostics"))
+                        .padding(8)
+                    }
+                }
+                .sheet(isPresented: $showingSearchLog) {
+                    SearchLogView(log: PlaceSearch.lastLog)
+                }
 
                 List(results, id: \.self) { item in
                     Button {
@@ -396,8 +416,8 @@ struct LocationSearchView: View {
             .onSubmit(of: .search) {
                 Task {
                     await search()
-                    // 结果可能分布在几十公里内，只框住排在前面的几个
-                    if let framing = PlaceSearch.framing(results) {
+                    // 结果可能分布在几十公里内，只框住排在前面的几个；它们已经都在地图上时不动地图
+                    if let framing = PlaceSearch.framing(results, visible: visibleRegion) {
                         placed = true
                         position = framing
                     }
@@ -561,5 +581,31 @@ struct PlacePickerView: View {
 
     private func add(_ place: Place) {
         if !isSelected(place) { selection.append(place) }
+    }
+}
+
+/// 地图搜索的诊断信息（只在 TestFlight 版出现，不翻译）。可以选中复制，也可以分享出去
+struct SearchLogView: View {
+    let log: String
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                Text(verbatim: log.isEmpty ? "No search yet" : log)
+                    .font(.system(.footnote, design: .monospaced))
+                    .textSelection(.enabled)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+            }
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button { dismiss() } label: { Image(systemName: "xmark") }
+                }
+                ToolbarItem(placement: .primaryAction) {
+                    ShareLink(item: log)
+                }
+            }
+        }
     }
 }
