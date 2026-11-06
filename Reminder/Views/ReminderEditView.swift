@@ -194,11 +194,12 @@ struct ReminderEditView: View {
     }
 
     private var placeSection: some View {
-        Section("购买地点") {
+        Section {
             ForEach(places) { place in
                 HStack {
                     Label(place.name, systemImage: place.isTextOnly ? "character.cursor.ibeam" : "mappin.and.ellipse")
                     Spacer()
+                    PlaceAlertButton(place: place)
                     Button {
                         places.removeAll { $0.id == place.id }
                     } label: {
@@ -209,6 +210,17 @@ struct ReminderEditView: View {
             }
             Button(places.isEmpty ? String(localized: "选择地点") : String(localized: "更改地点"), systemImage: "mappin.and.ellipse") {
                 pickingPlaces = true
+            }
+        } header: {
+            Text("购买地点")
+        } footer: {
+            if places.contains(where: { !$0.isTextOnly }) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("橙色铃铛表示到店提醒已开启。这是地点本身的设置，用这个地点的所有物品都会一起提醒。")
+                    if places.contains(where: \.isAlerting) {
+                        LocationDeniedWarning()
+                    }
+                }
             }
         }
     }

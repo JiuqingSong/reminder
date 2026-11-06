@@ -569,6 +569,22 @@
         }
       }
     },
+    "关闭到店提醒" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn Off Arrival Alert"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "關閉到店提醒"
+          }
+        }
+      }
+    },
     "具体时间" : {
       "localizations" : {
         "en" : {
@@ -677,6 +693,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "到"
+          }
+        }
+      }
+    },
+    "到了这里且有要买的东西就通知" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notify me here when something on the list can be bought"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "到了這裡且有要買的東西就通知"
           }
         }
       }
@@ -1437,6 +1469,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "套用"
+          }
+        }
+      }
+    },
+    "开启到店提醒" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn On Arrival Alert"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開啟到店提醒"
           }
         }
       }
@@ -2313,6 +2361,22 @@
         }
       }
     },
+    "橙色铃铛表示到店提醒已开启。这是地点本身的设置，用这个地点的所有物品都会一起提醒。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An orange bell means the arrival alert is on. It belongs to the place, so every item bought there is included."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "橘色鈴鐺表示到店提醒已開啟。這是地點本身的設定，用這個地點的所有物品都會一起提醒。"
+          }
+        }
+      }
+    },
     "每%lld个月" : {
       "localizations" : {
         "en" : {
@@ -2749,6 +2813,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "點右上角 ＋ 加入，或用「批次加入」一次加多項"
+          }
+        }
+      }
+    },
+    "点地点选中或取消。点右侧铃铛开关到店提醒。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap a place to select it. Tap the bell to turn its arrival alert on or off."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "點地點選取或取消。點右側鈴鐺開關到店提醒。"
           }
         }
       }

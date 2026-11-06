@@ -49,8 +49,8 @@ struct PlacesView: View {
                 }
             }
             .sheet(isPresented: $searching) {
-                LocationSearchView { item in
-                    path.append(PlaceActions.create(from: item, in: context))
+                LocationSearchView(asksAlert: true) { item, alert in
+                    path.append(PlaceActions.create(from: item, alert: alert, in: context))
                 }
             }
             .alert("纯文字地点", isPresented: $addingText) {
@@ -84,6 +84,8 @@ struct AddPlaceMenu: View {
 
 struct PlaceRow: View {
     let place: Place
+    /// 选地点时右边有铃铛按钮，就不再显示这个小铃铛
+    var showsAlertBadge = true
 
     var body: some View {
         HStack(spacing: 12) {
@@ -98,10 +100,55 @@ struct PlaceRow: View {
                     .lineLimit(1)
             }
             Spacer()
-            if place.isAlerting {
+            if showsAlertBadge && place.isAlerting {
                 Image(systemName: "bell.fill")
                     .foregroundStyle(.orange)
                     .font(.caption)
+            }
+        }
+    }
+}
+
+/// 列表行右边的铃铛：一点就开关这个地点的到店提醒。纯文字地点不显示
+struct PlaceAlertButton: View {
+    let place: Place
+    @Environment(\.modelContext) private var context
+
+    var body: some View {
+        if !place.isTextOnly {
+            Button {
+                PlaceActions.setAlert(place, on: !place.alertEnabled, in: context)
+            } label: {
+                Image(systemName: place.alertEnabled ? "bell.fill" : "bell.slash")
+                    .foregroundStyle(place.alertEnabled ? Color.orange : Color.secondary)
+                    .frame(width: 36, height: 36)
+                    .background(place.alertEnabled ? Color.orange.opacity(0.18) : Color.clear, in: Circle())
+            }
+            .buttonStyle(.borderless)
+            .accessibilityLabel(place.alertEnabled ? String(localized: "关闭到店提醒") : String(localized: "开启到店提醒"))
+            .sensoryFeedback(.selection, trigger: place.alertEnabled)
+        }
+    }
+}
+
+/// 有地点开启了到店提醒、但定位权限被关掉时的提示
+struct LocationDeniedWarning: View {
+    @Environment(\.openURL) private var openURL
+
+    static var isDenied: Bool {
+        let status = LocationAuthorization.shared.status
+        return status == .denied || status == .restricted
+    }
+
+    var body: some View {
+        if Self.isDenied {
+            VStack(alignment: .leading, spacing: 6) {
+                Label("定位权限已关闭，到店提醒不会生效。", systemImage: "exclamationmark.triangle")
+                    .foregroundStyle(.orange)
+                Button("前往系统设置开启") {
+                    if let url = URL(string: UIApplication.openSettingsURLString) { openURL(url) }
+                }
+                .buttonStyle(.borderless)
             }
         }
     }
@@ -166,9 +213,7 @@ struct PlaceEditView: View {
 
             Section {
                 Toggle("到店提醒", isOn: Binding(get: { place.alertEnabled }, set: { on in
-                    if on { auth.request() }
-                    place.alertEnabled = on
-                    ReminderActions.save(context)
+                    PlaceActions.setAlert(place, on: on, in: context)
                 }))
                 .disabled(locations.isEmpty)
                 if place.alertEnabled {
@@ -191,7 +236,7 @@ struct PlaceEditView: View {
         .navigationTitle(place.name.isEmpty ? String(localized: "地点") : place.name)
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $searching) {
-            LocationSearchView(initialQuery: place.name) { item in
+            LocationSearchView(initialQuery: place.name) { item, _ in
                 PlaceActions.addLocation(item, to: place, in: context)
             }
         }
@@ -231,15 +276,33 @@ struct PlaceEditView: View {
 /// 搜索地点并在地图上显示，选中一个后添加
 struct LocationSearchView: View {
     var initialQuery = ""
-    var onPick: (MKMapItem) -> Void
+    /// 新建地点时在底部一起设置到店提醒；给已有地点加位置时不需要
+    var asksAlert = false
+    /// 第二个参数是选的到店提醒设置，asksAlert 为 false 时是 nil
+    var onPick: (MKMapItem, PlaceAlertChoice?) -> Void
 
     @Environment(\.dismiss) private var dismiss
+    @State private var alert = PlaceAlertChoice()
     @State private var query = ""
     @State private var results: [MKMapItem] = []
     @State private var selected: MKMapItem?
-    @State private var position: MapCameraPosition = .userLocation(fallback: .automatic)
+    @State private var position: MapCameraPosition = LocationSearchView.initialPosition
     @State private var visibleRegion: MKCoordinateRegion?
     @State private var failed = false
+    /// 用户按了搜索或选了地点后，地图就停在那里，不再跟着当前位置走
+    @State private var placed = false
+    private let auth = LocationAuthorization.shared
+
+    private static func region(around location: CLLocation) -> MKCoordinateRegion {
+        MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
+    }
+
+    private static var initialPosition: MapCameraPosition {
+        if let location = LocationAuthorization.shared.location {
+            return .region(region(around: location))
+        }
+        return .userLocation(fallback: .automatic)
+    }
 
     var body: some View {
         NavigationStack {
@@ -248,6 +311,11 @@ struct LocationSearchView: View {
                     UserAnnotation()
                     ForEach(results, id: \.self) { item in
                         Marker(item: item).tag(item)
+                    }
+                    if asksAlert, alert.enabled, let selected {
+                        MapCircle(center: selected.placemark.coordinate, radius: alert.radius)
+                            .foregroundStyle(.orange.opacity(0.2))
+                            .stroke(.orange, lineWidth: 2)
                     }
                 }
                 .frame(height: 280)
@@ -292,38 +360,82 @@ struct LocationSearchView: View {
             // 新版 iOS 的搜索框会占掉导航栏，右上角的按钮显示不出来，所以确认按钮放在底部
             .safeAreaInset(edge: .bottom) {
                 if let selected {
-                    Button {
-                        onPick(selected)
-                        dismiss()
-                    } label: {
-                        Label("添加 \(selected.name ?? String(localized: "这个位置"))", systemImage: "plus.circle.fill")
-                            .lineLimit(1)
-                            .frame(maxWidth: .infinity)
+                    VStack(spacing: 12) {
+                        if asksAlert { alertOptions }
+                        Button {
+                            onPick(selected, asksAlert ? alert : nil)
+                            dismiss()
+                        } label: {
+                            Label("添加 \(selected.name ?? String(localized: "这个位置"))", systemImage: "plus.circle.fill")
+                                .lineLimit(1)
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .controlSize(.large)
                     }
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.large)
                     .padding()
                     .background(.bar)
                 }
             }
             .onAppear {
-                LocationAuthorization.shared.request()
+                auth.requestLocation()
                 if query.isEmpty { query = initialQuery }
             }
-            // 输入停顿后自动搜索
+            // 第一次进来时位置可能还没拿到，拿到后再把地图移到当前位置
+            .onChange(of: auth.location) { _, location in
+                if let location, !placed { position = .region(Self.region(around: location)) }
+            }
+            // 输入停顿后自动搜索，只更新下面的列表，地图不动
             .task(id: query) {
                 try? await Task.sleep(for: .milliseconds(400))
                 guard !Task.isCancelled else { return }
                 await search()
             }
+            // 按键盘上的搜索键才把地图移到搜索结果
+            .onSubmit(of: .search) {
+                Task {
+                    await search()
+                    if !results.isEmpty {
+                        placed = true
+                        position = .automatic
+                    }
+                }
+            }
             .onChange(of: selected) { _, item in
-                if let item { position = .item(item) }
+                if let item {
+                    placed = true
+                    position = .item(item)
+                }
             }
         }
     }
 
     private func select(_ item: MKMapItem) {
         selected = item
+    }
+
+    /// 到店提醒开关和范围，地图上的橙色圈跟着变
+    private var alertOptions: some View {
+        VStack(spacing: 10) {
+            Toggle(isOn: $alert.enabled.animation()) {
+                Label {
+                    VStack(alignment: .leading, spacing: 1) {
+                        Text("到店提醒")
+                        Text("到了这里且有要买的东西就通知")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                } icon: {
+                    Image(systemName: "bell").foregroundStyle(.orange)
+                }
+            }
+            if alert.enabled {
+                Picker("提醒范围", selection: $alert.radius) {
+                    ForEach(PlaceRadius.options, id: \.self) { Text(PlaceRadius.label($0)).tag($0) }
+                }
+                .pickerStyle(.segmented)
+            }
+        }
     }
 
     private func search() async {
@@ -336,14 +448,18 @@ struct LocationSearchView: View {
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = text
         request.resultTypes = [.pointOfInterest, .address]
-        if let visibleRegion { request.region = visibleRegion }
+        // 优先搜地图当前区域附近；地图还没报告区域时用当前位置
+        if let visibleRegion {
+            request.region = visibleRegion
+        } else if let location = auth.location {
+            request.region = Self.region(around: location)
+        }
         do {
             let response = try await MKLocalSearch(request: request).start()
             guard text == query.trimmingCharacters(in: .whitespaces) else { return }
             results = response.mapItems
             failed = results.isEmpty
             selected = nil
-            if !results.isEmpty { position = .automatic }
         } catch {
             results = []
             failed = true
@@ -367,17 +483,33 @@ struct PlacePickerView: View {
     var body: some View {
         NavigationStack {
             List {
-                ForEach(places) { place in
-                    Button {
-                        toggle(place)
-                    } label: {
-                        HStack {
-                            PlaceRow(place: place)
-                                .foregroundStyle(Color.primary)
-                            if isSelected(place) {
-                                Image(systemName: "checkmark").foregroundStyle(.tint)
+                // 条件放在外面，权限正常时列表顶部不留空行
+                if LocationDeniedWarning.isDenied && places.contains(where: \.isAlerting) {
+                    LocationDeniedWarning()
+                }
+                Section {
+                    ForEach(places) { place in
+                        // 两个按钮分开点：点地点选中或取消，点铃铛开关提醒
+                        HStack(spacing: 8) {
+                            Button {
+                                toggle(place)
+                            } label: {
+                                HStack {
+                                    PlaceRow(place: place, showsAlertBadge: false)
+                                        .foregroundStyle(Color.primary)
+                                    if isSelected(place) {
+                                        Image(systemName: "checkmark").foregroundStyle(.tint)
+                                    }
+                                }
+                                .contentShape(Rectangle())
                             }
+                            .buttonStyle(.plain)
+                            PlaceAlertButton(place: place)
                         }
+                    }
+                } footer: {
+                    if places.contains(where: { !$0.isTextOnly }) {
+                        Text("点地点选中或取消。点右侧铃铛开关到店提醒。")
                     }
                 }
             }
@@ -398,8 +530,8 @@ struct PlacePickerView: View {
                 }
             }
             .sheet(isPresented: $searching) {
-                LocationSearchView { item in
-                    add(PlaceActions.create(from: item, in: context))
+                LocationSearchView(asksAlert: true) { item, alert in
+                    add(PlaceActions.create(from: item, alert: alert, in: context))
                 }
             }
             .alert("纯文字地点", isPresented: $addingText) {

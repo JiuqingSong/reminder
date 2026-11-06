@@ -194,3 +194,8 @@
 未设置	Not Set	未設定
 已开启	On	已開啟
 有地点开启了到店提醒，但定位权限已关闭，到店提醒不会生效。可以在本页的购物地点部分前往系统设置开启。	Some places have arrival alerts on, but location access is off, so they won't work. You can turn it on in Settings from the Shopping Places section on this page.	有地點開啟了到店提醒，但定位權限已關閉，到店提醒不會生效。可以在本頁的購物地點部分前往系統設定開啟。
+关闭到店提醒	Turn Off Arrival Alert	關閉到店提醒
+开启到店提醒	Turn On Arrival Alert	開啟到店提醒
+到了这里且有要买的东西就通知	Notify me here when something on the list can be bought	到了這裡且有要買的東西就通知
+点地点选中或取消。点右侧铃铛开关到店提醒。	Tap a place to select it. Tap the bell to turn its arrival alert on or off.	點地點選取或取消。點右側鈴鐺開關到店提醒。
+橙色铃铛表示到店提醒已开启。这是地点本身的设置，用这个地点的所有物品都会一起提醒。	An orange bell means the arrival alert is on. It belongs to the place, so every item bought there is included.	橘色鈴鐺表示到店提醒已開啟。這是地點本身的設定，用這個地點的所有物品都會一起提醒。
