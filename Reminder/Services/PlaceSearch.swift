@@ -1,5 +1,6 @@
 import Foundation
 import MapKit
+import SwiftUI
 
 /// 地图搜索地点。
 ///
@@ -71,7 +72,7 @@ enum PlaceSearch {
             if $0.tier != $1.tier { return $0.tier > $1.tier }
             if from != nil, $0.distance != $1.distance { return $0.distance < $1.distance }
             return $0.index < $1.index
-        }.map(\.item)
+        }.map { $0.item }
     }
 
     /// 3 名字和搜索词相同；2 名字或其中某个词以搜索词开头；1 名字包含搜索词；0 其他（比如只有地址匹配）
