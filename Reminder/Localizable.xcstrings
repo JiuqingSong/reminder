@@ -2217,6 +2217,22 @@
         }
       }
     },
+    "有地点开启了到店提醒，但定位权限已关闭，到店提醒不会生效。可以在本页的购物地点部分前往系统设置开启。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Some places have arrival alerts on, but location access is off, so they won't work. You can turn it on in Settings from the Shopping Places section on this page."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有地點開啟了到店提醒，但定位權限已關閉，到店提醒不會生效。可以在本頁的購物地點部分前往系統設定開啟。"
+          }
+        }
+      }
+    },
     "未命名地点" : {
       "localizations" : {
         "en" : {

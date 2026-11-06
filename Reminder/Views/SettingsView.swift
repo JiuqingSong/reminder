@@ -104,6 +104,10 @@ struct SettingsView: View {
             .onChange(of: notifyMinutes) { _, _ in
                 NotificationScheduler.reschedule(context: context)
             }
+            // 刚授予定位权限时重新登记到店提醒
+            .onChange(of: location.status) { _, _ in
+                if location.isAllowed { NotificationScheduler.reschedule(context: context) }
+            }
             .sheet(isPresented: $showingPlaces) {
                 PlacesView()
             }
@@ -157,7 +161,19 @@ struct SettingsView: View {
     private func restore(_ backup: BackupFile, mode: BackupService.ImportMode) {
         do {
             let count = try BackupService.restore(backup, mode: mode, context: context)
-            message = String(localized: "已恢复 \(count) 条提醒。")
+            var text = String(localized: "已恢复 \(count) 条提醒。")
+            // 恢复多半是在新手机或重装后，这时定位权限还没设置，到店提醒不会生效
+            if NotificationScheduler.alertLocationCount(context: context) > 0 {
+                switch location.status {
+                case .notDetermined:
+                    location.request()
+                case .denied, .restricted:
+                    text += "\n\n" + String(localized: "有地点开启了到店提醒，但定位权限已关闭，到店提醒不会生效。可以在本页的购物地点部分前往系统设置开启。")
+                default:
+                    break
+                }
+            }
+            message = text
         } catch {
             message = String(localized: "恢复失败：\(error.localizedDescription)")
         }
