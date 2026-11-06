@@ -328,7 +328,7 @@ struct LocationSearchView: View {
                         HStack {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(item.name ?? String(localized: "未命名地点")).foregroundStyle(Color.primary)
-                                Text(item.placemark.title ?? "")
+                                Text([distanceText(item), item.placemark.title].compactMap { $0 }.joined(separator: " · "))
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                                     .lineLimit(2)
@@ -395,9 +395,10 @@ struct LocationSearchView: View {
             .onSubmit(of: .search) {
                 Task {
                     await search()
-                    if !results.isEmpty {
+                    // 结果可能分布在几十公里内，只框住排在前面的几个
+                    if let framing = PlaceSearch.framing(results) {
                         placed = true
-                        position = .automatic
+                        position = framing
                     }
                 }
             }
@@ -445,25 +446,19 @@ struct LocationSearchView: View {
             failed = false
             return
         }
-        let request = MKLocalSearch.Request()
-        request.naturalLanguageQuery = text
-        request.resultTypes = [.pointOfInterest, .address]
-        // 优先搜地图当前区域附近；地图还没报告区域时用当前位置
-        if let visibleRegion {
-            request.region = visibleRegion
-        } else if let location = auth.location {
-            request.region = Self.region(around: location)
-        }
-        do {
-            let response = try await MKLocalSearch(request: request).start()
-            guard text == query.trimmingCharacters(in: .whitespaces) else { return }
-            results = response.mapItems
-            failed = results.isEmpty
-            selected = nil
-        } catch {
-            results = []
-            failed = true
-        }
+        // 地图范围和周围稍远的地方都搜，按名字匹配程度和距离排序
+        let found = await PlaceSearch.search(text, visible: visibleRegion, center: auth.location?.coordinate)
+        guard text == query.trimmingCharacters(in: .whitespaces) else { return }
+        results = found
+        failed = found.isEmpty
+        selected = nil
+    }
+
+    private func distanceText(_ item: MKMapItem) -> String? {
+        guard let location = auth.location else { return nil }
+        let formatter = MKDistanceFormatter()
+        formatter.unitStyle = .abbreviated
+        return formatter.string(fromDistance: PlaceSearch.distanceMeters(from: location, to: item))
     }
 }
 
