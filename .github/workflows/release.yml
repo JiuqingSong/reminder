@@ -43,7 +43,8 @@ jobs:
           </plist>
           EOF
 
-      # 构建号用这个 workflow 的运行次数，每次上传自动 +1；版本号在 project.yml 的 MARKETING_VERSION
+      # 构建号是"运行次数.重试次数"（例如 5.1、5.2），每次运行或重新运行都会变大；
+      # 版本号在 project.yml 的 MARKETING_VERSION
       - name: Archive
         env:
           ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
@@ -61,7 +62,10 @@ jobs:
             -authenticationKeyID "$ASC_KEY_ID" \
             -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
             DEVELOPMENT_TEAM="$APPLE_TEAM_ID" \
-            CURRENT_PROJECT_VERSION=${{ github.run_number }}
+            CURRENT_PROJECT_VERSION=${{ github.run_number }}.${{ github.run_attempt }}
+          # 打印实际打进包里的版本号，上传被拒时好对照
+          /usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' -c 'Print :CFBundleVersion' \
+            "$RUNNER_TEMP/Reminder.xcarchive/Products/Applications/Reminder.app/Info.plist"
 
       - name: Upload to App Store Connect
         env:

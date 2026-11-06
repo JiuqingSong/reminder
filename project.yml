@@ -32,6 +32,9 @@ targets:
       path: Reminder/Info.plist
       properties:
         CFBundleDisplayName: 不着急
+        # 明确取自编译设置，Release workflow 在命令行覆盖构建号
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         CFBundleDevelopmentRegion: zh-Hans
         CFBundleLocalizations:
           - zh-Hans
