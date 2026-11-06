@@ -5683,6 +5683,40 @@
         }
       }
     },
+    "没看到要找的？多输入几个字试试" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Don't see it? Try typing a bit more."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿No lo ves? Prueba a escribir un poco más."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "見つからない場合は、もう少し入力してみてください"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "찾는 곳이 없나요? 조금 더 입력해 보세요"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "沒看到要找的？多輸入幾個字試試"
+          }
+        }
+      }
+    },
     "添加" : {
       "localizations" : {
         "en" : {

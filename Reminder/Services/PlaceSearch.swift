@@ -21,9 +21,7 @@ enum PlaceSearch {
     static func search(_ text: String,
                        visible: MKCoordinateRegion?,
                        center: CLLocationCoordinate2D?) async -> [MKMapItem] {
-        var log = ["搜索：「\(text)」 \(Date().formatted(date: .omitted, time: .standard))"]
         let origin = center ?? visible?.center
-        log.append("中心：\(describe(origin))\(center == nil ? "（没有当前位置，用地图中心）" : "（当前位置）")")
         var regions: [MKCoordinateRegion] = []
         if let visible { regions.append(visible) }
         if let origin {
@@ -36,87 +34,38 @@ enum PlaceSearch {
         async let suggested = completions.fetch(text, region: regions.last)
         let searchRegions: [MKCoordinateRegion?] = regions.isEmpty ? [nil] : regions
         var lists: [[MKMapItem]] = []
-        for (index, region) in searchRegions.enumerated() {
-            let (items, error) = await run(text, region: region)
-            log.append("")
-            log.append("搜索 \(index + 1)，范围 \(describe(region))：\(error.map { "失败 \($0)" } ?? "\(items.count) 个")")
-            log += items.prefix(15).map { "  · \($0.name ?? "?")  \(distanceLabel(origin, $0))" }
-            lists.append(items)
+        for region in searchRegions {
+            lists.append(await run(text, region: region))
         }
 
         var seen = Set<String>()
         var merged = lists.joined().filter { seen.insert(key($0)).inserted }
 
-        // MKLocalSearch 有时把搜索词当成别的品牌（搜 T&T 只给 AT&T）。
-        // 自动补全按名字开头匹配，更准：名字以搜索词开头、结果里还没有的建议，查出位置后补进来
-        let completions = await suggested
-        log.append("")
-        log.append("自动补全：\(completionStatus)，\(completions.count) 个")
-        log += completions.prefix(15).map { "  · \($0.title) | \($0.subtitle)  [匹配 \(matchTier($0.title, query: text))]" }
+        // MKLocalSearch 有时把搜索词当成别的品牌（搜 T&T S 时会混进很多 AT&T）。
+        // 自动补全按名字开头匹配：名字以搜索词开头、结果里还没有的建议，查出位置后补进来。
+        // 注意：只输入"T&T"时两边都不会返回 T&T Supermarket，要多输入一个字母，这是 Apple 数据的限制
         let names = Set(merged.map { normalize($0.name ?? "") })
-        let missing = completions
+        let missing = await suggested
             .filter { matchTier($0.title, query: text) >= 2 && !names.contains(normalize($0.title)) }
             .prefix(maxResolved)
         for completion in missing {
-            let items: [MKMapItem]
-            do {
-                items = try await MKLocalSearch(request: MKLocalSearch.Request(completion: completion)).start().mapItems
-            } catch {
-                log.append("  查「\(completion.title)」失败 \(describe(error))")
-                continue
-            }
-            log.append("  查「\(completion.title)」：" + items.map { "\($0.name ?? "?") \(distanceLabel(origin, $0))" }.joined(separator: "，"))
+            let items = (try? await MKLocalSearch(request: MKLocalSearch.Request(completion: completion)).start().mapItems) ?? []
             merged += items.filter { seen.insert(key($0)).inserted }
         }
-        let ranked = rank(merged, query: text, origin: origin)
-        log.append("")
-        log.append("最终 \(ranked.count) 个：")
-        log += ranked.map { "  · \($0.name ?? "?")  [匹配 \(matchTier($0.name ?? "", query: text))]  \(distanceLabel(origin, $0))" }
-        lastLog = log.joined(separator: "\n")
-        return ranked
+        return rank(merged, query: text, origin: origin)
     }
-
-    /// 最近一次搜索的过程，TestFlight 版里可以在搜索页查看，用来排查搜不到的问题
-    @MainActor static var lastLog = ""
-    @MainActor private static var completionStatus: String { completions.status }
 
     /// 每次搜索最多再查几个自动补全建议（MKLocalSearch 有频率限制）
     private static let maxResolved = 3
     @MainActor private static let completions = CompletionFetcher()
 
     @MainActor
-    private static func run(_ text: String, region: MKCoordinateRegion?) async -> ([MKMapItem], String?) {
+    private static func run(_ text: String, region: MKCoordinateRegion?) async -> [MKMapItem] {
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = text
         request.resultTypes = [.pointOfInterest, .address]
         if let region { request.region = region }
-        do {
-            return (try await MKLocalSearch(request: request).start().mapItems, nil)
-        } catch {
-            return ([], describe(error))
-        }
-    }
-
-    private static func describe(_ error: Error) -> String {
-        let e = error as NSError
-        return "\(e.domain) \(e.code)"
-    }
-
-    private static func describe(_ c: CLLocationCoordinate2D?) -> String {
-        guard let c else { return "无" }
-        return String(format: "%.3f, %.3f", c.latitude, c.longitude)
-    }
-
-    private static func describe(_ region: MKCoordinateRegion?) -> String {
-        guard let region else { return "不限" }
-        let km = region.span.latitudeDelta * 111
-        return "\(describe(region.center)) 约 \(Int(km.rounded())) 公里"
-    }
-
-    private static func distanceLabel(_ origin: CLLocationCoordinate2D?, _ item: MKMapItem) -> String {
-        guard let origin else { return "" }
-        let meters = distanceMeters(from: CLLocation(latitude: origin.latitude, longitude: origin.longitude), to: item)
-        return String(format: "%.1f km", meters / 1000)
+        return (try? await MKLocalSearch(request: request).start().mapItems) ?? []
     }
 
     /// 同名且几乎同一位置的算同一个
@@ -195,8 +144,6 @@ final class CompletionFetcher: NSObject, MKLocalSearchCompleterDelegate {
     private let completer = MKLocalSearchCompleter()
     private var continuation: CheckedContinuation<[MKLocalSearchCompletion], Never>?
     private var token = 0
-    /// 最近一次请求是怎么结束的，写进诊断信息
-    private(set) var status = ""
 
     override init() {
         super.init()
@@ -208,10 +155,9 @@ final class CompletionFetcher: NSObject, MKLocalSearchCompleterDelegate {
         if let region { completer.region = region }
         // 搜索词没变（例如按搜索键）时不会再回调，直接用上次的结果
         if text == completer.queryFragment && !completer.isSearching {
-            status = "沿用上次"
             return completer.results
         }
-        finish([], token: token, status: "被新的请求取代")
+        finish([], token: token)
         token += 1
         let current = token
         return await withCheckedContinuation { c in
@@ -219,25 +165,22 @@ final class CompletionFetcher: NSObject, MKLocalSearchCompleterDelegate {
             completer.queryFragment = text
             Task { @MainActor [weak self] in
                 try? await Task.sleep(for: .seconds(2))
-                self?.finish([], token: current, status: "2 秒超时")
+                self?.finish([], token: current)
             }
         }
     }
 
-    private func finish(_ results: [MKLocalSearchCompletion], token: Int, status: String) {
+    private func finish(_ results: [MKLocalSearchCompletion], token: Int) {
         guard token == self.token, let continuation else { return }
         self.continuation = nil
-        self.status = status
         continuation.resume(returning: results)
     }
 
     nonisolated func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
-        Task { @MainActor in finish(self.completer.results, token: token, status: "正常返回") }
+        Task { @MainActor in finish(self.completer.results, token: token) }
     }
 
     nonisolated func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
-        let e = error as NSError
-        let text = "失败 \(e.domain) \(e.code)"
-        Task { @MainActor in finish([], token: token, status: text) }
+        Task { @MainActor in finish([], token: token) }
     }
 }

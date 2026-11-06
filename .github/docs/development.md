@@ -51,7 +51,7 @@
 2. 在 `tools/l10n/strings.tsv` 加一行：简体原文、英文、繁体、日语、韩语、西班牙语，用 Tab 分隔。插值写成 `%lld`（整数）、`%@`（文字）；英文、西班牙语需要单复数时写成 `one=…|other=…`；要保留的空格（尤其在行尾）写成 `\s`
 3. 检查和生成：
    ```sh
-   perl tools/l10n/check.pl tools/l10n/strings.tsv $(git ls-files 'Reminder/*.swift' | grep -v -e Intents -e SpokenDateParser -e AppModel -e PlaceSearch)
+   perl tools/l10n/check.pl tools/l10n/strings.tsv $(git ls-files 'Reminder/*.swift' | grep -v -e Intents -e SpokenDateParser -e AppModel)
    perl tools/l10n/gen.pl tools/l10n/strings.tsv > Reminder/Localizable.xcstrings
    perl tools/l10n/gen.pl tools/l10n/infoplist.tsv > Reminder/InfoPlist.xcstrings
    ```

@@ -290,9 +290,6 @@ struct LocationSearchView: View {
     @State private var visibleRegion: MKCoordinateRegion?
     @State private var failed = false
     @State private var searchGeneration = 0
-    @State private var showingSearchLog = false
-    /// TestFlight 版才显示搜索诊断按钮（TestFlight 的收据文件名是 sandboxReceipt）
-    private let isTestFlight = Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
     /// 用户按了搜索或选了地点后，地图就停在那里，不再跟着当前位置走
     @State private var placed = false
     private let auth = LocationAuthorization.shared
@@ -324,41 +321,34 @@ struct LocationSearchView: View {
                 }
                 .frame(height: 280)
                 .onMapCameraChange(frequency: .onEnd) { visibleRegion = $0.region }
-                // 只在 TestFlight 版出现，正式版用户看不到，所以不翻译
-                .overlay(alignment: .topTrailing) {
-                    if isTestFlight {
-                        Button {
-                            showingSearchLog = true
-                        } label: {
-                            Image(systemName: "ladybug")
-                                .padding(10)
-                                .background(.regularMaterial, in: Circle())
-                        }
-                        .accessibilityLabel(Text(verbatim: "Search diagnostics"))
-                        .padding(8)
-                    }
-                }
-                .sheet(isPresented: $showingSearchLog) {
-                    SearchLogView(log: PlaceSearch.lastLog)
-                }
 
-                List(results, id: \.self) { item in
-                    Button {
-                        select(item)
-                    } label: {
-                        HStack {
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(item.name ?? String(localized: "未命名地点")).foregroundStyle(Color.primary)
-                                Text([distanceText(item), item.placemark.title].compactMap { $0 }.joined(separator: " · "))
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                                    .lineLimit(2)
-                            }
-                            Spacer()
-                            if selected == item {
-                                Image(systemName: "checkmark").foregroundStyle(.tint)
+                List {
+                    ForEach(results, id: \.self) { item in
+                        Button {
+                            select(item)
+                        } label: {
+                            HStack {
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(item.name ?? String(localized: "未命名地点")).foregroundStyle(Color.primary)
+                                    Text([distanceText(item), item.placemark.title].compactMap { $0 }.joined(separator: " · "))
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                        .lineLimit(2)
+                                }
+                                Spacer()
+                                if selected == item {
+                                    Image(systemName: "checkmark").foregroundStyle(.tint)
+                                }
                             }
                         }
+                    }
+                    // Apple 的搜索对名字太短的词可能给出别的结果（只输入 T&T 时找不到 T&T Supermarket）
+                    if !results.isEmpty {
+                        Text("没看到要找的？多输入几个字试试")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .listRowSeparator(.hidden)
                     }
                 }
                 .listStyle(.plain)
@@ -581,31 +571,5 @@ struct PlacePickerView: View {
 
     private func add(_ place: Place) {
         if !isSelected(place) { selection.append(place) }
-    }
-}
-
-/// 地图搜索的诊断信息（只在 TestFlight 版出现，不翻译）。可以选中复制，也可以分享出去
-struct SearchLogView: View {
-    let log: String
-    @Environment(\.dismiss) private var dismiss
-
-    var body: some View {
-        NavigationStack {
-            ScrollView {
-                Text(verbatim: log.isEmpty ? "No search yet" : log)
-                    .font(.system(.footnote, design: .monospaced))
-                    .textSelection(.enabled)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
-            }
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button { dismiss() } label: { Image(systemName: "xmark") }
-                }
-                ToolbarItem(placement: .primaryAction) {
-                    ShareLink(item: log)
-                }
-            }
-        }
     }
 }
