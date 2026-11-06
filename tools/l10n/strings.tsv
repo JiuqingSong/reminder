@@ -1,201 +1,201 @@
-、	, 	、
-不重复	Never	不重複
-每天	Daily	每天
-每周	Weekly	每週
-每月	Monthly	每月
-每年	Yearly	每年
-每%lld天	Every %lld days	每%lld天
-每%lld周	Every %lld weeks	每%lld週
-每%lld个月	Every %lld months	每%lld個月
-每%lld年	Every %lld years	每%lld年
-仅当天	On the day	僅當天
-提前%lld天	one=%lld day before|other=%lld days before	提前%lld天
-%lld 公里	%lld km	%lld 公里
-%lld 米	%lld m	%lld 公尺
-纯文字	Text only	純文字
-%lld 个位置	%lld locations	%lld 個位置
-今天	Today	今天
-明天	Tomorrow	明天
-后天	In 2 days	後天
-%lld天后	In %lld days	%lld天後
-已过%lld天	one=%lld day overdue|other=%lld days overdue	已過%lld天
-以下物品可以在这里购买：%@	You can buy these here: %@	以下物品可以在這裡購買：%@
-今天有 %lld 件事到期	one=%lld item due today|other=%lld items due today	今天有 %lld 件事到期
-有 %lld 件事即将到期	one=%lld item due soon|other=%lld items due soon	有 %lld 件事即將到期
-有 %lld 件事已过期	one=%lld item overdue|other=%lld items overdue	有 %lld 件事已過期
-今天：%@	Today: %@	今天：%@
-%@：%@	%1$@: %2$@	%1$@：%2$@
-%@（%lld天）	%1$@ (%2$lldd)	%1$@（%2$lld天）
-已过期：%@	Overdue: %@	已過期：%@
-［图片］	[Image]	［圖片］
-（无内容）	(No content)	（無內容）
-未命名地点	Unnamed place	未命名地點
-提醒备份-%@	Reminder Backup-%@	提醒備份-%@
-待办	To Do	待辦
-已完成	Done	已完成
-搜索关键词	Search	搜尋關鍵字
-待买	To Buy	待買
-常年	Ongoing	常駐
-完成	Done	完成
-排序	Reorder	排序
-已过期	Overdue	已過期
-近期	Soon	近期
-以后	Later	以後
-找到 %lld 条	one=%lld result|other=%lld results	找到 %lld 筆
-恢复	Restore	復原
-删除	Delete	刪除
-恢复为待办	Restore to To Do	復原為待辦
-标记完成	Mark Done	標記完成
-推迟一天	Postpone 1 Day	延後一天
-推迟一周	Postpone 1 Week	延後一週
-复制文字	Copy Text	拷貝文字
-还没有已完成的事项	No completed items yet	還沒有已完成的事項
-视图	View	檢視
-完成于 %@	Done %@	完成於 %@
-已买	Bought	已買
-循环	Recurring	循環
-以后检查	Check Later	以後檢查
-买于 %@	Bought %@	買於 %@
-编辑	Edit	編輯
-删除这件物品？	Delete this item?	刪除這件物品？
-删除这条提醒？	Delete this reminder?	刪除這則提醒？
-类别	Type	類別
-待买物品	Shopping item	待買物品
-状态	Status	狀態
-到期	Due	到期
-剩余	Remaining	剩餘
-提醒	Alert	提醒
-重复	Repeat	重複
-类型	Type	類型
-常年提醒	Ongoing	常駐提醒
-已买于	Bought	已買於
-完成于	Done	完成於
-创建于	Created	建立於
-需要买	Need to Buy	需要買
-恢复为待买	Back to To Buy	復原為待買
-物品名称（第一行），可以附上链接、说明	Item name (first line); add links or notes	物品名稱（第一行），可以附上連結、說明
-写点什么……链接、地址会自动识别	Write something… links and addresses are detected	寫點什麼……連結、地址會自動辨識
-新物品	New Item	新物品
-编辑物品	Edit Item	編輯物品
-新提醒	New Reminder	新提醒
-编辑提醒	Edit Reminder	編輯提醒
-已有同名物品	Item Already Exists	已有同名物品
-仍然添加	Add Anyway	仍然加入
-不添加，把原有的改为需要买	Don't Add; Mark Existing as Need to Buy	不加入，把原有的改為需要買
-不添加	Don't Add	不加入
-返回修改	Go Back	返回修改
-「%@」已在待买列表中（循环，以后检查）。	"%@" is already on the list (recurring, check later).	「%@」已在待買清單中（循環，以後檢查）。
-「%@」已在待买列表中。	"%@" is already on the list.	「%@」已在待買清單中。
-取消	Cancel	取消
-保存	Save	儲存
-图片	Images	圖片
-相册	Photos	相簿
-拍照	Camera	拍照
-设置日期	Set Date	設定日期
-日期	Date	日期
-具体时间	Time	具體時間
-时间	Time	時間
-不设日期即为常年提醒，固定显示在列表顶部，不发通知。	Without a date it's an ongoing reminder: pinned to the top, no notifications.	不設日期即為常駐提醒，固定顯示在清單頂部，不發通知。
-到期当天提醒；过期后每天继续提醒，直到标记完成。	Alerts on the due date, then daily while overdue until marked done.	到期當天提醒；過期後每天繼續提醒，直到標記完成。
-从到期前 %lld 天起每天提醒；过期后每天继续提醒，直到标记完成。	one=Alerts daily from %lld day before the due date, then daily while overdue until marked done.|other=Alerts daily from %lld days before the due date, then daily while overdue until marked done.	從到期前 %lld 天起每天提醒；過期後每天繼續提醒，直到標記完成。
-购买地点	Where to Buy	購買地點
-选择地点	Choose Places	選擇地點
-更改地点	Change Places	更改地點
-普通	Regular	一般
-循环物品左划不会变成已买，而是改为"以后检查"，灰色显示在列表最下面，用完了再改回"需要买"。	Swiping a recurring item doesn't mark it bought; it moves to "Check Later" (gray, at the bottom). Switch it back to "Need to Buy" when you run out.	循環物品左滑不會變成已買，而是改為「以後檢查」，灰色顯示在清單最下面，用完了再改回「需要買」。
-普通物品左划即标记为已买。	Swipe left on a regular item to mark it bought.	一般物品左滑即標記為已買。
-用完了左划或在详情里改为"需要买"。	When you run out, swipe left or switch to "Need to Buy" in details.	用完了左滑或在詳細資訊裡改為「需要買」。
-没有待买物品	Nothing to Buy	沒有待買物品
-点右上角 ＋ 添加，或用"批量添加"一次加多项	Tap + to add, or use "Add Multiple" to add several at once	點右上角 ＋ 加入，或用「批次加入」一次加多項
-批量添加	Add Multiple	批次加入
-已买 %lld	Bought %lld	已買 %lld
-全部	All	全部
-改为普通物品	Make Regular	改為一般物品
-改为循环物品	Make Recurring	改為循環物品
-没有已买物品	No Bought Items	沒有已買物品
-清空	Clear	清空
-永久删除全部 %lld 件已买物品？	one=Permanently delete %lld bought item?|other=Permanently delete all %lld bought items?	永久刪除全部 %lld 件已買物品？
-全部删除	Delete All	全部刪除
-图片也会一起删除，无法恢复。	Images will be deleted too. This can't be undone.	圖片也會一起刪除，無法復原。
-每行一项，添加为普通待买物品。空行会忽略，同一次输入里重复的只加一次。	One item per line, added as regular items. Blank lines are ignored; duplicates within the input are added once.	每行一項，加入為一般待買物品。空行會忽略，同一次輸入裡重複的只加一次。
-添加	Add	加入
-添加 %lld 项	one=Add %lld Item|other=Add %lld Items	加入 %lld 項
-有 %lld 项已在待买列表中	one=%lld item is already on the list|other=%lld items are already on the list	有 %lld 項已在待買清單中
-跳过这些	Skip These	略過這些
-跳过，并把 %lld 件循环物品改为需要买	one=Skip, and mark %lld recurring item as Need to Buy|other=Skip, and mark %lld recurring items as Need to Buy	略過，並把 %lld 件循環物品改為需要買
-重复添加	Add Duplicates	重複加入
-从	From	從
-到	To	到
-按到期日期筛选，待办和已完成都会搜索。可与关键词同时使用。	Filters by due date across To Do and Done. Works together with keyword search.	依到期日期篩選，待辦和已完成都會搜尋。可與關鍵字同時使用。
-快捷	Quick	快速
-本周	This Week	本週
-本月	This Month	本月
-今年	This Year	今年
-清除日期筛选	Clear Date Filter	清除日期篩選
-按日期筛选	Filter by Date	依日期篩選
-应用	Apply	套用
-没有常用地点	No Saved Places	沒有常用地點
-点右上角 ＋ 在地图上搜索，或添加纯文字地点	Tap + to search the map or add a text-only place	點右上角 ＋ 在地圖上搜尋，或加入純文字地點
-常用购物地点	Shopping Places	常用購物地點
-纯文字地点	Text-Only Place	純文字地點
-名称，例如 菜市场	Name, e.g. Farmers Market	名稱，例如 傳統市場
-不关联地图，不能开启到店提醒。	Not linked to the map, so arrival alerts are unavailable.	不連結地圖，無法開啟到店提醒。
-在地图上搜索	Search Map	在地圖上搜尋
-名称	Name	名稱
-添加地图位置	Add Map Location	加入地圖位置
-地图位置	Map Locations	地圖位置
-没有地图位置的是纯文字地点，不能开启到店提醒。	A place without map locations is text-only and can't have arrival alerts.	沒有地圖位置的是純文字地點，無法開啟到店提醒。
-同一家店的几个分店都可以加进来，到达任何一个都会提醒。	Add every branch you visit; arriving at any of them triggers the alert.	同一家店的幾間分店都可以加進來，到達任何一間都會提醒。
-到店提醒	Arrival Alert	到店提醒
-提醒范围	Alert Radius	提醒範圍
-待买列表中有 %lld 件物品可以在这里买	one=%lld item on your list can be bought here|other=%lld items on your list can be bought here	待買清單中有 %lld 件物品可以在這裡買
-地点	Place	地點
-到达这个地点、并且有需要在这里买的物品时，马上提醒你。每次到达都会提醒。	When you arrive and there are items to buy here, you'll be alerted right away—every time you arrive.	到達這個地點、並且有需要在這裡買的物品時，馬上提醒你。每次到達都會提醒。
-定位权限已关闭，到店提醒不会生效。	Location access is off, so arrival alerts won't work.	定位權限已關閉，到店提醒不會生效。
-前往系统设置开启	Open Settings	前往系統設定開啟
-已开启提醒的地图位置超过 %lld 个（iOS 的限制），超出的位置不会提醒。	More than %lld map locations have alerts on (an iOS limit); the extra ones won't alert.	已開啟提醒的地圖位置超過 %lld 個（iOS 的限制），超出的位置不會提醒。
-没有找到	No Results	沒有找到
-搜索地点	Search Places	搜尋地點
-换个关键词试试	Try a different search	換個關鍵字試試
-例如 Costco、大华超市，会优先显示地图当前区域附近的结果	e.g. Costco or Target. Results near the visible map area come first.	例如 Costco、全聯，會優先顯示地圖目前區域附近的結果
-选择位置	Choose Location	選擇位置
-添加 %@	Add %@	加入 %@
-这个位置	This Location	這個位置
-不关联地图，不能开启到店提醒。会同时加入常用地点。	Not linked to the map, so arrival alerts are unavailable. It's also saved to your places.	不連結地圖，無法開啟到店提醒。會同時加入常用地點。
-每日提醒时间	Daily Alert Time	每日提醒時間
-每天在这个时间把需要注意的事项汇总成一条通知。	At this time each day, items that need attention are summarized in one notification.	每天在這個時間把需要注意的事項彙整成一則通知。
-新建时默认提醒	Default Alert	新增時預設提醒
-每条提醒都可以单独修改。	Each reminder can be changed individually.	每則提醒都可以個別修改。
-定位权限	Location Access	定位權限
-购物地点	Shopping Places	購物地點
-给购物地点开启到店提醒后，到了那里会提醒你可以买的物品。只需要"使用 App 期间"的定位权限。	With arrival alerts on, you'll be reminded what you can buy when you get there. Only "While Using the App" location access is needed.	為購物地點開啟到店提醒後，到了那裡會提醒你可以買的物品。只需要「使用 App 期間」的定位權限。
-导出备份	Export Backup	匯出備份
-从备份恢复	Restore from Backup	從備份復原
-备份	Backup	備份
-通知权限	Notifications	通知權限
-所有提醒都是普通的 iPhone 通知，Apple Watch 会自动显示：iPhone 锁屏或黑屏、手表戴在手上时，通知出现在手表上；正在用 iPhone 时只出现在手机上。这是系统规则，App 无法改变。\n\n是否在手表上显示，在 iPhone 的 Watch App 里设置：我的手表 → 通知 → 不着急，选"镜像我的 iPhone"或关闭。	All alerts are regular iPhone notifications, and Apple Watch shows them automatically: when your iPhone is locked or asleep and you're wearing the watch, they appear on the watch; while you're using the iPhone they appear only on the phone. This is a system rule the app can't change.\n\nTo choose whether they appear on the watch, open the Watch app on iPhone: My Watch → Notifications → Will Do, then pick "Mirror my iPhone" or off.	所有提醒都是一般的 iPhone 通知，Apple Watch 會自動顯示：iPhone 鎖定或螢幕關閉、手錶戴在手上時，通知出現在手錶上；正在用 iPhone 時只出現在手機上。這是系統規則，App 無法改變。\n\n是否在手錶上顯示，在 iPhone 的 Watch App 裡設定：我的手錶 → 通知 → 不著急，選「鏡像輸出我的 iPhone」或關閉。
-打开 Watch App	Open Watch App	打開 Watch App
-版本	Version	版本
-设置	Settings	設定
-无法读取备份文件：%@	Couldn't read the backup file: %@	無法讀取備份檔案：%@
-合并（保留现有数据）	Merge (Keep Existing Data)	合併（保留現有資料）
-替换全部现有数据	Replace All Existing Data	取代全部現有資料
-备份中有 %lld 条提醒，导出于 %@。合并时会跳过已存在的事项。	The backup has %1$lld reminders, exported %2$@. Merging skips items that already exist.	備份中有 %1$lld 則提醒，匯出於 %2$@。合併時會略過已存在的事項。
-好	OK	好
-还没有导出过备份。	No backup exported yet. 	還沒有匯出過備份。
-上次导出：%@。	Last exported: %@. 	上次匯出：%@。
-备份是一个包含文字和图片的文件，可以存到“文件”App、iCloud Drive，或者用隔空投送发到 Mac。	The backup is a single file with text and images. Save it to Files, iCloud Drive, or AirDrop it to a Mac.	備份是一個包含文字和圖片的檔案，可以存到「檔案」App、iCloud Drive，或者用 AirDrop 傳到 Mac。
-导出失败：%@	Export failed: %@	匯出失敗：%@
-已恢复 %lld 条提醒。	one=Restored %lld reminder.|other=Restored %lld reminders.	已復原 %lld 則提醒。
-恢复失败：%@	Restore failed: %@	復原失敗：%@
-使用 App 期间	While Using the App	使用 App 期間
-始终	Always	永遠
-已关闭	Off	已關閉
-未设置	Not Set	未設定
-已开启	On	已開啟
-有地点开启了到店提醒，但定位权限已关闭，到店提醒不会生效。可以在本页的购物地点部分前往系统设置开启。	Some places have arrival alerts on, but location access is off, so they won't work. You can turn it on in Settings from the Shopping Places section on this page.	有地點開啟了到店提醒，但定位權限已關閉，到店提醒不會生效。可以在本頁的購物地點部分前往系統設定開啟。
-关闭到店提醒	Turn Off Arrival Alert	關閉到店提醒
-开启到店提醒	Turn On Arrival Alert	開啟到店提醒
-到了这里且有要买的东西就通知	Notify me here when something on the list can be bought	到了這裡且有要買的東西就通知
-点地点选中或取消。点右侧铃铛开关到店提醒。	Tap a place to select it. Tap the bell to turn its arrival alert on or off.	點地點選取或取消。點右側鈴鐺開關到店提醒。
-橙色铃铛表示到店提醒已开启。这是地点本身的设置，用这个地点的所有物品都会一起提醒。	An orange bell means the arrival alert is on. It belongs to the place, so every item bought there is included.	橘色鈴鐺表示到店提醒已開啟。這是地點本身的設定，用這個地點的所有物品都會一起提醒。
+、	,\s	、	、	,\s	,\s
+不重复	Never	不重複	しない	안 함	Nunca
+每天	Daily	每天	毎日	매일	A diario
+每周	Weekly	每週	毎週	매주	Cada semana
+每月	Monthly	每月	毎月	매월	Cada mes
+每年	Yearly	每年	毎年	매년	Cada año
+每%lld天	Every %lld days	每%lld天	%lld日ごと	%lld일마다	Cada %lld días
+每%lld周	Every %lld weeks	每%lld週	%lld週間ごと	%lld주마다	Cada %lld semanas
+每%lld个月	Every %lld months	每%lld個月	%lldか月ごと	%lld개월마다	Cada %lld meses
+每%lld年	Every %lld years	每%lld年	%lld年ごと	%lld년마다	Cada %lld años
+仅当天	On the day	僅當天	当日のみ	당일만	El mismo día
+提前%lld天	one=%lld day before|other=%lld days before	提前%lld天	%lld日前	%lld일 전	one=%lld día antes|other=%lld días antes
+%lld 公里	%lld km	%lld 公里	%lld km	%lld km	%lld km
+%lld 米	%lld m	%lld 公尺	%lld m	%lld m	%lld m
+纯文字	Text only	純文字	テキストのみ	텍스트만	Solo texto
+%lld 个位置	%lld locations	%lld 個位置	%lldか所	위치 %lld개	one=%lld ubicación|other=%lld ubicaciones
+今天	Today	今天	今日	오늘	Hoy
+明天	Tomorrow	明天	明日	내일	Mañana
+后天	In 2 days	後天	明後日	모레	Pasado mañana
+%lld天后	In %lld days	%lld天後	%lld日後	%lld일 후	En %lld días
+已过%lld天	one=%lld day overdue|other=%lld days overdue	已過%lld天	%lld日超過	%lld일 지남	one=%lld día de retraso|other=%lld días de retraso
+以下物品可以在这里购买：%@	You can buy these here: %@	以下物品可以在這裡購買：%@	ここで買えるもの：%@	여기서 살 수 있는 물건: %@	Puedes comprar aquí: %@
+今天有 %lld 件事到期	one=%lld item due today|other=%lld items due today	今天有 %lld 件事到期	今日が期限：%lld件	오늘 마감: %lld건	one=%lld cosa vence hoy|other=%lld cosas vencen hoy
+有 %lld 件事即将到期	one=%lld item due soon|other=%lld items due soon	有 %lld 件事即將到期	まもなく期限：%lld件	곧 마감: %lld건	one=%lld cosa vence pronto|other=%lld cosas vencen pronto
+有 %lld 件事已过期	one=%lld item overdue|other=%lld items overdue	有 %lld 件事已過期	期限切れ：%lld件	기한 지남: %lld건	one=%lld cosa vencida|other=%lld cosas vencidas
+今天：%@	Today: %@	今天：%@	今日：%@	오늘: %@	Hoy: %@
+%@：%@	%1$@: %2$@	%1$@：%2$@	%1$@：%2$@	%1$@: %2$@	%1$@: %2$@
+%@（%lld天）	%1$@ (%2$lldd)	%1$@（%2$lld天）	%1$@（%2$lld日）	%1$@ (%2$lld일)	%1$@ (%2$lld d)
+已过期：%@	Overdue: %@	已過期：%@	期限切れ：%@	기한 지남: %@	Vencido: %@
+［图片］	[Image]	［圖片］	［画像］	[이미지]	[Imagen]
+（无内容）	(No content)	（無內容）	（内容なし）	(내용 없음)	(Sin contenido)
+未命名地点	Unnamed place	未命名地點	名称未設定の場所	이름 없는 장소	Lugar sin nombre
+提醒备份-%@	Reminder Backup-%@	提醒備份-%@	リマインダーバックアップ-%@	리마인더 백업-%@	Copia de recordatorios-%@
+待办	To Do	待辦	やること	할 일	Pendientes
+已完成	Done	已完成	完了済み	완료됨	Completados
+搜索关键词	Search	搜尋關鍵字	検索	검색	Buscar
+待买	To Buy	待買	買うもの	살 것	Por comprar
+常年	Ongoing	常駐	常時	상시	Fijos
+完成	Done	完成	完了	완료	Listo
+排序	Reorder	排序	並べ替え	순서 변경	Reordenar
+已过期	Overdue	已過期	期限切れ	기한 지남	Vencidos
+近期	Soon	近期	もうすぐ	곧	Pronto
+以后	Later	以後	あとで	나중에	Más adelante
+找到 %lld 条	one=%lld result|other=%lld results	找到 %lld 筆	%lld件見つかりました	%lld개 찾음	one=%lld resultado|other=%lld resultados
+恢复	Restore	復原	戻す	복원	Restaurar
+删除	Delete	刪除	削除	삭제	Eliminar
+恢复为待办	Restore to To Do	復原為待辦	やることに戻す	할 일로 되돌리기	Volver a pendientes
+标记完成	Mark Done	標記完成	完了にする	완료로 표시	Marcar como hecho
+推迟一天	Postpone 1 Day	延後一天	1日延期	하루 미루기	Posponer 1 día
+推迟一周	Postpone 1 Week	延後一週	1週間延期	일주일 미루기	Posponer 1 semana
+复制文字	Copy Text	拷貝文字	テキストをコピー	텍스트 복사	Copiar texto
+还没有已完成的事项	No completed items yet	還沒有已完成的事項	完了した項目はまだありません	완료된 항목이 아직 없습니다	Aún no hay elementos completados
+视图	View	檢視	表示	보기	Vista
+完成于 %@	Done %@	完成於 %@	完了：%@	완료: %@	Hecho: %@
+已买	Bought	已買	購入済み	구매함	Comprado
+循环	Recurring	循環	定期	반복	Recurrente
+以后检查	Check Later	以後檢查	あとで確認	나중에 확인	Revisar luego
+买于 %@	Bought %@	買於 %@	購入：%@	구매: %@	Comprado: %@
+编辑	Edit	編輯	編集	편집	Editar
+删除这件物品？	Delete this item?	刪除這件物品？	このアイテムを削除しますか？	이 물건을 삭제할까요?	¿Eliminar este artículo?
+删除这条提醒？	Delete this reminder?	刪除這則提醒？	このリマインダーを削除しますか？	이 리마인더를 삭제할까요?	¿Eliminar este recordatorio?
+类别	Type	類別	種類	종류	Tipo
+待买物品	Shopping item	待買物品	買い物アイテム	쇼핑 항목	Artículo de compra
+状态	Status	狀態	状態	상태	Estado
+到期	Due	到期	期限	마감	Vence
+剩余	Remaining	剩餘	残り	남은 기간	Faltan
+提醒	Alert	提醒	通知	알림	Aviso
+重复	Repeat	重複	繰り返し	반복	Repetir
+类型	Type	類型	種類	유형	Tipo
+常年提醒	Ongoing	常駐提醒	常時リマインダー	상시 리마인더	Recordatorio fijo
+已买于	Bought	已買於	購入日	구매일	Comprado el
+完成于	Done	完成於	完了日	완료일	Hecho el
+创建于	Created	建立於	作成日	생성일	Creado el
+需要买	Need to Buy	需要買	要購入	구매 필요	Hay que comprar
+恢复为待买	Back to To Buy	復原為待買	買うものに戻す	살 것으로 되돌리기	Volver a Por comprar
+物品名称（第一行），可以附上链接、说明	Item name (first line); add links or notes	物品名稱（第一行），可以附上連結、說明	アイテム名（1行目）。リンクやメモも書けます	물건 이름(첫 줄), 링크나 메모도 추가할 수 있어요	Nombre del artículo (primera línea); añade enlaces o notas
+写点什么……链接、地址会自动识别	Write something… links and addresses are detected	寫點什麼……連結、地址會自動辨識	何か書いてください…リンクや住所は自動で認識されます	무엇이든 적어 보세요… 링크와 주소는 자동으로 인식됩니다	Escribe algo… los enlaces y direcciones se detectan
+新物品	New Item	新物品	新しいアイテム	새 물건	Nuevo artículo
+编辑物品	Edit Item	編輯物品	アイテムを編集	물건 편집	Editar artículo
+新提醒	New Reminder	新提醒	新規リマインダー	새 리마인더	Nuevo recordatorio
+编辑提醒	Edit Reminder	編輯提醒	リマインダーを編集	리마인더 편집	Editar recordatorio
+已有同名物品	Item Already Exists	已有同名物品	同じ名前のアイテムがあります	같은 이름의 물건이 있습니다	El artículo ya existe
+仍然添加	Add Anyway	仍然加入	それでも追加	그래도 추가	Añadir de todos modos
+不添加，把原有的改为需要买	Don't Add; Mark Existing as Need to Buy	不加入，把原有的改為需要買	追加せず、既存のものを「要購入」にする	추가하지 않고 기존 물건을 '구매 필요'로 변경	No añadir; marcar el existente como "Hay que comprar"
+不添加	Don't Add	不加入	追加しない	추가 안 함	No añadir
+返回修改	Go Back	返回修改	戻って修正	돌아가서 수정	Volver
+「%@」已在待买列表中（循环，以后检查）。	"%@" is already on the list (recurring, check later).	「%@」已在待買清單中（循環，以後檢查）。	「%@」はすでに買うものリストにあります（定期・あとで確認）。	'%@'은(는) 이미 목록에 있습니다(반복, 나중에 확인).	"%@" ya está en la lista (recurrente, revisar luego).
+「%@」已在待买列表中。	"%@" is already on the list.	「%@」已在待買清單中。	「%@」はすでに買うものリストにあります。	'%@'은(는) 이미 목록에 있습니다.	"%@" ya está en la lista.
+取消	Cancel	取消	キャンセル	취소	Cancelar
+保存	Save	儲存	保存	저장	Guardar
+图片	Images	圖片	画像	이미지	Imágenes
+相册	Photos	相簿	写真	사진	Fotos
+拍照	Camera	拍照	カメラ	카메라	Cámara
+设置日期	Set Date	設定日期	日付を設定	날짜 설정	Fijar fecha
+日期	Date	日期	日付	날짜	Fecha
+具体时间	Time	具體時間	時刻を指定	시간 지정	Hora
+时间	Time	時間	時刻	시간	Hora
+不设日期即为常年提醒，固定显示在列表顶部，不发通知。	Without a date it's an ongoing reminder: pinned to the top, no notifications.	不設日期即為常駐提醒，固定顯示在清單頂部，不發通知。	日付を設定しないと常時リマインダーになり、リストの一番上に固定され、通知は送られません。	날짜를 정하지 않으면 상시 리마인더가 되어 목록 맨 위에 고정되고 알림은 보내지 않습니다.	Sin fecha es un recordatorio fijo: queda arriba de la lista y no envía notificaciones.
+到期当天提醒；过期后每天继续提醒，直到标记完成。	Alerts on the due date, then daily while overdue until marked done.	到期當天提醒；過期後每天繼續提醒，直到標記完成。	期限日に通知し、期限を過ぎたら完了にするまで毎日通知します。	마감일에 알리고, 기한이 지나면 완료로 표시할 때까지 매일 알립니다.	Avisa el día de vencimiento y, si se pasa, cada día hasta marcarlo como hecho.
+从到期前 %lld 天起每天提醒；过期后每天继续提醒，直到标记完成。	one=Alerts daily from %lld day before the due date, then daily while overdue until marked done.|other=Alerts daily from %lld days before the due date, then daily while overdue until marked done.	從到期前 %lld 天起每天提醒；過期後每天繼續提醒，直到標記完成。	期限の%lld日前から毎日通知し、期限を過ぎたら完了にするまで毎日通知します。	마감 %lld일 전부터 매일 알리고, 기한이 지나면 완료로 표시할 때까지 매일 알립니다.	one=Avisa cada día desde %lld día antes del vencimiento y, si se pasa, cada día hasta marcarlo como hecho.|other=Avisa cada día desde %lld días antes del vencimiento y, si se pasa, cada día hasta marcarlo como hecho.
+购买地点	Where to Buy	購買地點	購入場所	구매 장소	Dónde comprar
+选择地点	Choose Places	選擇地點	場所を選択	장소 선택	Elegir lugares
+更改地点	Change Places	更改地點	場所を変更	장소 변경	Cambiar lugares
+普通	Regular	一般	通常	일반	Normal
+循环物品左划不会变成已买，而是改为"以后检查"，灰色显示在列表最下面，用完了再改回"需要买"。	Swiping a recurring item doesn't mark it bought; it moves to "Check Later" (gray, at the bottom). Switch it back to "Need to Buy" when you run out.	循環物品左滑不會變成已買，而是改為「以後檢查」，灰色顯示在清單最下面，用完了再改回「需要買」。	定期アイテムは左にスワイプしても購入済みにならず、「あとで確認」になってリストの一番下に灰色で表示されます。なくなったら「要購入」に戻してください。	반복 물건은 왼쪽으로 밀어도 구매함이 되지 않고 '나중에 확인'으로 바뀌어 목록 맨 아래에 회색으로 표시됩니다. 다 쓰면 다시 '구매 필요'로 바꾸세요.	Al deslizar un artículo recurrente no se marca como comprado: pasa a "Revisar luego" (en gris, al final). Cámbialo a "Hay que comprar" cuando se acabe.
+普通物品左划即标记为已买。	Swipe left on a regular item to mark it bought.	一般物品左滑即標記為已買。	通常アイテムは左にスワイプすると購入済みになります。	일반 물건은 왼쪽으로 밀면 구매함으로 표시됩니다.	Desliza a la izquierda un artículo normal para marcarlo como comprado.
+用完了左划或在详情里改为"需要买"。	When you run out, swipe left or switch to "Need to Buy" in details.	用完了左滑或在詳細資訊裡改為「需要買」。	なくなったら左にスワイプするか、詳細で「要購入」に変更します。	다 쓰면 왼쪽으로 밀거나 상세 정보에서 '구매 필요'로 바꾸세요.	Cuando se acabe, desliza a la izquierda o cámbialo a "Hay que comprar" en los detalles.
+没有待买物品	Nothing to Buy	沒有待買物品	買うものはありません	살 것이 없습니다	Nada por comprar
+点右上角 ＋ 添加，或用"批量添加"一次加多项	Tap + to add, or use "Add Multiple" to add several at once	點右上角 ＋ 加入，或用「批次加入」一次加多項	右上の＋で追加、または「まとめて追加」で一度に複数追加できます	오른쪽 위 +로 추가하거나 '여러 개 추가'로 한 번에 추가하세요	Toca + para añadir, o usa "Añadir varios" para añadir varios a la vez
+批量添加	Add Multiple	批次加入	まとめて追加	여러 개 추가	Añadir varios
+已买 %lld	Bought %lld	已買 %lld	購入済み %lld	구매함 %lld	Comprados %lld
+全部	All	全部	すべて	전체	Todo
+改为普通物品	Make Regular	改為一般物品	通常アイテムにする	일반 물건으로 변경	Hacer normal
+改为循环物品	Make Recurring	改為循環物品	定期アイテムにする	반복 물건으로 변경	Hacer recurrente
+没有已买物品	No Bought Items	沒有已買物品	購入済みのアイテムはありません	구매한 물건이 없습니다	No hay artículos comprados
+清空	Clear	清空	すべて消去	비우기	Vaciar
+永久删除全部 %lld 件已买物品？	one=Permanently delete %lld bought item?|other=Permanently delete all %lld bought items?	永久刪除全部 %lld 件已買物品？	購入済みのアイテム%lld件をすべて完全に削除しますか？	구매한 물건 %lld개를 모두 영구 삭제할까요?	one=¿Eliminar definitivamente %lld artículo comprado?|other=¿Eliminar definitivamente los %lld artículos comprados?
+全部删除	Delete All	全部刪除	すべて削除	모두 삭제	Eliminar todo
+图片也会一起删除，无法恢复。	Images will be deleted too. This can't be undone.	圖片也會一起刪除，無法復原。	画像も一緒に削除され、元に戻せません。	이미지도 함께 삭제되며 되돌릴 수 없습니다.	También se eliminarán las imágenes. No se puede deshacer.
+每行一项，添加为普通待买物品。空行会忽略，同一次输入里重复的只加一次。	One item per line, added as regular items. Blank lines are ignored; duplicates within the input are added once.	每行一項，加入為一般待買物品。空行會忽略，同一次輸入裡重複的只加一次。	1行に1つずつ、通常アイテムとして追加します。空行は無視され、同じ入力内の重複は1つだけ追加されます。	한 줄에 하나씩 일반 물건으로 추가합니다. 빈 줄은 무시되고, 같은 입력 안의 중복은 한 번만 추가됩니다.	Un artículo por línea, se añaden como normales. Las líneas vacías se ignoran y los duplicados en el mismo texto se añaden una sola vez.
+添加	Add	加入	追加	추가	Añadir
+添加 %lld 项	one=Add %lld Item|other=Add %lld Items	加入 %lld 項	%lld件を追加	%lld개 추가	one=Añadir %lld artículo|other=Añadir %lld artículos
+有 %lld 项已在待买列表中	one=%lld item is already on the list|other=%lld items are already on the list	有 %lld 項已在待買清單中	%lld件はすでにリストにあります	%lld개는 이미 목록에 있습니다	one=%lld artículo ya está en la lista|other=%lld artículos ya están en la lista
+跳过这些	Skip These	略過這些	これらをスキップ	이 항목 건너뛰기	Omitir estos
+跳过，并把 %lld 件循环物品改为需要买	one=Skip, and mark %lld recurring item as Need to Buy|other=Skip, and mark %lld recurring items as Need to Buy	略過，並把 %lld 件循環物品改為需要買	スキップして、定期アイテム%lld件を「要購入」にする	건너뛰고 반복 물건 %lld개를 '구매 필요'로 변경	one=Omitir y marcar %lld artículo recurrente como "Hay que comprar"|other=Omitir y marcar %lld artículos recurrentes como "Hay que comprar"
+重复添加	Add Duplicates	重複加入	重複して追加	중복 추가	Añadir duplicados
+从	From	從	開始	시작	Desde
+到	To	到	終了	종료	Hasta
+按到期日期筛选，待办和已完成都会搜索。可与关键词同时使用。	Filters by due date across To Do and Done. Works together with keyword search.	依到期日期篩選，待辦和已完成都會搜尋。可與關鍵字同時使用。	期限日で絞り込みます。やることと完了済みの両方が対象です。キーワード検索と併用できます。	마감일로 필터링하며 할 일과 완료됨을 모두 검색합니다. 키워드 검색과 함께 쓸 수 있습니다.	Filtra por fecha de vencimiento en Pendientes y Completados. Funciona junto con la búsqueda.
+快捷	Quick	快速	クイック	빠른 선택	Rápido
+本周	This Week	本週	今週	이번 주	Esta semana
+本月	This Month	本月	今月	이번 달	Este mes
+今年	This Year	今年	今年	올해	Este año
+清除日期筛选	Clear Date Filter	清除日期篩選	日付の絞り込みを解除	날짜 필터 지우기	Quitar filtro de fecha
+按日期筛选	Filter by Date	依日期篩選	日付で絞り込む	날짜로 필터링	Filtrar por fecha
+应用	Apply	套用	適用	적용	Aplicar
+没有常用地点	No Saved Places	沒有常用地點	保存した場所はありません	저장된 장소가 없습니다	No hay lugares guardados
+点右上角 ＋ 在地图上搜索，或添加纯文字地点	Tap + to search the map or add a text-only place	點右上角 ＋ 在地圖上搜尋，或加入純文字地點	右上の＋で地図を検索するか、テキストのみの場所を追加します	오른쪽 위 +로 지도에서 검색하거나 텍스트 전용 장소를 추가하세요	Toca + para buscar en el mapa o añadir un lugar solo de texto
+常用购物地点	Shopping Places	常用購物地點	買い物する場所	쇼핑 장소	Lugares de compra
+纯文字地点	Text-Only Place	純文字地點	テキストのみの場所	텍스트 전용 장소	Lugar solo de texto
+名称，例如 菜市场	Name, e.g. Farmers Market	名稱，例如 傳統市場	名前（例：商店街）	이름 (예: 전통시장)	Nombre, p. ej. Mercado
+不关联地图，不能开启到店提醒。	Not linked to the map, so arrival alerts are unavailable.	不連結地圖，無法開啟到店提醒。	地図に紐づかないため、到着通知は使えません。	지도와 연결되지 않아 도착 알림을 쓸 수 없습니다.	No está vinculado al mapa, así que no hay avisos de llegada.
+在地图上搜索	Search Map	在地圖上搜尋	地図で検索	지도에서 검색	Buscar en el mapa
+名称	Name	名稱	名前	이름	Nombre
+添加地图位置	Add Map Location	加入地圖位置	地図の位置を追加	지도 위치 추가	Añadir ubicación
+地图位置	Map Locations	地圖位置	地図の位置	지도 위치	Ubicaciones
+没有地图位置的是纯文字地点，不能开启到店提醒。	A place without map locations is text-only and can't have arrival alerts.	沒有地圖位置的是純文字地點，無法開啟到店提醒。	地図の位置がない場所はテキストのみの場所となり、到着通知は使えません。	지도 위치가 없는 장소는 텍스트 전용 장소이며 도착 알림을 쓸 수 없습니다.	Un lugar sin ubicaciones es solo de texto y no puede tener avisos de llegada.
+同一家店的几个分店都可以加进来，到达任何一个都会提醒。	Add every branch you visit; arriving at any of them triggers the alert.	同一家店的幾間分店都可以加進來，到達任何一間都會提醒。	同じお店の複数の店舗を追加でき、どこに着いても通知されます。	같은 가게의 여러 지점을 추가할 수 있으며 어느 곳에 도착해도 알립니다.	Añade todas las sucursales que visites; llegar a cualquiera activa el aviso.
+到店提醒	Arrival Alert	到店提醒	到着通知	도착 알림	Aviso de llegada
+提醒范围	Alert Radius	提醒範圍	通知範囲	알림 반경	Radio del aviso
+待买列表中有 %lld 件物品可以在这里买	one=%lld item on your list can be bought here|other=%lld items on your list can be bought here	待買清單中有 %lld 件物品可以在這裡買	リストのアイテム%lld件がここで買えます	목록의 물건 %lld개를 여기서 살 수 있습니다	one=%lld artículo de tu lista se puede comprar aquí|other=%lld artículos de tu lista se pueden comprar aquí
+地点	Place	地點	場所	장소	Lugar
+到达这个地点、并且有需要在这里买的物品时，马上提醒你。每次到达都会提醒。	When you arrive and there are items to buy here, you'll be alerted right away—every time you arrive.	到達這個地點、並且有需要在這裡買的物品時，馬上提醒你。每次到達都會提醒。	この場所に着いたとき、ここで買うものがあればすぐに通知します。着くたびに通知されます。	이 장소에 도착했을 때 여기서 살 물건이 있으면 바로 알려 드립니다. 도착할 때마다 알립니다.	Al llegar, si hay artículos que comprar aquí, te avisaremos al momento, cada vez que llegues.
+定位权限已关闭，到店提醒不会生效。	Location access is off, so arrival alerts won't work.	定位權限已關閉，到店提醒不會生效。	位置情報へのアクセスがオフのため、到着通知は機能しません。	위치 접근이 꺼져 있어 도착 알림이 작동하지 않습니다.	El acceso a la ubicación está desactivado, así que los avisos de llegada no funcionarán.
+前往系统设置开启	Open Settings	前往系統設定開啟	設定を開く	설정 열기	Abrir Ajustes
+已开启提醒的地图位置超过 %lld 个（iOS 的限制），超出的位置不会提醒。	More than %lld map locations have alerts on (an iOS limit); the extra ones won't alert.	已開啟提醒的地圖位置超過 %lld 個（iOS 的限制），超出的位置不會提醒。	通知がオンの地図の位置が%lldか所を超えています（iOSの制限）。超えた分は通知されません。	알림이 켜진 지도 위치가 %lld개를 넘었습니다(iOS 제한). 초과한 위치는 알리지 않습니다.	Hay más de %lld ubicaciones con aviso (un límite de iOS); las que sobran no avisarán.
+没有找到	No Results	沒有找到	見つかりません	결과 없음	Sin resultados
+搜索地点	Search Places	搜尋地點	場所を検索	장소 검색	Buscar lugares
+换个关键词试试	Try a different search	換個關鍵字試試	別のキーワードで試してください	다른 검색어로 시도해 보세요	Prueba con otra búsqueda
+例如 Costco、大华超市，会优先显示地图当前区域附近的结果	e.g. Costco or Target. Results near the visible map area come first.	例如 Costco、全聯，會優先顯示地圖目前區域附近的結果	例：コストコ、イオン。地図に表示中のエリア周辺の結果が優先されます	예: 코스트코, 이마트. 지도에 보이는 지역 근처 결과가 먼저 표시됩니다	p. ej. Costco o Walmart. Primero aparecen los resultados cerca de la zona visible del mapa
+选择位置	Choose Location	選擇位置	位置を選択	위치 선택	Elegir ubicación
+添加 %@	Add %@	加入 %@	%@を追加	%@ 추가	Añadir %@
+这个位置	This Location	這個位置	この位置	이 위치	Esta ubicación
+不关联地图，不能开启到店提醒。会同时加入常用地点。	Not linked to the map, so arrival alerts are unavailable. It's also saved to your places.	不連結地圖，無法開啟到店提醒。會同時加入常用地點。	地図に紐づかないため、到着通知は使えません。保存した場所にも追加されます。	지도와 연결되지 않아 도착 알림을 쓸 수 없습니다. 저장된 장소에도 추가됩니다.	No está vinculado al mapa, así que no hay avisos de llegada. También se guarda en tus lugares.
+每日提醒时间	Daily Alert Time	每日提醒時間	毎日の通知時刻	매일 알림 시간	Hora del aviso diario
+每天在这个时间把需要注意的事项汇总成一条通知。	At this time each day, items that need attention are summarized in one notification.	每天在這個時間把需要注意的事項彙整成一則通知。	毎日この時刻に、注意が必要な項目を1件の通知にまとめます。	매일 이 시간에 확인이 필요한 항목을 하나의 알림으로 모아 보냅니다.	Cada día a esta hora, los elementos que requieren atención se resumen en una notificación.
+新建时默认提醒	Default Alert	新增時預設提醒	デフォルトの通知	기본 알림	Aviso predeterminado
+每条提醒都可以单独修改。	Each reminder can be changed individually.	每則提醒都可以個別修改。	リマインダーごとに個別に変更できます。	리마인더마다 따로 바꿀 수 있습니다.	Cada recordatorio se puede cambiar por separado.
+定位权限	Location Access	定位權限	位置情報へのアクセス	위치 접근	Acceso a la ubicación
+购物地点	Shopping Places	購物地點	買い物する場所	쇼핑 장소	Lugares de compra
+给购物地点开启到店提醒后，到了那里会提醒你可以买的物品。只需要"使用 App 期间"的定位权限。	With arrival alerts on, you'll be reminded what you can buy when you get there. Only "While Using the App" location access is needed.	為購物地點開啟到店提醒後，到了那裡會提醒你可以買的物品。只需要「使用 App 期間」的定位權限。	買い物する場所の到着通知をオンにすると、そこに着いたときに買えるものを通知します。位置情報は「Appの使用中」のみで十分です。	쇼핑 장소의 도착 알림을 켜면 그곳에 도착했을 때 살 수 있는 물건을 알려 드립니다. 위치 접근은 '앱을 사용하는 동안'만 필요합니다.	Con los avisos de llegada activados, te recordaremos qué puedes comprar al llegar. Solo hace falta el acceso a la ubicación "Cuando se use la app".
+导出备份	Export Backup	匯出備份	バックアップを書き出す	백업 내보내기	Exportar copia
+从备份恢复	Restore from Backup	從備份復原	バックアップから復元	백업에서 복원	Restaurar copia
+备份	Backup	備份	バックアップ	백업	Copia de seguridad
+通知权限	Notifications	通知權限	通知	알림	Notificaciones
+所有提醒都是普通的 iPhone 通知，Apple Watch 会自动显示：iPhone 锁屏或黑屏、手表戴在手上时，通知出现在手表上；正在用 iPhone 时只出现在手机上。这是系统规则，App 无法改变。\n\n是否在手表上显示，在 iPhone 的 Watch App 里设置：我的手表 → 通知 → 不着急，选"镜像我的 iPhone"或关闭。	All alerts are regular iPhone notifications, and Apple Watch shows them automatically: when your iPhone is locked or asleep and you're wearing the watch, they appear on the watch; while you're using the iPhone they appear only on the phone. This is a system rule the app can't change.\n\nTo choose whether they appear on the watch, open the Watch app on iPhone: My Watch → Notifications → Will Do, then pick "Mirror my iPhone" or off.	所有提醒都是一般的 iPhone 通知，Apple Watch 會自動顯示：iPhone 鎖定或螢幕關閉、手錶戴在手上時，通知出現在手錶上；正在用 iPhone 時只出現在手機上。這是系統規則，App 無法改變。\n\n是否在手錶上顯示，在 iPhone 的 Watch App 裡設定：我的手錶 → 通知 → 不著急，選「鏡像輸出我的 iPhone」或關閉。	すべての通知は通常のiPhone通知で、Apple Watchに自動で表示されます。iPhoneがロック中またはスリープ中で、Apple Watchを身に着けているときはApple Watchに表示され、iPhoneを使用中はiPhoneにのみ表示されます。これはシステムの仕組みで、Appからは変更できません。\n\nApple Watchに表示するかどうかは、iPhoneのWatch Appで設定します：マイウォッチ → 通知 → Will Do で「iPhoneを反映」またはオフを選びます。	모든 알림은 일반 iPhone 알림이며 Apple Watch에 자동으로 표시됩니다. iPhone이 잠겨 있거나 화면이 꺼져 있고 Apple Watch를 착용하고 있으면 워치에 표시되고, iPhone을 사용 중일 때는 iPhone에만 표시됩니다. 이는 시스템 규칙이라 앱에서 바꿀 수 없습니다.\n\n워치에 표시할지는 iPhone의 Watch 앱에서 설정하세요: 나의 시계 → 알림 → Will Do에서 'iPhone 미러링' 또는 끔을 선택합니다.	Todos los avisos son notificaciones normales del iPhone y el Apple Watch las muestra automáticamente: si el iPhone está bloqueado o en reposo y llevas puesto el reloj, aparecen en el reloj; mientras usas el iPhone solo aparecen en el teléfono. Es una regla del sistema que la app no puede cambiar.\n\nPara elegir si aparecen en el reloj, abre la app Watch en el iPhone: Mi reloj → Notificaciones → Will Do, y elige "Duplicar mi iPhone" o desactívalas.
+打开 Watch App	Open Watch App	打開 Watch App	Watch Appを開く	Watch 앱 열기	Abrir app Watch
+版本	Version	版本	バージョン	버전	Versión
+设置	Settings	設定	設定	설정	Ajustes
+无法读取备份文件：%@	Couldn't read the backup file: %@	無法讀取備份檔案：%@	バックアップファイルを読み込めませんでした：%@	백업 파일을 읽을 수 없습니다: %@	No se pudo leer la copia: %@
+合并（保留现有数据）	Merge (Keep Existing Data)	合併（保留現有資料）	統合（既存のデータを保持）	병합(기존 데이터 유지)	Combinar (conservar datos actuales)
+替换全部现有数据	Replace All Existing Data	取代全部現有資料	既存のデータをすべて置き換える	기존 데이터를 모두 대체	Reemplazar todos los datos actuales
+备份中有 %lld 条提醒，导出于 %@。合并时会跳过已存在的事项。	The backup has %1$lld reminders, exported %2$@. Merging skips items that already exist.	備份中有 %1$lld 則提醒，匯出於 %2$@。合併時會略過已存在的事項。	このバックアップには%1$lld件のリマインダーがあり、%2$@に書き出されました。統合では既存の項目はスキップされます。	이 백업에는 리마인더 %1$lld개가 있으며 %2$@에 내보냈습니다. 병합하면 이미 있는 항목은 건너뜁니다.	La copia tiene %1$lld recordatorios y se exportó el %2$@. Al combinar se omiten los que ya existen.
+好	OK	好	OK	확인	OK
+还没有导出过备份。	No backup exported yet.\s	還沒有匯出過備份。	まだバックアップを書き出していません。	아직 백업을 내보낸 적이 없습니다.\s	Aún no has exportado ninguna copia.\s
+上次导出：%@。	Last exported: %@.\s	上次匯出：%@。	前回の書き出し：%@。	마지막 내보내기: %@.\s	Última exportación: %@.\s
+备份是一个包含文字和图片的文件，可以存到“文件”App、iCloud Drive，或者用隔空投送发到 Mac。	The backup is a single file with text and images. Save it to Files, iCloud Drive, or AirDrop it to a Mac.	備份是一個包含文字和圖片的檔案，可以存到「檔案」App、iCloud Drive，或者用 AirDrop 傳到 Mac。	バックアップはテキストと画像を含む1つのファイルです。「ファイル」App、iCloud Driveに保存したり、AirDropでMacに送ったりできます。	백업은 텍스트와 이미지를 담은 하나의 파일입니다. '파일' 앱이나 iCloud Drive에 저장하거나 AirDrop으로 Mac에 보낼 수 있습니다.	La copia es un único archivo con textos e imágenes. Guárdala en Archivos o iCloud Drive, o envíala a un Mac por AirDrop.
+导出失败：%@	Export failed: %@	匯出失敗：%@	書き出しに失敗しました：%@	내보내기 실패: %@	Error al exportar: %@
+已恢复 %lld 条提醒。	one=Restored %lld reminder.|other=Restored %lld reminders.	已復原 %lld 則提醒。	%lld件のリマインダーを復元しました。	리마인더 %lld개를 복원했습니다.	one=Se restauró %lld recordatorio.|other=Se restauraron %lld recordatorios.
+恢复失败：%@	Restore failed: %@	復原失敗：%@	復元に失敗しました：%@	복원 실패: %@	Error al restaurar: %@
+使用 App 期间	While Using the App	使用 App 期間	Appの使用中	앱을 사용하는 동안	Cuando se use la app
+始终	Always	永遠	常に	항상	Siempre
+已关闭	Off	已關閉	オフ	끔	Desactivado
+未设置	Not Set	未設定	未設定	설정 안 됨	Sin configurar
+已开启	On	已開啟	オン	켬	Activado
+有地点开启了到店提醒，但定位权限已关闭，到店提醒不会生效。可以在本页的购物地点部分前往系统设置开启。	Some places have arrival alerts on, but location access is off, so they won't work. You can turn it on in Settings from the Shopping Places section on this page.	有地點開啟了到店提醒，但定位權限已關閉，到店提醒不會生效。可以在本頁的購物地點部分前往系統設定開啟。	到着通知がオンの場所がありますが、位置情報へのアクセスがオフのため機能しません。このページの「買い物する場所」から設定を開いてオンにできます。	도착 알림이 켜진 장소가 있지만 위치 접근이 꺼져 있어 작동하지 않습니다. 이 페이지의 쇼핑 장소 섹션에서 설정을 열어 켤 수 있습니다.	Algunos lugares tienen aviso de llegada, pero el acceso a la ubicación está desactivado y no funcionarán. Puedes activarlo en Ajustes desde la sección Lugares de compra de esta página.
+关闭到店提醒	Turn Off Arrival Alert	關閉到店提醒	到着通知をオフ	도착 알림 끄기	Desactivar aviso de llegada
+开启到店提醒	Turn On Arrival Alert	開啟到店提醒	到着通知をオン	도착 알림 켜기	Activar aviso de llegada
+到了这里且有要买的东西就通知	Notify me here when something on the list can be bought	到了這裡且有要買的東西就通知	ここに着いて買うものがあれば通知	여기 도착했을 때 살 물건이 있으면 알림	Avisarme aquí cuando haya algo de la lista que comprar
+点地点选中或取消。点右侧铃铛开关到店提醒。	Tap a place to select it. Tap the bell to turn its arrival alert on or off.	點地點選取或取消。點右側鈴鐺開關到店提醒。	場所をタップして選択／解除。右のベルで到着通知をオン／オフ。	장소를 탭해 선택하거나 해제하세요. 오른쪽 종을 탭해 도착 알림을 켜거나 끕니다.	Toca un lugar para seleccionarlo. Toca la campana para activar o desactivar su aviso de llegada.
+橙色铃铛表示到店提醒已开启。这是地点本身的设置，用这个地点的所有物品都会一起提醒。	An orange bell means the arrival alert is on. It belongs to the place, so every item bought there is included.	橘色鈴鐺表示到店提醒已開啟。這是地點本身的設定，用這個地點的所有物品都會一起提醒。	オレンジのベルは到着通知がオンであることを示します。これは場所自体の設定なので、この場所で買うすべてのアイテムが対象になります。	주황색 종은 도착 알림이 켜져 있다는 뜻입니다. 장소 자체의 설정이므로 이곳에서 사는 모든 물건이 포함됩니다.	Una campana naranja indica que el aviso de llegada está activado. Es del lugar, así que incluye todos los artículos que se compran ahí.

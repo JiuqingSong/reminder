@@ -54,7 +54,7 @@ THE DETAILS
 • Attach photos from the camera or your library
 • Links, phone numbers and addresses are tappable; addresses open in Google Maps
 • Notifications show up on Apple Watch automatically
-• English, Simplified Chinese and Traditional Chinese
+• English, Spanish, Japanese, Korean, Simplified Chinese and Traditional Chinese
 • Add reminders with Siri in Chinese (Mandarin), with dates and times understood from what you say
 
 PRIVATE BY DESIGN
@@ -102,7 +102,7 @@ No account, no ads, no tracking. Everything is stored on your iPhone. Export a b
 • 拍照或从相册选图附加到提醒
 • 链接、电话、地址都能直接点开，地址用 Google 地图打开
 • 通知会自动转到 Apple Watch
-• 支持简体中文、繁体中文和英文
+• 支持简体中文、繁体中文、英文、日语、韩语和西班牙语
 
 注重隐私
 不用注册，没有广告，不追踪。数据全部存在你的 iPhone 上，可以随时导出备份文件，在另一台手机上恢复。
@@ -147,12 +147,137 @@ No account, no ads, no tracking. Everything is stored on your iPhone. Export a b
 • 拍照或從相簿選圖附加到提醒
 • 連結、電話、地址都能直接點開，地址用 Google 地圖開啟
 • 通知會自動轉到 Apple Watch
-• 支援簡體中文、繁體中文和英文
+• 支援簡體中文、繁體中文、英文、日文、韓文和西班牙文
 
 重視隱私
 不用註冊，沒有廣告，不追蹤。資料全部存在你的 iPhone 上，可以隨時匯出備份檔案，在另一支手機上復原。
 
 **關鍵字**：待辦,備忘,購物清單,買菜,到店提醒,定位提醒,清單,行程,重複提醒,Siri,購物
+
+---
+
+## 日本語（Japanese）
+
+**名前**：Will Do: リマインダーと買い物リスト
+
+**サブタイトル**：お店に着いたら買うものを通知
+
+**プロモーションテキスト**：
+
+書き留めたら、もう焦らない。リマインダーは1件ずつ並び、お店に着くと買うものを知らせる買い物リスト付き。データはすべてiPhoneの中だけに保存されます。
+
+**説明**：
+
+Will Doは、静かでシンプルなリマインダーAppです。カレンダーではなく、リマインダーを1件ずつ並べて表示するので、次にやることがひと目でわかります。
+
+あなたの考え方に合ったリマインダー
+• 日付だけ、日付と時刻、または日付なしで、ずっと覚えておきたいことを一番上に固定
+• 数日前から通知を開始し、毎日決まった時刻に1件の通知にまとめてお知らせ
+• 期限を過ぎた項目は、完了するまで毎日通知
+• 毎日・毎週・毎月・毎年の繰り返しに対応、間隔も自由に設定
+• 左にスワイプで完了、長押しで1日または1週間延期
+
+今いる場所がわかる買い物リスト
+• テキスト、写真、リンク付きでアイテムを追加。リストをまとめて貼り付けることも可能
+• アイテムごとに買える場所を設定：地図でお店を検索し、複数の店舗も登録可能
+• 到着通知をオンにすると、買うものがあるお店に着いたときに通知
+• 定期的に買うものは、買っても消えずに「要購入」と「あとで確認」を切り替え
+
+細かなところまで
+• カメラや写真ライブラリから写真を添付
+• リンク、電話番号、住所はタップで開け、住所はGoogleマップで表示
+• 通知はApple Watchにも自動で表示
+• 日本語、英語、韓国語、スペイン語、簡体字中国語、繁体字中国語に対応
+• Siriでリマインダーを追加（現在は中国語［普通話］のみ）
+
+プライバシーを大切に
+アカウント不要、広告なし、トラッキングなし。データはすべてiPhoneに保存されます。いつでもバックアップファイルを書き出して、別のiPhoneで復元できます。
+
+**キーワード**：ToDo,やること,買い物,買い物メモ,位置情報,到着,チェックリスト,繰り返し,通知,メモ,タスク
+
+---
+
+## 한국어（Korean）
+
+**이름**：Will Do: 미리 알림과 쇼핑 목록
+
+**부제**：가게에 도착하면 살 것을 알려줘요
+
+**프로모션 텍스트**：
+
+적어 두면 더는 조급하지 않아요. 리마인더는 하나씩 나열되고, 가게에 도착하면 살 것을 알려 주는 쇼핑 목록까지. 모든 데이터는 iPhone에만 저장됩니다.
+
+**설명**：
+
+Will Do는 조용하고 단순한 리마인더 앱입니다. 달력 대신 리마인더를 하나씩 나열해 보여 주므로, 다음에 할 일을 한눈에 알 수 있습니다.
+
+생각하는 방식에 맞춘 리마인더
+• 날짜만, 날짜와 시간, 또는 날짜 없이 늘 기억할 일을 맨 위에 고정
+• 며칠 전부터 알림을 시작하고, 매일 정한 시간에 하나의 알림으로 모아서 알려 줌
+• 기한이 지난 항목은 완료할 때까지 매일 알림
+• 매일, 매주, 매월, 매년 반복과 원하는 간격 설정 지원
+• 왼쪽으로 밀어 완료, 길게 눌러 하루 또는 일주일 미루기
+
+내 위치를 아는 쇼핑 목록
+• 텍스트, 사진, 링크와 함께 물건을 추가하거나 목록을 한 번에 붙여넣기
+• 물건마다 살 수 있는 장소 지정: 지도에서 가게를 검색하고 여러 지점도 추가 가능
+• 도착 알림을 켜면 살 물건이 있는 가게에 도착했을 때 알림
+• 반복해서 사는 물건은 사라지지 않고 '구매 필요'와 '나중에 확인' 사이를 전환
+
+세심한 부분까지
+• 카메라나 사진 보관함에서 사진 첨부
+• 링크, 전화번호, 주소를 탭해서 바로 열기, 주소는 Google 지도로 열림
+• 알림은 Apple Watch에도 자동으로 표시
+• 한국어, 영어, 일본어, 스페인어, 중국어 간체, 중국어 번체 지원
+• Siri로 리마인더 추가(현재 중국어 보통화만 지원)
+
+개인정보 보호
+계정 없음, 광고 없음, 추적 없음. 모든 데이터는 iPhone에 저장됩니다. 언제든 백업 파일을 내보내 다른 iPhone에서 복원할 수 있습니다.
+
+**키워드**：할일,투두,장보기,쇼핑,위치,도착,체크리스트,반복,알림,메모,플래너
+
+---
+
+## Español（Spanish）
+
+ASC 里有 Spanish (Mexico) 和 Spanish (Spain) 两种，美国商店显示的是 Spanish (Mexico)。下面的文字两种都能用，可以都填。
+
+**Nombre**: Will Do: Tareas y compras
+
+**Subtítulo**: Avisos al llegar a la tienda
+
+**Texto promocional**:
+
+Anótalo y olvídate de preocuparte. Recordatorios uno tras otro, una lista de compras que te avisa al llegar a la tienda y todo guardado en tu iPhone.
+
+**Descripción**:
+
+Will Do es una app de recordatorios tranquila y sencilla. En lugar de un calendario, tus recordatorios aparecen uno tras otro, así siempre ves lo que viene.
+
+RECORDATORIOS A TU MANERA
+• Pon una fecha, una fecha y hora, o ninguna fecha para lo que quieres tener presente siempre
+• Empieza a recibir avisos días antes, con un resumen diario a la hora que elijas
+• Lo vencido te sigue avisando cada día hasta que lo termines
+• Repite a diario, cada semana, cada mes o cada año, con intervalos personalizados
+• Desliza a la izquierda para completar; mantén pulsado para posponer un día o una semana
+
+UNA LISTA DE COMPRAS QUE SABE DÓNDE ESTÁS
+• Añade artículos con texto, fotos y enlaces, o pega una lista entera de una vez
+• Elige dónde se puede comprar cada artículo: busca tiendas en el mapa y añade varias sucursales
+• Activa los avisos de llegada y recibe una notificación al llegar a una tienda donde tienes algo que comprar
+• Los artículos recurrentes pasan de "Hay que comprar" a "Revisar luego" en lugar de desaparecer
+
+LOS DETALLES
+• Adjunta fotos de la cámara o de tu fototeca
+• Los enlaces, teléfonos y direcciones se pueden tocar; las direcciones se abren en Google Maps
+• Las notificaciones aparecen automáticamente en el Apple Watch
+• En español, inglés, japonés, coreano, chino simplificado y chino tradicional
+• Añade recordatorios con Siri (por ahora solo en chino mandarín)
+
+PRIVACIDAD ANTE TODO
+Sin cuenta, sin anuncios, sin rastreo. Todo se guarda en tu iPhone. Exporta una copia de seguridad cuando quieras y restáurala en otro teléfono.
+
+**Palabras clave**: recordatorio,lista,pendientes,supermercado,ubicación,llegada,checklist,recurrente,notas,aviso,siri
 
 ---
 

@@ -47,7 +47,7 @@
 界面文字的原文（key）就是代码里的简体中文，翻译在 `Reminder/Localizable.xcstrings`，App 名和权限说明在 `Reminder/InfoPlist.xcstrings`。这两个文件由 `tools/l10n` 里的表格生成，不要手改：
 
 1. 代码里新加的中文：直接写在 `Text("…")`、`Button("…")` 等字面量里会自动翻译；先拼成 `String` 再显示的（三元表达式、函数参数、通知内容等）要写成 `String(localized: "…")`
-2. 在 `tools/l10n/strings.tsv` 加一行：简体原文、英文、繁体，用 Tab 分隔。插值写成 `%lld`（整数）、`%@`（文字）；英文需要单复数时写成 `one=…|other=…`
+2. 在 `tools/l10n/strings.tsv` 加一行：简体原文、英文、繁体、日语、韩语、西班牙语，用 Tab 分隔。插值写成 `%lld`（整数）、`%@`（文字）；英文、西班牙语需要单复数时写成 `one=…|other=…`；要保留的空格（尤其在行尾）写成 `\s`
 3. 检查和生成：
    ```sh
    perl tools/l10n/check.pl tools/l10n/strings.tsv $(git ls-files 'Reminder/*.swift' | grep -v -e Intents -e SpokenDateParser -e AppModel)
@@ -56,7 +56,7 @@
    ```
    `check.pl` 列出缺翻译（MISSING）和多余（UNUSED）的条目；插值里又嵌套字符串的、注释参数会误报。
 
-CI 会检查编出来的 App 里有没有英文和繁体的翻译文件。
+CI 会检查编出来的 App 里有没有英文、繁体、日语、韩语、西班牙语的翻译文件。
 
 ## 开发时装到 iPhone（免费 Apple ID）
 
