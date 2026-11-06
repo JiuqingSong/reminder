@@ -77,6 +77,19 @@ jobs:
             -authenticationKeyID "$ASC_KEY_ID" \
             -authenticationKeyIssuerID "$ASC_ISSUER_ID"
 
+      # 上传失败时 xcodebuild 只打印日志包的路径，真正的错误在包里
+      - name: Show distribution logs
+        if: failure()
+        run: |
+          for dir in $(find "$TMPDIR" /var/folders -maxdepth 4 -name '*.xcdistributionlogs' 2>/dev/null | sort -u); do
+            echo "== $dir"
+            for f in "$dir"/IDEDistribution*.log; do
+              [ -f "$f" ] || continue
+              echo "---- $(basename "$f")"
+              grep -iE 'error|fail|reject|invalid|denied|agreement' "$f" | tail -40
+            done
+          done
+
       - name: Clean up key
         if: always()
         run: rm -f "$RUNNER_TEMP/AuthKey.p8"
