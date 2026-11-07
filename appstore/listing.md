@@ -19,6 +19,66 @@
 
 ---
 
+## 1.1 更新内容（What's New in This Version）
+
+每种语言各填一份。1.1 起商店新增日语、韩语、西班牙语，这三种语言的商店页（名称、副标题、描述等）见下面各自的部分，也要一起填好。
+
+### English (U.S.)
+
+• Turn on an arrival alert right when you add a store, and pick how close you need to be
+• Tap the bell next to any store, in the place list or while editing an item, to switch its arrival alert on or off
+• Store search now finds places farther away, puts the best name matches first and shows how far each one is
+• The map opens at your location and no longer jumps around while you type
+• After restoring a backup, the app asks for location access so your arrival alerts keep working
+• Now in Japanese, Korean and Spanish
+
+### 简体中文
+
+• 添加购物地点时就能直接开启到店提醒，并选择提醒范围
+• 在选地点列表和编辑物品时，点地点旁边的铃铛就能开关到店提醒
+• 搜索地点能找到更远的店，名字最匹配的排在前面，并显示距离
+• 地图打开时就在你的位置，输入时不再乱跳
+• 从备份恢复后，会提示开启定位权限，到店提醒才能正常工作
+• 新增日语、韩语和西班牙语
+
+### 繁體中文
+
+• 新增購物地點時就能直接開啟到店提醒，並選擇提醒範圍
+• 在選地點列表和編輯物品時，點地點旁邊的鈴鐺就能開關到店提醒
+• 搜尋地點能找到更遠的店，名稱最相符的排在前面，並顯示距離
+• 地圖打開時就在你的位置，輸入時不再亂跳
+• 從備份還原後，會提示開啟定位權限，到店提醒才能正常運作
+• 新增日文、韓文和西班牙文
+
+### 日本語
+
+• お店を追加するときに、そのまま到着通知をオンにして範囲を選べるようになりました
+• 場所の一覧やアイテムの編集画面で、お店の横のベルをタップすると到着通知をオン／オフできます
+• 場所の検索で少し離れたお店も見つかるようになり、名前がよく一致するものから順に距離つきで表示されます
+• 地図は現在地から始まり、入力中に動き回らなくなりました
+• バックアップから復元したあと、到着通知が使えるよう位置情報の許可を確認します
+• 日本語、韓国語、スペイン語に対応しました
+
+### 한국어
+
+• 매장을 추가할 때 바로 도착 알림을 켜고 알림 범위를 고를 수 있습니다
+• 장소 목록이나 항목 편집 화면에서 매장 옆 종 아이콘을 탭하면 도착 알림을 켜고 끌 수 있습니다
+• 장소 검색에서 조금 먼 매장도 찾을 수 있고, 이름이 가장 잘 맞는 곳부터 거리와 함께 표시됩니다
+• 지도가 현재 위치에서 시작하고, 입력하는 동안 이리저리 움직이지 않습니다
+• 백업에서 복원한 후 도착 알림이 작동하도록 위치 권한을 요청합니다
+• 일본어, 한국어, 스페인어를 지원합니다
+
+### Español
+
+• Activa el aviso de llegada al añadir una tienda y elige a qué distancia quieres que te avise
+• Toca la campana junto a cualquier tienda, en la lista de lugares o al editar un artículo, para activar o desactivar su aviso de llegada
+• La búsqueda de tiendas encuentra lugares más lejanos, muestra primero los nombres que mejor coinciden e indica la distancia
+• El mapa se abre en tu ubicación y ya no salta mientras escribes
+• Al restaurar una copia de seguridad, la app pide acceso a la ubicación para que los avisos de llegada sigan funcionando
+• Ahora disponible en japonés, coreano y español
+
+---
+
 ## English (U.S.)
 
 **Name**: Will Do: Reminders & Lists
@@ -62,7 +122,7 @@ No account, no ads, no tracking. Everything is stored on your iPhone. Export a b
 
 **Keywords**: todo,shopping,grocery,errands,location,arrival,geofence,checklist,recurring,notes,alert,planner,siri
 
-**What's New**（首发版本不需要填）
+**What's New**：见上面"1.1 更新内容"
 
 ---
 
@@ -285,7 +345,7 @@ Sin cuenta, sin anuncios, sin rastreo. Todo se guarda en tu iPhone. Exporta una 
 
 No account or login is required. All data is stored locally on the device; the app has no server.
 
-Arrival alerts: open Shopping (the first row in the list) → top-right places button → add a place by searching the map → turn on "Arrival Alert" for that location. Add an item to the shopping list and assign it that place. When the device enters the 200 m region, a local notification lists the items. Only "While Using the App" location permission is used (UNLocationNotificationTrigger).
+Arrival alerts: open "To Buy" (the first row in the list) → add an item → "Choose Places" → + → search the map and pick a store. "Arrival Alert" is on by default at the bottom of that screen; tap "Add …". Save the item. The bell next to each store in the place list turns its alert on or off. When the device enters the 200 m region, a local notification lists the items. Only "While Using the App" location permission is used (UNLocationNotificationTrigger).
 
 Siri: the app provides an App Shortcut to add a reminder. Its phrases are currently Chinese only (e.g. "用不着急添加提醒" with Siri set to Chinese, Mandarin). The same action can be run from the Shortcuts app in any language.
 
