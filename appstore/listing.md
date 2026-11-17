@@ -19,63 +19,57 @@
 
 ---
 
-## 1.1 更新内容（What's New in This Version）
+## 1.2 更新内容（What's New in This Version）
 
-每种语言各填一份。1.1 起商店新增日语、韩语、西班牙语，这三种语言的商店页（名称、副标题、描述等）见下面各自的部分，也要一起填好。
+每种语言各填一份（App Store Connect 右上角切换语言）。
 
 ### English (U.S.)
 
-• Turn on an arrival alert right when you add a store, and pick how close you need to be
-• Tap the bell next to any store, in the place list or while editing an item, to switch its arrival alert on or off
-• Store search now finds places farther away, puts the best name matches first and shows how far each one is
-• The map opens at your location and no longer jumps around while you type
-• After restoring a backup, the app asks for location access so your arrival alerts keep working
-• Now in Japanese, Korean and Spanish
+• Widgets: see what's overdue, what's coming up and your ongoing reminders on the Home Screen and Lock Screen
+• iCloud sync: reminders, photos, shopping items and places stay in sync across your iPhones signed in to the same Apple Account
+• Recurring items can switch back to "Need to Buy" on their own a set number of days after you mark them "Check Later"
+• Tapping an arrival alert opens To Buy filtered to that store, so you only see what to buy there
+• Quicker to add: choose No Date, Today, Tomorrow or Custom right under the text, and add photos with the icons in the corner
 
 ### 简体中文
 
-• 添加购物地点时就能直接开启到店提醒，并选择提醒范围
-• 在选地点列表和编辑物品时，点地点旁边的铃铛就能开关到店提醒
-• 搜索地点能找到更远的店，名字最匹配的排在前面，并显示距离
-• 地图打开时就在你的位置，输入时不再乱跳
-• 从备份恢复后，会提示开启定位权限，到店提醒才能正常工作
-• 新增日语、韩语和西班牙语
+• 桌面和锁屏小组件：已过期、近期的事项和常年提醒，一眼就能看到
+• iCloud 同步：提醒、图片、待买物品和购物地点，在登录同一 Apple 账户的 iPhone 之间自动同步
+• 循环物品可以设定天数：改为"以后检查"满几天后，自动转回"需要买"
+• 点到店提醒的通知，直接打开待买页并筛选到这家店，只显示在这里要买的东西
+• 添加更快：输入框下面直接选不设日期、今天、明天或自定义，右上角的图标添加照片
 
 ### 繁體中文
 
-• 新增購物地點時就能直接開啟到店提醒，並選擇提醒範圍
-• 在選地點列表和編輯物品時，點地點旁邊的鈴鐺就能開關到店提醒
-• 搜尋地點能找到更遠的店，名稱最相符的排在前面，並顯示距離
-• 地圖打開時就在你的位置，輸入時不再亂跳
-• 從備份還原後，會提示開啟定位權限，到店提醒才能正常運作
-• 新增日文、韓文和西班牙文
+• 桌面和鎖定畫面小工具：已過期、近期的事項和常駐提醒，一眼就能看到
+• iCloud 同步：提醒、圖片、待買物品和購物地點，在登入同一 Apple 帳號的 iPhone 之間自動同步
+• 循環物品可以設定天數：改為「以後檢查」滿幾天後，自動轉回「需要買」
+• 點到店提醒的通知，直接打開待買頁並篩選到這家店，只顯示在這裡要買的東西
+• 新增更快：輸入框下面直接選不設日期、今天、明天或自訂，右上角的圖示加入照片
 
 ### 日本語
 
-• お店を追加するときに、そのまま到着通知をオンにして範囲を選べるようになりました
-• 場所の一覧やアイテムの編集画面で、お店の横のベルをタップすると到着通知をオン／オフできます
-• 場所の検索で少し離れたお店も見つかるようになり、名前がよく一致するものから順に距離つきで表示されます
-• 地図は現在地から始まり、入力中に動き回らなくなりました
-• バックアップから復元したあと、到着通知が使えるよう位置情報の許可を確認します
-• 日本語、韓国語、スペイン語に対応しました
+• ウィジェット：期限切れ・もうすぐの項目と常時リマインダーを、ホーム画面とロック画面でひと目で確認できます
+• iCloud 同期：リマインダー、画像、買い物リスト、お店が、同じ Apple アカウントの iPhone 間で自動的に同期されます
+• 定期アイテムに日数を設定できるようになりました。「あとで確認」にしてから指定の日数がたつと、自動で「要購入」に戻ります
+• 到着通知をタップすると、そのお店で絞り込んだ買い物リストが開き、そこで買うものだけが表示されます
+• すばやく追加：入力欄のすぐ下で「日付なし」「今日」「明日」「カスタム」を選べ、右上のアイコンから写真を追加できます
 
 ### 한국어
 
-• 매장을 추가할 때 바로 도착 알림을 켜고 알림 범위를 고를 수 있습니다
-• 장소 목록이나 항목 편집 화면에서 매장 옆 종 아이콘을 탭하면 도착 알림을 켜고 끌 수 있습니다
-• 장소 검색에서 조금 먼 매장도 찾을 수 있고, 이름이 가장 잘 맞는 곳부터 거리와 함께 표시됩니다
-• 지도가 현재 위치에서 시작하고, 입력하는 동안 이리저리 움직이지 않습니다
-• 백업에서 복원한 후 도착 알림이 작동하도록 위치 권한을 요청합니다
-• 일본어, 한국어, 스페인어를 지원합니다
+• 위젯: 기한이 지난 항목, 다가오는 항목과 상시 리마인더를 홈 화면과 잠금 화면에서 한눈에 볼 수 있습니다
+• iCloud 동기화: 리마인더, 이미지, 장보기 항목과 장소가 같은 Apple 계정의 iPhone 사이에서 자동으로 동기화됩니다
+• 반복 물건에 일수를 정할 수 있습니다. '나중에 확인'으로 바꾼 뒤 정한 일수가 지나면 자동으로 '구매 필요'로 돌아갑니다
+• 도착 알림을 탭하면 그 매장으로 필터링된 장보기 목록이 열려 거기서 살 것만 보입니다
+• 더 빠른 추가: 입력란 바로 아래에서 날짜 없음, 오늘, 내일, 직접 설정을 고르고, 오른쪽 위 아이콘으로 사진을 추가하세요
 
 ### Español
 
-• Activa el aviso de llegada al añadir una tienda y elige a qué distancia quieres que te avise
-• Toca la campana junto a cualquier tienda, en la lista de lugares o al editar un artículo, para activar o desactivar su aviso de llegada
-• La búsqueda de tiendas encuentra lugares más lejanos, muestra primero los nombres que mejor coinciden e indica la distancia
-• El mapa se abre en tu ubicación y ya no salta mientras escribes
-• Al restaurar una copia de seguridad, la app pide acceso a la ubicación para que los avisos de llegada sigan funcionando
-• Ahora disponible en japonés, coreano y español
+• Widgets: ve lo vencido, lo próximo y tus recordatorios fijos en la pantalla de inicio y en la pantalla bloqueada
+• Sincronización con iCloud: recordatorios, fotos, artículos de compra y lugares se mantienen al día en tus iPhone con la misma cuenta de Apple
+• Los artículos recurrentes pueden volver solos a "Hay que comprar" unos días después de pasarlos a "Revisar luego"
+• Al tocar un aviso de llegada se abre la lista de compras filtrada por esa tienda, para ver solo lo que tienes que comprar allí
+• Añadir es más rápido: elige Sin fecha, Hoy, Mañana u Otra justo debajo del texto y añade fotos con los iconos de la esquina
 
 ---
 
@@ -350,5 +344,9 @@ Arrival alerts: open "To Buy" (the first row in the list) → add an item → "C
 Siri: the app provides an App Shortcut to add a reminder. Its phrases are currently Chinese only (e.g. "用不着急添加提醒" with Siri set to Chinese, Mandarin). The same action can be run from the Shortcuts app in any language.
 
 Camera and photo library are only used to attach images to reminders, when the user chooses to.
+
+Background modes: "remote-notification" is used only by iCloud (CloudKit) sync to receive changes made on the user's other devices. "fetch" (background app refresh) is used once a day to move recurring shopping items back to "Need to Buy" after the number of days the user chose, and to refresh the local notifications and widget.
+
+Widget: long-press the Home Screen → + → search "Will Do". It shows overdue, upcoming and ongoing reminders.
 
 联系信息：填你的名字、电话、邮箱（只给审核人员看，不公开）。演示账号：不需要，把"需要登录"的勾去掉。
