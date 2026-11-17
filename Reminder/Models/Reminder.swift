@@ -24,6 +24,10 @@ final class Reminder {
     var shopRecurring: Bool = false
     /// 循环物品的状态：true 需要买，false 以后检查。普通物品不看这个字段
     var shopNeeded: Bool = true
+    /// 循环物品改为"以后检查"后满多少天自动转回"需要买"，0 表示不自动
+    var shopCycleDays: Int = 0
+    /// 循环物品改为"以后检查"的时刻，自动转回的天数从这里算起；"需要买"时为 nil
+    var shopLaterSince: Date?
     var createdAt: Date = Date()
     var updatedAt: Date = Date()
 
@@ -62,6 +66,23 @@ extension Reminder {
 
     /// 循环物品状态为"以后检查"
     var isShopLater: Bool { isShopping && !isDone && shopRecurring && !shopNeeded }
+
+    /// 切换循环物品的状态。所有改 shopNeeded 的地方都走这里，好记下开始"以后检查"的时刻
+    func setShopNeeded(_ needed: Bool, now: Date = Date()) {
+        if needed {
+            shopLaterSince = nil
+        } else if shopNeeded || shopLaterSince == nil {
+            shopLaterSince = now
+        }
+        shopNeeded = needed
+    }
+
+    /// "以后检查"的循环物品还有几天自动转为"需要买"；没设天数、或不在"以后检查"时为 nil
+    func daysUntilShopNeeded(from now: Date = Date()) -> Int? {
+        guard isShopLater, shopCycleDays > 0 else { return nil }
+        let elapsed = Calendar.current.dayDistance(from: shopLaterSince ?? now, to: now)
+        return max(0, shopCycleDays - elapsed)
+    }
 
     var sortedAttachments: [Attachment] {
         (attachments ?? []).sorted { $0.order < $1.order }

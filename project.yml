@@ -60,8 +60,12 @@ targets:
           - es
         UILaunchScreen: {}
         # iCloud 有变化时系统用静默推送唤醒 App 拉取
+        # fetch：后台刷新（循环物品满天数转回需要买，见 BackgroundRefresh.swift）
         UIBackgroundModes:
           - remote-notification
+          - fetch
+        BGTaskSchedulerPermittedIdentifiers:
+          - com.songthin.willdo.refresh
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
         NSCameraUsageDescription: 用于拍照并附加到提醒事项

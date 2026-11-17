@@ -14,8 +14,11 @@ enum ShoppingRoute: Hashable {
 final class Navigator {
     static let shared = Navigator()
     var path = NavigationPath()
+    /// 待买页要筛选到的地点（点击到店提醒时设置），待买页取走后清空
+    var pendingPlaceFilter: UUID?
 
-    func openShopping() {
+    func openShopping(placeID: UUID? = nil) {
+        pendingPlaceFilter = placeID
         path = NavigationPath([ShoppingRoute.list])
     }
 }
@@ -107,6 +110,16 @@ struct ShoppingListView: View {
         .sheet(isPresented: $showingPlaces) {
             PlacesView()
         }
+        // 从到店提醒进来：筛选到那个地点（待买页已经开着时也会收到）
+        .onAppear(perform: takePendingFilter)
+        .onChange(of: navigator.pendingPlaceFilter) { _, _ in takePendingFilter() }
+    }
+
+    private func takePendingFilter() {
+        guard let id = navigator.pendingPlaceFilter else { return }
+        navigator.pendingPlaceFilter = nil
+        editMode = .inactive
+        placeFilterID = id
     }
 
     private func ordered(_ list: [Reminder]) -> [Reminder] {
@@ -332,7 +345,7 @@ struct BatchAddView: View {
                 Button("跳过这些") { commit(skipping: dup) }
                 if !dup.laterItems.isEmpty {
                     Button("跳过，并把 \(dup.laterItems.count) 件循环物品改为需要买") {
-                        for item in dup.laterItems { item.shopNeeded = true; item.updatedAt = Date() }
+                        for item in dup.laterItems { item.setShopNeeded(true); item.updatedAt = Date() }
                         commit(skipping: dup)
                     }
                 }

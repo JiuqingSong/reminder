@@ -19,6 +19,7 @@ enum NotificationScheduler {
 
     struct LocationItem: Sendable {
         let id: String
+        let placeID: String
         let title: String
         let latitude: Double
         let longitude: Double
@@ -28,6 +29,8 @@ enum NotificationScheduler {
 
     /// 点击通知后打开待买页的标记
     nonisolated static let openShoppingKey = "openShopping"
+    /// 到店提醒对应的地点，打开待买页后筛选到这个地点
+    nonisolated static let placeIDKey = "placeID"
 
     nonisolated private static let horizonDays = 45
     nonisolated private static let maxRequests = 62
@@ -71,7 +74,7 @@ enum NotificationScheduler {
                 let title = location.title.isEmpty || location.title == place.name
                     ? place.name
                     : "\(place.name) · \(location.title)"
-                result.append(LocationItem(id: location.id.uuidString, title: title,
+                result.append(LocationItem(id: location.id.uuidString, placeID: place.id.uuidString, title: title,
                                            latitude: location.latitude, longitude: location.longitude,
                                            radius: place.radius, items: names))
             }
@@ -139,7 +142,7 @@ enum NotificationScheduler {
         content.title = location.title
         content.body = String(localized: "以下物品可以在这里购买：\(L10n.join(location.items))")
         content.sound = .default
-        content.userInfo = [openShoppingKey: true]
+        content.userInfo = [openShoppingKey: true, placeIDKey: location.placeID]
         let trigger = UNLocationNotificationTrigger(region: region, repeats: true)
         try? await center.add(UNNotificationRequest(identifier: "place-\(location.id)", content: content, trigger: trigger))
     }

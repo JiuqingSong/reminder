@@ -149,6 +149,180 @@
         }
       }
     },
+    "%lld 天" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld day"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld days"
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld día"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld días"
+                }
+              }
+            }
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld日"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld일"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 天"
+          }
+        }
+      }
+    },
+    "%lld 天后" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "After %lld day"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "After %lld days"
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "A los %lld día"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "A los %lld días"
+                }
+              }
+            }
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld日後"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld일 후"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 天後"
+          }
+        }
+      }
+    },
+    "%lld 天后转为需要买" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Need to Buy in %lld day"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Need to Buy in %lld days"
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Hay que comprar en %lld día"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Hay que comprar en %lld días"
+                }
+              }
+            }
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld日後に要購入"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld일 후 구매 필요"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 天後轉為需要買"
+          }
+        }
+      }
+    },
     "%lld 米" : {
       "localizations" : {
         "en" : {
@@ -451,6 +625,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "不連結地圖，無法開啟到店提醒。會同時加入常用地點。"
+          }
+        }
+      }
+    },
+    "不指定" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "None"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ninguno"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "指定しない"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "지정 안 함"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不指定"
           }
         }
       }
@@ -3393,6 +3601,64 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "循環"
+          }
+        }
+      }
+    },
+    "循环物品左划不会变成已买，而是改为\"以后检查\"。改为\"以后检查\"满 %lld 天后，自动转回\"需要买\"；一直是\"需要买\"时不计天数。" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Swiping a recurring item moves it to \"Check Later\" instead of bought. %lld day after it moves to \"Check Later\", it automatically goes back to \"Need to Buy\". No days are counted while it's \"Need to Buy\"."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Swiping a recurring item moves it to \"Check Later\" instead of bought. %lld days after it moves to \"Check Later\", it automatically goes back to \"Need to Buy\". No days are counted while it's \"Need to Buy\"."
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Al deslizar un artículo recurrente pasa a \"Revisar luego\" en vez de comprado. %lld día después de pasar a \"Revisar luego\", vuelve solo a \"Hay que comprar\". Mientras está en \"Hay que comprar\" no se cuentan días."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Al deslizar un artículo recurrente pasa a \"Revisar luego\" en vez de comprado. %lld días después de pasar a \"Revisar luego\", vuelve solo a \"Hay que comprar\". Mientras está en \"Hay que comprar\" no se cuentan días."
+                }
+              }
+            }
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "定期アイテムは左にスワイプすると購入済みではなく「あとで確認」になります。「あとで確認」にしてから %lld日たつと、自動で「要購入」に戻ります。「要購入」の間は日数を数えません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "반복 물건은 왼쪽으로 밀면 구매함이 아니라 '나중에 확인'으로 바뀝니다. '나중에 확인'으로 바꾼 뒤 %lld일이 지나면 자동으로 '구매 필요'로 돌아갑니다. '구매 필요'인 동안에는 날짜를 세지 않습니다."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "循環物品左滑不會變成已買，而是改為「以後檢查」。改為「以後檢查」滿 %lld 天後，自動轉回「需要買」；一直是「需要買」時不計天數。"
           }
         }
       }
@@ -6655,6 +6921,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "編輯物品"
+          }
+        }
+      }
+    },
+    "自动转为需要买" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Back to \"Need to Buy\""
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volver a \"Hay que comprar\""
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自動で要購入に戻す"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "자동으로 구매 필요로"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自動轉為需要買"
           }
         }
       }

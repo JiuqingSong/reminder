@@ -5,6 +5,7 @@ import SwiftData
 @MainActor
 enum ReminderActions {
     static func save(_ context: ModelContext) {
+        ShoppingActions.applyCycles(in: context)
         try? context.save()
         NotificationScheduler.reschedule(context: context)
     }

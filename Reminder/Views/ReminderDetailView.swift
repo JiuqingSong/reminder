@@ -98,6 +98,12 @@ struct ReminderDetailView: View {
                     Label("循环", systemImage: "arrow.triangle.2.circlepath").foregroundStyle(.secondary)
                 }
                 infoRow("info.circle", "状态", shopStatus)
+                if reminder.shopRecurring, reminder.shopCycleDays > 0 {
+                    infoRow("arrow.clockwise", "自动转为需要买", ShoppingActions.cycleLabel(reminder.shopCycleDays))
+                    if let days = reminder.daysUntilShopNeeded(from: now) {
+                        infoRow("hourglass", "剩余", String(localized: "\(days) 天"))
+                    }
+                }
                 if !reminder.sortedPlaces.isEmpty {
                     infoRow("mappin.and.ellipse", "购买地点", L10n.join(reminder.sortedPlaces.map(\.name)))
                 }

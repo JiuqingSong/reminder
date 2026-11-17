@@ -48,6 +48,9 @@ struct BackupReminder: Codable {
     var shopRecurring: Bool?
     var shopNeeded: Bool?
     var placeIDs: [UUID]?
+    // 循环天数（1.2 加的）
+    var shopCycleDays: Int?
+    var shopLaterSince: Date?
 }
 
 @MainActor
@@ -79,7 +82,9 @@ enum BackupService {
                 isShopping: r.isShopping,
                 shopRecurring: r.shopRecurring,
                 shopNeeded: r.shopNeeded,
-                placeIDs: r.sortedPlaces.map { $0.id }
+                placeIDs: r.sortedPlaces.map { $0.id },
+                shopCycleDays: r.shopCycleDays,
+                shopLaterSince: r.shopLaterSince
             )
         }, places: try context.fetch(FetchDescriptor<Place>()).map { p in
             BackupPlace(
@@ -144,6 +149,8 @@ enum BackupService {
             r.isShopping = item.isShopping ?? false
             r.shopRecurring = item.shopRecurring ?? false
             r.shopNeeded = item.shopNeeded ?? true
+            r.shopCycleDays = item.shopCycleDays ?? 0
+            r.shopLaterSince = item.shopLaterSince
             context.insert(r)
             r.places = (item.placeIDs ?? []).compactMap { placesByID[$0] }
             for (index, data) in item.images.enumerated() {

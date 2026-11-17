@@ -21,16 +21,52 @@ enum ShoppingActions {
     }
 
     static func setNeeded(_ item: Reminder, _ needed: Bool, in context: ModelContext) {
-        item.shopNeeded = needed
+        item.setShopNeeded(needed)
         item.updatedAt = Date()
         ReminderActions.save(context)
+    }
+
+    static let cycleOptions = [0, 3, 7, 10, 14, 21, 30, 45, 60, 90, 180]
+
+    static func cycleLabel(_ days: Int) -> String {
+        days == 0 ? String(localized: "不指定") : String(localized: "\(days) 天后")
+    }
+
+    /// 设了循环天数的"以后检查"物品，满天数的转回"需要买"。只改不存，返回是否有变化。
+    /// 每次保存前（ReminderActions.save）都会调用；打开 App、跨过午夜、后台刷新时用 refreshCycles
+    @discardableResult
+    static func applyCycles(in context: ModelContext, now: Date = Date()) -> Bool {
+        let descriptor = FetchDescriptor<Reminder>(predicate: #Predicate {
+            $0.isShopping == true && $0.isDone == false && $0.shopRecurring == true
+                && $0.shopNeeded == false && $0.shopCycleDays > 0
+        })
+        var changed = false
+        for item in (try? context.fetch(descriptor)) ?? [] {
+            if item.shopLaterSince == nil {
+                // 先设成"以后检查"、后来才加的天数：从现在开始算
+                item.shopLaterSince = now
+                changed = true
+            } else if item.daysUntilShopNeeded(from: now) == 0 {
+                item.setShopNeeded(true, now: now)
+                item.updatedAt = now
+                changed = true
+            }
+        }
+        return changed
+    }
+
+    /// 有物品转回"需要买"时保存，并重建到店提醒
+    static func refreshCycles(in context: ModelContext) {
+        if applyCycles(in: context) {
+            ReminderActions.save(context)
+        }
     }
 
     /// 改为循环时默认"需要买"；已买的普通物品改为循环后回到待买列表
     static func setRecurring(_ item: Reminder, _ recurring: Bool, in context: ModelContext) {
         item.shopRecurring = recurring
         if recurring {
-            item.shopNeeded = true
+            item.setShopNeeded(true)
             item.isDone = false
             item.completedAt = nil
         }

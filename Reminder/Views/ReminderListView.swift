@@ -345,6 +345,9 @@ struct ReminderRow: View {
         if !inShoppingList { parts.append(reminder.isDone ? String(localized: "已买") : String(localized: "待买")) }
         if reminder.shopRecurring { parts.append(String(localized: "循环")) }
         if reminder.isShopLater { parts.append(String(localized: "以后检查")) }
+        if let days = reminder.daysUntilShopNeeded(from: now) {
+            parts.append(String(localized: "\(days) 天后转为需要买"))
+        }
         if reminder.isDone, let completedAt = reminder.completedAt {
             parts.append(String(localized: "买于 \(DueFormat.timestamp(completedAt))"))
         }

@@ -24,6 +24,7 @@ struct ReminderEditView: View {
     @State private var showingCamera = false
     @State private var shopRecurring = false
     @State private var shopNeeded = true
+    @State private var shopCycleDays = 0
     @State private var duplicate: Reminder?
     @State private var places: [Place] = []
     @State private var pickingPlaces = false
@@ -264,12 +265,24 @@ struct ReminderEditView: View {
                     Text("需要买").tag(true)
                     Text("以后检查").tag(false)
                 }
+                Picker("自动转为需要买", selection: $shopCycleDays) {
+                    ForEach(cycleOptions, id: \.self) { Text(ShoppingActions.cycleLabel($0)).tag($0) }
+                }
             }
         } footer: {
-            Text(shopRecurring
-                 ? String(localized: "循环物品左划不会变成已买，而是改为\"以后检查\"，灰色显示在列表最下面，用完了再改回\"需要买\"。")
-                 : String(localized: "普通物品左划即标记为已买。"))
+            if !shopRecurring {
+                Text("普通物品左划即标记为已买。")
+            } else if shopCycleDays == 0 {
+                Text("循环物品左划不会变成已买，而是改为\"以后检查\"，灰色显示在列表最下面，用完了再改回\"需要买\"。")
+            } else {
+                Text("循环物品左划不会变成已买，而是改为\"以后检查\"。改为\"以后检查\"满 \(shopCycleDays) 天后，自动转回\"需要买\"；一直是\"需要买\"时不计天数。")
+            }
         }
+    }
+
+    private var cycleOptions: [Int] {
+        let options = ShoppingActions.cycleOptions
+        return options.contains(shopCycleDays) ? options : (options + [shopCycleDays]).sorted()
     }
 
     private var titleText: String {
@@ -306,6 +319,7 @@ struct ReminderEditView: View {
             images = reminder.sortedAttachments.map { DraftImage(source: .existing($0)) }
             shopRecurring = reminder.shopRecurring
             shopNeeded = reminder.shopNeeded
+            shopCycleDays = reminder.shopCycleDays
             places = reminder.sortedPlaces
         } else {
             leadDays = defaultLeadDays
@@ -356,7 +370,8 @@ struct ReminderEditView: View {
             target.hasTime = false
             target.recurrence = .none
             target.shopRecurring = shopRecurring
-            target.shopNeeded = shopRecurring ? shopNeeded : true
+            target.setShopNeeded(shopRecurring ? shopNeeded : true)
+            target.shopCycleDays = shopRecurring ? shopCycleDays : 0
             target.places = places
             // 循环物品不会处于已买状态
             if shopRecurring {
