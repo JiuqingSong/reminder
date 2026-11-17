@@ -18,6 +18,9 @@ targets:
     platform: iOS
     sources:
       - Reminder
+      - Shared
+    dependencies:
+      - target: ReminderWidget
     scheme: {}
     settings:
       base:
@@ -28,6 +31,18 @@ targets:
         # 在 Mac 上用 Xcode 装机时，把这里改成你的 Personal Team ID（Xcode → Settings → Accounts 可查看）
         DEVELOPMENT_TEAM: ""
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    # iCloud 同步（CloudKit）+ 与小组件共享数据的 App Group。
+    # Release 用自动签名，第一次会自动在开发者账号里登记这些能力
+    entitlements:
+      path: Reminder/Reminder.entitlements
+      properties:
+        com.apple.developer.icloud-container-identifiers:
+          - iCloud.com.songthin.willdo
+        com.apple.developer.icloud-services:
+          - CloudKit
+        aps-environment: development
+        com.apple.security.application-groups:
+          - group.com.songthin.willdo
     info:
       path: Reminder/Info.plist
       properties:
@@ -44,6 +59,9 @@ targets:
           - ko
           - es
         UILaunchScreen: {}
+        # iCloud 有变化时系统用静默推送唤醒 App 拉取
+        UIBackgroundModes:
+          - remote-notification
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
         NSCameraUsageDescription: 用于拍照并附加到提醒事项
@@ -53,3 +71,35 @@ targets:
           - comgooglemaps
         # 只用系统自带的加密（HTTPS 等），上传 App Store 时不用再回答出口合规
         ITSAppUsesNonExemptEncryption: false
+
+  # 桌面 / 锁屏小组件。数据由 App 写到 App Group 里的 widget.json（见 Shared/WidgetSnapshot.swift）
+  ReminderWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - ReminderWidget
+      - Shared
+      - path: Reminder/Services/DueFormat.swift
+      - path: Reminder/Localizable.xcstrings
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.songthin.willdo.widget
+        PRODUCT_NAME: ReminderWidget
+        TARGETED_DEVICE_FAMILY: "1"
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: ""
+        SKIP_INSTALL: YES
+    entitlements:
+      path: ReminderWidget/ReminderWidget.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.songthin.willdo
+    info:
+      path: ReminderWidget/Info.plist
+      properties:
+        CFBundleDisplayName: 不着急
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        CFBundleDevelopmentRegion: zh-Hans
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension

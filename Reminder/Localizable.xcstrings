@@ -217,6 +217,40 @@
         }
       }
     },
+    "iCloud 同步" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud Sync"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sincronización con iCloud"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud 同期"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud 동기화"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud 同步"
+          }
+        }
+      }
+    },
     "、" : {
       "localizations" : {
         "en" : {
@@ -485,6 +519,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "不加入，把原有的改為需要買"
+          }
+        }
+      }
+    },
+    "不设日期" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Date"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin fecha"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日付なし"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "날짜 없음"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不設日期"
           }
         }
       }
@@ -1927,40 +1995,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "後天"
-          }
-        }
-      }
-    },
-    "图片" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Images"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Imágenes"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "画像"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "이미지"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "圖片"
           }
         }
       }
@@ -3601,6 +3635,40 @@
         }
       }
     },
+    "打开 App 后显示" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open the app to show items"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abre la app para ver los elementos"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリを開くと表示されます"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "앱을 열면 표시됩니다"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打開 App 後顯示"
+          }
+        }
+      }
+    },
     "打开 Watch App" : {
       "localizations" : {
         "en" : {
@@ -4495,6 +4563,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "明天"
+          }
+        }
+      }
+    },
+    "显示已过期、近期的事项和常年提醒。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shows overdue and upcoming items, plus ongoing reminders."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muestra lo vencido, lo próximo y los recordatorios fijos."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "期限切れ・もうすぐの項目と常時リマインダーを表示します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "기한이 지난 항목, 다가오는 항목과 상시 리마인더를 표시합니다."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "顯示已過期、近期的事項和常駐提醒。"
           }
         }
       }
@@ -5683,6 +5785,40 @@
         }
       }
     },
+    "没有要处理的事" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All clear"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nada pendiente"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "やることはありません"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "처리할 일이 없습니다"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "沒有要處理的事"
+          }
+        }
+      }
+    },
     "没看到要找的？多输入几个字试试" : {
       "localizations" : {
         "en" : {
@@ -6183,6 +6319,40 @@
         }
       }
     },
+    "登录了 iCloud 时，提醒、图片、待买物品和购物地点会自动同步到你登录同一 Apple 账户的其他 iPhone。可以在系统设置 → Apple 账户 → iCloud 里关闭。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When you're signed in to iCloud, reminders, images, shopping items and places sync automatically to your other iPhones signed in to the same Apple Account. You can turn this off in Settings → Apple Account → iCloud."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si has iniciado sesión en iCloud, los recordatorios, imágenes, artículos de compra y lugares se sincronizan automáticamente con tus otros iPhone con la misma cuenta de Apple. Puedes desactivarlo en Ajustes → Cuenta de Apple → iCloud."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud にサインインしていると、リマインダー、画像、買い物リスト、お店が同じ Apple アカウントの他の iPhone に自動で同期されます。設定 → Apple アカウント → iCloud でオフにできます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud에 로그인되어 있으면 미리 알림, 이미지, 장보기 항목과 장소가 같은 Apple 계정의 다른 iPhone에 자동으로 동기화됩니다. 설정 → Apple 계정 → iCloud에서 끌 수 있습니다."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登入 iCloud 時，提醒、圖片、待買物品和購物地點會自動同步到你登入同一 Apple 帳號的其他 iPhone。可以在系統設定 → Apple 帳號 → iCloud 裡關閉。"
+          }
+        }
+      }
+    },
     "相册" : {
       "localizations" : {
         "en" : {
@@ -6489,6 +6659,40 @@
         }
       }
     },
+    "自定义" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otra"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カスタム"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "직접 설정"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自訂"
+          }
+        }
+      }
+    },
     "视图" : {
       "localizations" : {
         "en" : {
@@ -6553,40 +6757,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "設定"
-          }
-        }
-      }
-    },
-    "设置日期" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Set Date"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fijar fecha"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "日付を設定"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "날짜 설정"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "設定日期"
           }
         }
       }
@@ -6815,6 +6985,64 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "返回修改"
+          }
+        }
+      }
+    },
+    "还有 %lld 项" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld more"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld more"
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld más"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld más"
+                }
+              }
+            }
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ほか %lld 件"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld개 더"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "還有 %lld 項"
           }
         }
       }

@@ -1,6 +1,8 @@
 import SwiftUI
 import SwiftData
 import UserNotifications
+import CoreData
+import Combine
 
 @main
 struct ReminderApp: App {
@@ -51,7 +53,15 @@ struct RootView: View {
     var body: some View {
         ReminderListView(now: now)
             .task {
+                AttachmentStore.reconcile(context: context)
                 await NotificationScheduler.requestAuthorization()
+                NotificationScheduler.reschedule(context: context)
+            }
+            // iCloud 同步来了别的设备上的修改：补齐图片文件，重建通知和小组件。
+            // 同步时这个通知会连着来好几次，等安静一秒再处理
+            .onReceive(NotificationCenter.default.publisher(for: .NSPersistentStoreRemoteChange)
+                .debounce(for: .seconds(1), scheduler: RunLoop.main)) { _ in
+                AttachmentStore.reconcile(context: context)
                 NotificationScheduler.reschedule(context: context)
             }
             .onChange(of: scenePhase) { _, phase in

@@ -88,10 +88,10 @@
 「%@」已在待买列表中。	"%@" is already on the list.	「%@」已在待買清單中。	「%@」はすでに買うものリストにあります。	'%@'은(는) 이미 목록에 있습니다.	"%@" ya está en la lista.
 取消	Cancel	取消	キャンセル	취소	Cancelar
 保存	Save	儲存	保存	저장	Guardar
-图片	Images	圖片	画像	이미지	Imágenes
+自定义	Custom	自訂	カスタム	직접 설정	Otra
 相册	Photos	相簿	写真	사진	Fotos
 拍照	Camera	拍照	カメラ	카메라	Cámara
-设置日期	Set Date	設定日期	日付を設定	날짜 설정	Fijar fecha
+不设日期	No Date	不設日期	日付なし	날짜 없음	Sin fecha
 日期	Date	日期	日付	날짜	Fecha
 具体时间	Time	具體時間	時刻を指定	시간 지정	Hora
 时间	Time	時間	時刻	시간	Hora
@@ -200,3 +200,9 @@
 点地点选中或取消。点右侧铃铛开关到店提醒。	Tap a place to select it. Tap the bell to turn its arrival alert on or off.	點地點選取或取消。點右側鈴鐺開關到店提醒。	場所をタップして選択／解除。右のベルで到着通知をオン／オフ。	장소를 탭해 선택하거나 해제하세요. 오른쪽 종을 탭해 도착 알림을 켜거나 끕니다.	Toca un lugar para seleccionarlo. Toca la campana para activar o desactivar su aviso de llegada.
 橙色铃铛表示到店提醒已开启。这是地点本身的设置，用这个地点的所有物品都会一起提醒。	An orange bell means the arrival alert is on. It belongs to the place, so every item bought there is included.	橘色鈴鐺表示到店提醒已開啟。這是地點本身的設定，用這個地點的所有物品都會一起提醒。	オレンジのベルは到着通知がオンであることを示します。これは場所自体の設定なので、この場所で買うすべてのアイテムが対象になります。	주황색 종은 도착 알림이 켜져 있다는 뜻입니다. 장소 자체의 설정이므로 이곳에서 사는 모든 물건이 포함됩니다.	Una campana naranja indica que el aviso de llegada está activado. Es del lugar, así que incluye todos los artículos que se compran ahí.
 没看到要找的？多输入几个字试试	Don't see it? Try typing a bit more.	沒看到要找的？多輸入幾個字試試	見つからない場合は、もう少し入力してみてください	찾는 곳이 없나요? 조금 더 입력해 보세요	¿No lo ves? Prueba a escribir un poco más.
+iCloud 同步	iCloud Sync	iCloud 同步	iCloud 同期	iCloud 동기화	Sincronización con iCloud
+登录了 iCloud 时，提醒、图片、待买物品和购物地点会自动同步到你登录同一 Apple 账户的其他 iPhone。可以在系统设置 → Apple 账户 → iCloud 里关闭。	When you're signed in to iCloud, reminders, images, shopping items and places sync automatically to your other iPhones signed in to the same Apple Account. You can turn this off in Settings → Apple Account → iCloud.	登入 iCloud 時，提醒、圖片、待買物品和購物地點會自動同步到你登入同一 Apple 帳號的其他 iPhone。可以在系統設定 → Apple 帳號 → iCloud 裡關閉。	iCloud にサインインしていると、リマインダー、画像、買い物リスト、お店が同じ Apple アカウントの他の iPhone に自動で同期されます。設定 → Apple アカウント → iCloud でオフにできます。	iCloud에 로그인되어 있으면 미리 알림, 이미지, 장보기 항목과 장소가 같은 Apple 계정의 다른 iPhone에 자동으로 동기화됩니다. 설정 → Apple 계정 → iCloud에서 끌 수 있습니다.	Si has iniciado sesión en iCloud, los recordatorios, imágenes, artículos de compra y lugares se sincronizan automáticamente con tus otros iPhone con la misma cuenta de Apple. Puedes desactivarlo en Ajustes → Cuenta de Apple → iCloud.
+显示已过期、近期的事项和常年提醒。	Shows overdue and upcoming items, plus ongoing reminders.	顯示已過期、近期的事項和常駐提醒。	期限切れ・もうすぐの項目と常時リマインダーを表示します。	기한이 지난 항목, 다가오는 항목과 상시 리마인더를 표시합니다.	Muestra lo vencido, lo próximo y los recordatorios fijos.
+打开 App 后显示	Open the app to show items	打開 App 後顯示	アプリを開くと表示されます	앱을 열면 표시됩니다	Abre la app para ver los elementos
+没有要处理的事	All clear	沒有要處理的事	やることはありません	처리할 일이 없습니다	Nada pendiente
+还有 %lld 项	one=%lld more|other=%lld more	還有 %lld 項	ほか %lld 件	%lld개 더	one=%lld más|other=%lld más

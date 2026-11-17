@@ -54,6 +54,13 @@ jobs:
             ls "$app/$lang.lproj/" | grep -q '^AppShortcuts' || { echo "missing $lang AppShortcuts"; exit 1; }
           done
 
+      # 小组件扩展要打进 App 里，且带上翻译
+      - name: Check widget
+        run: |
+          appex=build/Build/Products/Release-iphoneos/Reminder.app/PlugIns/ReminderWidget.appex
+          ls "$appex"
+          ls "$appex/en.lproj/" | grep -q '^Localizable' || { echo "missing widget en Localizable"; exit 1; }
+
       # App Store 要求隐私清单，缺了上传会被拒
       - name: Check privacy manifest
         run: |

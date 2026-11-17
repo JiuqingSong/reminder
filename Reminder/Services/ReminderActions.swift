@@ -20,7 +20,7 @@ enum ReminderActions {
             record.completedAt = now
             context.insert(record)
             for attachment in reminder.sortedAttachments {
-                guard let copy = AttachmentStore.duplicate(attachment.fileName) else { continue }
+                guard let copy = AttachmentStore.duplicate(AttachmentStore.ensureFile(attachment)) else { continue }
                 let a = Attachment(fileName: copy, order: attachment.order)
                 context.insert(a)
                 a.reminder = record

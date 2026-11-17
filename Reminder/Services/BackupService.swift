@@ -75,7 +75,7 @@ enum BackupService {
                 sortOrder: r.sortOrder,
                 createdAt: r.createdAt,
                 updatedAt: r.updatedAt,
-                images: r.sortedAttachments.compactMap { try? Data(contentsOf: AttachmentStore.url(for: $0.fileName)) },
+                images: r.sortedAttachments.compactMap { AttachmentStore.data(for: $0) },
                 isShopping: r.isShopping,
                 shopRecurring: r.shopRecurring,
                 shopNeeded: r.shopNeeded,

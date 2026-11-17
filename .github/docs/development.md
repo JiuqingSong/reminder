@@ -2,7 +2,7 @@
 
 面向开发者的细节：功能规则、多语言、构建、发布和代码结构。App 介绍见仓库根目录的 [README](../../README.md)。
 
-- SwiftUI + SwiftData，iOS 18+，全部本地存储，不依赖服务器
+- SwiftUI + SwiftData，iOS 18+，数据存在本机，登录 iCloud 时通过 CloudKit 同步到用户的私有数据库，不依赖自己的服务器
 - 工程由 [XcodeGen](https://github.com/yonaskolb/XcodeGen) 从 `project.yml` 生成，`.xcodeproj` 不进版本库
 
 ## 功能与规则
@@ -25,7 +25,10 @@
 | 重复 | 每天、每周、每月、每年，可设间隔。完成后生成一条历史记录，原事项顺延到下一次 |
 | 地址 | 用 Google 地图打开：装了 App 就打开 App，没装就打开网页版 |
 | 链接、电话 | 链接用系统默认浏览器打开，电话号码点击即可拨打 |
-| 图片 | 支持拍照和从相册多选。压缩到长边 2048 像素后存在 App 目录，会随 iPhone 备份一起备份 |
+| 图片 | 支持拍照和从相册多选，图标在输入框右上角。压缩到长边 2048 像素，数据存在数据库里（随 iCloud 同步），本机另存一份文件用来显示 |
+| 新建日期 | 输入框下面选：不设日期（默认）、今天、明天、自定义（显示日期选择器）；选了日期后可以加具体时间 |
+| 小组件 | 桌面小、中、大三种，锁屏圆形、矩形、单行三种。显示已过期（红）、近期（橙），然后常年；"以后"的不显示。App 每次数据变化时写 App Group 里的 `widget.json`，小组件每天零点自动换算"今天/明天/已过几天" |
+| iCloud 同步 | 提醒、图片、待买、地点都同步（SwiftData + CloudKit 私有数据库）。别的设备改了数据，本机收到后重建通知、补齐图片文件、刷新小组件。到店提醒开关是地点的属性，也会同步 |
 | 滑动 | 全 App 统一：左划完成或买完（已完成、已买的左划恢复），右划没有操作。删除在长按菜单和详情页里。常用地点和地图位置仍可左划删除 |
 | 长按菜单 | 列表中长按某条提醒：完成或恢复、推迟一天、推迟一周、复制文字、删除 |
 | 语言 | 简体中文、繁体中文（台湾用词）、英文，英文名 Will Do。跟随系统语言，也可以在 设置 → 不着急 → 语言 单独选。Siri 目前只支持中文 |
@@ -51,7 +54,7 @@
 2. 在 `tools/l10n/strings.tsv` 加一行：简体原文、英文、繁体、日语、韩语、西班牙语，用 Tab 分隔。插值写成 `%lld`（整数）、`%@`（文字）；英文、西班牙语需要单复数时写成 `one=…|other=…`；要保留的空格（尤其在行尾）写成 `\s`
 3. 检查和生成：
    ```sh
-   perl tools/l10n/check.pl tools/l10n/strings.tsv $(git ls-files 'Reminder/*.swift' | grep -v -e Intents -e SpokenDateParser -e AppModel)
+   perl tools/l10n/check.pl tools/l10n/strings.tsv $(git ls-files 'Reminder/*.swift' 'ReminderWidget/*.swift' 'Shared/*.swift' | grep -v -e Intents -e SpokenDateParser -e AppModel)
    perl tools/l10n/gen.pl tools/l10n/strings.tsv > Reminder/Localizable.xcstrings
    perl tools/l10n/gen.pl tools/l10n/infoplist.tsv > Reminder/InfoPlist.xcstrings
    ```
@@ -94,7 +97,7 @@ CI 会检查编出来的 App 里有没有英文、繁体、日语、韩语、西
 
 ```
 Reminder/
-  App/        入口、AppDelegate（前台通知）、RootView（回到前台时刷新）、AppModel（共用数据库）
+  App/        入口、AppDelegate（前台通知）、RootView（回到前台、iCloud 有变化时刷新）、AppModel（共用数据库、CloudKit）
   Intents/    Siri 添加提醒（AddReminderIntent、触发语）
   Models/     Reminder（待买物品也是 Reminder，用 isShopping 区分）、Attachment（SwiftData，兼容 CloudKit）、
               Place / PlaceLocation（购物地点和它的地图位置）、Recurrence
@@ -106,15 +109,26 @@ Reminder/
               AttachmentStore（图片文件）
               ContentDetector / MapOpener（链接、地址识别）
               SpokenDateParser（从口语里识别日期时间）
+              WidgetSync（写小组件数据）
               DueFormat、AppSettings
   Views/      列表、详情、编辑、待买（含已买、批量添加）、购物地点（管理、地图搜索、选择）、
               图片浏览、日期筛选、设置
+ReminderWidget/  小组件扩展
+Shared/          App 和小组件共用：WidgetSnapshot（小组件数据和显示规则）、Calendar.dayDistance
 ```
+
+## iCloud 同步的一次性设置
+
+TestFlight 和 App Store 版用的是 CloudKit **生产环境**，生产环境的数据结构不能由 App 自己创建，只能从开发环境部署过去。数据模型（`Reminder/Models`）每次增加字段或类型后都要重做一遍：
+
+1. 在 Mac 上用 Xcode 以 Debug 方式在真机上运行一次（`project.yml` 里填 `DEVELOPMENT_TEAM`，iPhone 登录 iCloud）。Debug 版启动时会调用 `initializeCloudKitSchema`（`Reminder/App/AppModel.swift`），在开发环境建好全部记录类型，控制台打印 `CloudKit schema: initialized`
+2. 打开 https://icloud.developer.apple.com → `iCloud.com.songthin.willdo` → Schema → Deploy Schema Changes，部署到生产环境
+
+规则：模型只能加字段、加类型，不能删、不能改名、不能改类型（生产环境部署后就改不了了）。所有属性要有默认值或可选，关系要可选且有反向关系，不能用唯一约束。
 
 ## 后续计划
 
-- 桌面小组件
-- iCloud 同步（需要付费开发者账号。数据模型已经按 CloudKit 的要求设计，届时只需开启能力）
+- 暂无
 
 ## 图标
 

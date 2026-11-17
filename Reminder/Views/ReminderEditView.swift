@@ -13,7 +13,7 @@ struct ReminderEditView: View {
     @AppStorage(AppSettings.defaultLeadDaysKey) private var defaultLeadDays = 1
 
     @State private var text = ""
-    @State private var hasDate = false
+    @State private var dateMode: DateMode = .noDate
     @State private var date = Date()
     @State private var hasTime = false
     @State private var leadDays = 1
@@ -31,24 +31,30 @@ struct ReminderEditView: View {
     @FocusState private var textFocused: Bool
 
     private var isShopping: Bool { reminder?.isShopping ?? newShoppingItem }
+    private var hasDate: Bool { dateMode != .noDate }
+
+    enum DateMode: Hashable, CaseIterable {
+        case noDate, today, tomorrow, custom
+
+        var label: String {
+            switch self {
+            case .noDate: String(localized: "不设日期")
+            case .today: String(localized: "今天")
+            case .tomorrow: String(localized: "明天")
+            case .custom: String(localized: "自定义")
+            }
+        }
+    }
 
     var body: some View {
         NavigationStack {
             Form {
-                Section {
-                    TextField(isShopping ? String(localized: "物品名称（第一行），可以附上链接、说明") : String(localized: "写点什么……链接、地址会自动识别"),
-                              text: $text, axis: .vertical)
-                        .lineLimit(isShopping ? 2...20 : 4...20)
-                        .focused($textFocused)
-                }
-
-                imageSection
+                mainSection
 
                 if isShopping {
                     placeSection
                     shopSection
                 } else {
-                    dateSection
                     if hasDate {
                         reminderSection
                     }
@@ -108,70 +114,92 @@ struct ReminderEditView: View {
 
     // MARK: - 分区
 
-    private var imageSection: some View {
-        Section("图片") {
-            if !images.isEmpty {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 8) {
-                        ForEach(images) { item in
-                            ZStack(alignment: .topTrailing) {
-                                Group {
-                                    if let thumb = item.thumbnail {
-                                        Image(uiImage: thumb).resizable().scaledToFill()
-                                    } else {
-                                        Color.gray.opacity(0.2)
-                                    }
-                                }
-                                .frame(width: 72, height: 72)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
+    /// 输入框（右上角是相册、拍照按钮）+ 已选图片 + 日期、时间
+    private var mainSection: some View {
+        Section {
+            HStack(alignment: .top, spacing: 12) {
+                TextField(isShopping ? String(localized: "物品名称（第一行），可以附上链接、说明") : String(localized: "写点什么……链接、地址会自动识别"),
+                          text: $text, axis: .vertical)
+                    .lineLimit(isShopping ? 2...20 : 4...20)
+                    .focused($textFocused)
+                imageButtons
+            }
 
-                                Button {
-                                    images.removeAll { $0.id == item.id }
-                                } label: {
-                                    Image(systemName: "xmark.circle.fill")
-                                        .symbolRenderingMode(.palette)
-                                        .foregroundStyle(.white, .black.opacity(0.6))
-                                }
-                                .buttonStyle(.plain)
-                                .padding(3)
-                            }
-                        }
+            if !images.isEmpty {
+                imageStrip
+            }
+
+            if !isShopping {
+                Picker("日期", selection: $dateMode.animation()) {
+                    ForEach(DateMode.allCases, id: \.self) { Text($0.label).tag($0) }
+                }
+                .pickerStyle(.segmented)
+                .labelsHidden()
+
+                if dateMode == .custom {
+                    DatePicker("日期", selection: $date, displayedComponents: .date)
+                }
+                if hasDate {
+                    Toggle("具体时间", isOn: $hasTime.animation())
+                    if hasTime {
+                        DatePicker("时间", selection: $date, displayedComponents: .hourAndMinute)
                     }
-                    .padding(.vertical, 4)
                 }
             }
-            HStack {
-                PhotosPicker(selection: $pickerItems, maxSelectionCount: 10, matching: .images) {
-                    Label("相册", systemImage: "photo.on.rectangle")
-                }
-                .buttonStyle(.borderless)
-                Spacer()
-                if UIImagePickerController.isSourceTypeAvailable(.camera) {
-                    Button {
-                        showingCamera = true
-                    } label: {
-                        Label("拍照", systemImage: "camera")
-                    }
-                    .buttonStyle(.borderless)
-                }
+        } footer: {
+            if !isShopping && !hasDate {
+                Text("不设日期即为常年提醒，固定显示在列表顶部，不发通知。")
             }
         }
     }
 
-    private var dateSection: some View {
-        Section {
-            Toggle("设置日期", isOn: $hasDate.animation())
-            if hasDate {
-                DatePicker("日期", selection: $date, displayedComponents: .date)
-                Toggle("具体时间", isOn: $hasTime.animation())
-                if hasTime {
-                    DatePicker("时间", selection: $date, displayedComponents: .hourAndMinute)
+    private var imageButtons: some View {
+        HStack(spacing: 16) {
+            PhotosPicker(selection: $pickerItems, maxSelectionCount: 10, matching: .images) {
+                Image(systemName: "photo.on.rectangle")
+            }
+            .accessibilityLabel("相册")
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                Button {
+                    showingCamera = true
+                } label: {
+                    Image(systemName: "camera")
+                }
+                .accessibilityLabel("拍照")
+            }
+        }
+        .buttonStyle(.borderless)
+        .font(.title3)
+    }
+
+    private var imageStrip: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) {
+                ForEach(images) { item in
+                    ZStack(alignment: .topTrailing) {
+                        Group {
+                            if let thumb = item.thumbnail {
+                                Image(uiImage: thumb).resizable().scaledToFill()
+                            } else {
+                                Color.gray.opacity(0.2)
+                            }
+                        }
+                        .frame(width: 72, height: 72)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+
+                        Button {
+                            images.removeAll { $0.id == item.id }
+                        } label: {
+                            Image(systemName: "xmark.circle.fill")
+                                .symbolRenderingMode(.palette)
+                                .foregroundStyle(.white, .black.opacity(0.6))
+                        }
+                        .buttonStyle(.plain)
+                        .padding(3)
+                    }
                 }
             }
-        } footer: {
-            if !hasDate {
-                Text("不设日期即为常年提醒，固定显示在列表顶部，不发通知。")
-            }
+            .padding(.vertical, 4)
         }
     }
 
@@ -266,8 +294,11 @@ struct ReminderEditView: View {
         loaded = true
         if let reminder {
             text = reminder.text
-            hasDate = reminder.dueDate != nil
             date = reminder.dueDate ?? Date()
+            if let due = reminder.dueDate {
+                let cal = Calendar.current
+                dateMode = cal.isDateInToday(due) ? .today : cal.isDateInTomorrow(due) ? .tomorrow : .custom
+            }
             hasTime = reminder.hasTime
             leadDays = reminder.leadDays
             recurrence = reminder.recurrence
@@ -296,6 +327,19 @@ struct ReminderEditView: View {
         save()
     }
 
+    /// 今天/明天按保存时的日期算，时分取自 date；自定义直接用 date
+    private func resolvedDate() -> Date {
+        let cal = Calendar.current
+        let base: Date
+        switch dateMode {
+        case .today: base = Date()
+        case .tomorrow: base = cal.date(byAdding: .day, value: 1, to: Date()) ?? Date()
+        case .noDate, .custom: return date
+        }
+        let hm = cal.dateComponents([.hour, .minute], from: date)
+        return cal.date(bySettingHour: hm.hour ?? 0, minute: hm.minute ?? 0, second: 0, of: base) ?? base
+    }
+
     private func save() {
         let target: Reminder
         if let reminder {
@@ -320,7 +364,8 @@ struct ReminderEditView: View {
                 target.completedAt = nil
             }
         } else if hasDate {
-            target.dueDate = hasTime ? date : Calendar.current.startOfDay(for: date)
+            let day = resolvedDate()
+            target.dueDate = hasTime ? day : Calendar.current.startOfDay(for: day)
             target.hasTime = hasTime
             target.leadDays = leadDays
             target.recurrence = recurrence
@@ -374,7 +419,7 @@ struct DraftImage: Identifiable {
 
     var thumbnail: UIImage? {
         switch source {
-        case .existing(let attachment): AttachmentStore.thumbnail(attachment.fileName)
+        case .existing(let attachment): AttachmentStore.thumbnail(for: attachment)
         case .new(let image): image
         }
     }

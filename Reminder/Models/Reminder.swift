@@ -98,10 +98,3 @@ extension Reminder {
         return .later
     }
 }
-
-extension Calendar {
-    /// 两个时刻之间相差的自然日数（忽略时分）
-    func dayDistance(from a: Date, to b: Date) -> Int {
-        dateComponents([.day], from: startOfDay(for: a), to: startOfDay(for: b)).day ?? 0
-    }
-}

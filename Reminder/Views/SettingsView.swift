@@ -55,6 +55,12 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    Label("iCloud 同步", systemImage: "icloud")
+                } footer: {
+                    Text("登录了 iCloud 时，提醒、图片、待买物品和购物地点会自动同步到你登录同一 Apple 账户的其他 iPhone。可以在系统设置 → Apple 账户 → iCloud 里关闭。")
+                }
+
+                Section {
                     Button("导出备份", systemImage: "square.and.arrow.up", action: exportBackup)
                     Button("从备份恢复", systemImage: "square.and.arrow.down") { importing = true }
                 } header: {

@@ -283,6 +283,7 @@ struct ReminderListView: View {
             reminder.sortOrder = Double(index)
         }
         try? context.save()
+        WidgetSync.update(context: context)
     }
 }
 
@@ -306,7 +307,7 @@ struct ReminderRow: View {
                     .foregroundStyle(.secondary)
             }
             Spacer(minLength: 8)
-            if let first = reminder.sortedAttachments.first, let thumb = AttachmentStore.thumbnail(first.fileName) {
+            if let first = reminder.sortedAttachments.first, let thumb = AttachmentStore.thumbnail(for: first) {
                 Image(uiImage: thumb)
                     .resizable()
                     .scaledToFill()

@@ -31,7 +31,7 @@ struct ReminderDetailView: View {
                                 Color.clear
                                     .aspectRatio(1, contentMode: .fit)
                                     .overlay {
-                                        if let thumb = AttachmentStore.thumbnail(attachment.fileName) {
+                                        if let thumb = AttachmentStore.thumbnail(for: attachment) {
                                             Image(uiImage: thumb).resizable().scaledToFill()
                                         }
                                     }
@@ -75,7 +75,7 @@ struct ReminderDetailView: View {
             ReminderEditView(reminder: reminder)
         }
         .fullScreenCover(item: $viewerStart) { start in
-            ImageViewer(fileNames: reminder.sortedAttachments.map(\.fileName), startIndex: start.index)
+            ImageViewer(fileNames: reminder.sortedAttachments.map { AttachmentStore.ensureFile($0) }, startIndex: start.index)
         }
         .confirmationDialog(reminder.isShopping ? String(localized: "删除这件物品？") : String(localized: "删除这条提醒？"), isPresented: $confirmingDelete, titleVisibility: .visible) {
             Button("删除", role: .destructive) {

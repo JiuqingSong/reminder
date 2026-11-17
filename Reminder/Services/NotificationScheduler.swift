@@ -40,6 +40,8 @@ enum NotificationScheduler {
 
     @discardableResult
     static func reschedule(context: ModelContext) -> Task<Void, Never> {
+        // 所有数据变化都会走到这里，顺便更新小组件
+        WidgetSync.update(context: context)
         let descriptor = FetchDescriptor<Reminder>(predicate: #Predicate { $0.isDone == false })
         let items = ((try? context.fetch(descriptor)) ?? []).compactMap { r -> Item? in
             guard let due = r.dueDate else { return nil }

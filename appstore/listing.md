@@ -343,7 +343,7 @@ Sin cuenta, sin anuncios, sin rastreo. Todo se guarda en tu iPhone. Exporta una 
 
 ## 审核备注（App Review Information → Notes，英文）
 
-No account or login is required. All data is stored locally on the device; the app has no server.
+No account or login is required. Data is stored on the device and, if the user is signed in to iCloud, synced to their private iCloud (CloudKit) database; the app has no server of its own.
 
 Arrival alerts: open "To Buy" (the first row in the list) → add an item → "Choose Places" → + → search the map and pick a store. "Arrival Alert" is on by default at the bottom of that screen; tap "Add …". Save the item. The bell next to each store in the place list turns its alert on or off. When the device enters the 200 m region, a local notification lists the items. Only "While Using the App" location permission is used (UNLocationNotificationTrigger).
 

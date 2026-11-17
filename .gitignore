@@ -6,3 +6,6 @@ DerivedData/
 Payload/
 .DS_Store
 xcuserdata/
+Reminder/Reminder.entitlements
+ReminderWidget/Info.plist
+ReminderWidget/ReminderWidget.entitlements
